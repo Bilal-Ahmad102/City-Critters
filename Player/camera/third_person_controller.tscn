@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dh01swgeiks35"]
+
+[ext_resource type="Script" uid="uid://cqq4suxgli1rd" path="res://Player/camera/camera.gd" id="1_h2hvw"]
+
+[node name="third_person_controller" type="Node3D" unique_id=437289837]
+transform = Transform3D(0.60181504, 0, 0.79863554, 0, 1, 0, -0.79863554, 0, 0.60181504, 0, 0, 0)
+script = ExtResource("1_h2hvw")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=91542762]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.67074, -0.0812451)
+spring_length = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=515873925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62268e-07, 0, 3)
