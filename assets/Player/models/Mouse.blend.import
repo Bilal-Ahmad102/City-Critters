@@ -16,6 +16,8 @@ dest_files=["res://.godot/imported/Mouse.blend-4b4b24e7e3b9dfc1c81e48ce48ff2d31.
 nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -18543,6 +18545,13 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 }
+},
+"materials": {
+"Ch14_Body": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/Player/models/materials/default.tres",
+"use_external/path": "uid://ih27gqi3ksqw"
+}
 }
 }
 blender/nodes/visible=0
@@ -18551,7 +18560,7 @@ blender/nodes/punctual_lights=true
 blender/nodes/cameras=true
 blender/nodes/custom_properties=true
 blender/nodes/modifiers=1
-blender/meshes/colors=false
+blender/meshes/vertex_colors=2
 blender/meshes/uvs=true
 blender/meshes/normals=true
 blender/meshes/export_geometry_nodes_instances=false
@@ -18565,3 +18574,4 @@ blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true
 gltf/naming_version=2
+gltf/texture_map_mode=1

@@ -15,6 +15,13 @@ var use_gamepad: bool = false
 var active_device: int = 0
 
 func _ready() -> void:
+	# Only the local player's rig drives the view and captures the mouse.
+	if not get_parent().is_multiplayer_authority():
+		set_process(false)
+		set_process_input(false)
+		camera_3d.current = false
+		return
+	camera_3d.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	yaw = transform.basis.get_euler().y
 	pitch = spring_arm_3d.transform.basis.get_euler().x

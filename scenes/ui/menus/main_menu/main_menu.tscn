@@ -1,0 +1,240 @@
+[gd_scene format=3 uid="uid://cyc8taatpa0n7"]
+
+[ext_resource type="Script" uid="uid://beopx05chwaye" path="res://scenes/ui/menus/main_menu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" uid="uid://cd1x0h3pe0yw4" path="res://assets/Player/models/Mouse.blend" id="2_e7q4l"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e7q4l"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_p82i1"]
+sky_material = SubResource("ProceduralSkyMaterial_e7q4l")
+
+[sub_resource type="Environment" id="Environment_ywmah"]
+background_mode = 2
+sky = SubResource("Sky_p82i1")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e7q4l"]
+viewport_path = NodePath("Customization/SubViewport")
+
+[node name="MainMenu" type="Control" unique_id=1073342248]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1403947201]
+environment = SubResource("Environment_ywmah")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=166662214]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=1239241050]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105882, 0.121569, 0.152941, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1929576409]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="VBoxContainer" parent="CenterContainer" unique_id=239759166]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/MainPanel" unique_id=1752426221]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "City Critters"
+horizontal_alignment = 1
+
+[node name="SinglePlayer" type="Button" parent="CenterContainer/MainPanel" unique_id=1806734643]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Single Player"
+
+[node name="MultiplayerButton" type="Button" parent="CenterContainer/MainPanel" unique_id=1867074264]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Multiplayer"
+
+[node name="Customization" type="Button" parent="CenterContainer/MainPanel" unique_id=1069634775]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Customization"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MainPanel" unique_id=225706471]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Quit"
+
+[node name="Customization_Panel" type="VBoxContainer" parent="CenterContainer" unique_id=286936248]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/Customization_Panel" unique_id=13555961]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "City Critters"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/Customization_Panel" unique_id=409569693]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = SubResource("ViewportTexture_e7q4l")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="MaterialLabel" type="Label" parent="CenterContainer/Customization_Panel" unique_id=409569694]
+layout_mode = 2
+text = "Body Material"
+horizontal_alignment = 1
+
+[node name="MaterialList" type="VBoxContainer" parent="CenterContainer/Customization_Panel" unique_id=409569695]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="back" type="Button" parent="CenterContainer/Customization_Panel" unique_id=1446340478]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 48)
+layout_mode = 2
+text = "Back"
+
+[node name="MultiplayerPanel" type="VBoxContainer" parent="CenterContainer" unique_id=4099351]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="Label" parent="CenterContainer/MultiplayerPanel" unique_id=2142137251]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Multiplayer"
+horizontal_alignment = 1
+
+[node name="HostButton" type="Button" parent="CenterContainer/MultiplayerPanel" unique_id=959140252]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 44)
+layout_mode = 2
+text = "Host New Lobby"
+
+[node name="RefreshButton" type="Button" parent="CenterContainer/MultiplayerPanel" unique_id=1393694139]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 44)
+layout_mode = 2
+text = "Refresh Lobby List"
+
+[node name="LobbyListLabel" type="Label" parent="CenterContainer/MultiplayerPanel" unique_id=428981552]
+layout_mode = 2
+text = "Available Lobbies"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/MultiplayerPanel" unique_id=256964096]
+custom_minimum_size = Vector2(300, 220)
+layout_mode = 2
+
+[node name="LobbyList" type="VBoxContainer" parent="CenterContainer/MultiplayerPanel/ScrollContainer" unique_id=242078225]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="StatusLabel" type="Label" parent="CenterContainer/MultiplayerPanel" unique_id=1815324437]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="CenterContainer/MultiplayerPanel" unique_id=1687848756]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+text = "Back"
+
+[node name="CreatePanel" type="VBoxContainer" parent="CenterContainer" unique_id=16665796]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="Label" parent="CenterContainer/CreatePanel" unique_id=652640634]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Create Lobby"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="CenterContainer/CreatePanel" unique_id=1331923164]
+layout_mode = 2
+text = "Lobby Name"
+
+[node name="NameEdit" type="LineEdit" parent="CenterContainer/CreatePanel" unique_id=72327504]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+placeholder_text = "Leave blank for a random name"
+
+[node name="MaxPlayersLabel" type="Label" parent="CenterContainer/CreatePanel" unique_id=1058130931]
+layout_mode = 2
+text = "Max Players"
+
+[node name="MaxPlayersSpin" type="SpinBox" parent="CenterContainer/CreatePanel" unique_id=1644107020]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+min_value = 2.0
+max_value = 8.0
+value = 4.0
+
+[node name="ConfirmCreateButton" type="Button" parent="CenterContainer/CreatePanel" unique_id=174098756]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 44)
+layout_mode = 2
+text = "Create"
+
+[node name="CreateBackButton" type="Button" parent="CenterContainer/CreatePanel" unique_id=440843926]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+text = "Back"
+
+[node name="Customization" type="Node3D" parent="." unique_id=785498306]
+
+[node name="Mouse" parent="Customization" unique_id=1429672169 instance=ExtResource("2_e7q4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8692911, 0)
+
+[node name="room" type="CSGBox3D" parent="Customization" unique_id=64074533]
+size = Vector3(5, 5, 5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Customization/room" unique_id=1817957901]
+operation = 2
+size = Vector3(4, 4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="Customization" unique_id=703374525]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Customization/SubViewport" unique_id=1652836350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0383974, 1.3755217)

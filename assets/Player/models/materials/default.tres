@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ih27gqi3ksqw"]
+
+[ext_resource type="Texture2D" uid="uid://cph6w5fpjctrj" path="res://assets/Player/models/textures/Ch14_1001_Diffuse.png" id="1_h4cis"]
+[ext_resource type="Texture2D" uid="uid://bh17g4xbh17cs" path="res://assets/Player/models/textures/Ch14_1001_Glossiness.png" id="2_ws67v"]
+[ext_resource type="Texture2D" uid="uid://dwgcwpf4v6hm8" path="res://assets/Player/models/textures/Ch14_1001_Normal.png" id="3_u3seh"]
+
+[resource]
+resource_name = "Ch14_Body"
+cull_mode = 2
+albedo_texture = ExtResource("1_h4cis")
+metallic = 0.5
+metallic_texture = ExtResource("2_ws67v")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_ws67v")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("3_u3seh")
+metadata/_gltf_primary_texture_coord = 0

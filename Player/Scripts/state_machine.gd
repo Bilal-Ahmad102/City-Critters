@@ -26,6 +26,10 @@ var state_to_states_transition : Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Proxies animate from replicated state, so only the owner runs the FSM.
+	if not get_parent().is_multiplayer_authority():
+		set_active(false)
+		return
 	fill_state_to_states_dictionary()
 	_init_state_machine_()
 	movement_states = [idle,walk,run]

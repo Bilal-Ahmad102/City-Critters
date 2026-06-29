@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://67sdkkbyvoad" path="res://Player/Scenes/player.tscn" id="1_2gq20"]
 [ext_resource type="Texture2D" uid="uid://bnveypthejsgl" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="1_s5gpl"]
 [ext_resource type="Texture2D" uid="uid://b7qhxko8nwi20" path="res://addons/kenney_prototype_textures/green/texture_07.png" id="2_drexq"]
+[ext_resource type="Script" uid="uid://d4lgrpoc6s7w" path="res://scripts/multiplayer/player_spawner_setup.gd" id="5_spawn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2gq20"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -87,5 +88,12 @@ material = SubResource("StandardMaterial3D_ybiq7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.993118, 1, 11.913937)
 material = SubResource("StandardMaterial3D_ybiq7")
 
-[node name="Player" parent="." unique_id=1702345117 instance=ExtResource("1_2gq20")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3732855, 0)
+[node name="Players" type="Node3D" parent="." unique_id=1736835479]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1736835480]
+spawn_path = NodePath("../Players")
+
+[node name="PlayerSpawnManager" type="Node" parent="." unique_id=1736835481]
+script = ExtResource("5_spawn")
+player_scene = ExtResource("1_2gq20")
+spawn_root = NodePath("../Players")
