@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://drl1jwfi815mr"]
+
+[ext_resource type="PackedScene" uid="uid://67sdkkbyvoad" path="res://Player/Scenes/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://d4lgrpoc6s7w" path="res://scripts/multiplayer/player_spawner_setup.gd" id="2_spawn"]
+[ext_resource type="PackedScene" uid="uid://rdy88j6ysrrt" path="res://scenes/jobs/food_service_stand.tscn" id="3_stand"]
+[ext_resource type="Script" uid="uid://c87hhsxwmpbmj" path="res://scripts/city/modular_building.gd" id="4_build"]
+[ext_resource type="Script" uid="uid://4jfyvs2dsnrv" path="res://scripts/city/city_street.gd" id="5_street"]
+[ext_resource type="Texture2D" uid="uid://bnveypthejsgl" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="6_tex"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("Sky_mat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="Ground_mat"]
+albedo_texture = ExtResource("6_tex")
+uv1_triplanar = true
+
+[node name="Town" type="Node3D" unique_id=6429258]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1087392047]
+environment = SubResource("Env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1727674894]
+transform = Transform3D(-0.5016229, -0.6583956, -0.5611503, -0.70595634, -0.06336616, 0.705415, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="CSGBox3D" parent="." unique_id=701882264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(90, 1, 90)
+material = SubResource("Ground_mat")
+
+[node name="Street" type="Node3D" parent="." unique_id=1137839599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.452632, 0)
+visible = false
+script = ExtResource("5_street")
+
+[node name="Buildings" type="Node3D" parent="." unique_id=1502025829]
+
+[node name="B1" type="Node3D" parent="Buildings" unique_id=1748496009]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -15.09553, 0, -18)
+script = ExtResource("4_build")
+width_segments = 8
+depth_segments = 8
+floors = 4
+
+[node name="B2" type="Node3D" parent="Buildings" unique_id=1007573193]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -10, 0, 0)
+script = ExtResource("4_build")
+width_segments = 5
+floors = 4
+
+[node name="B3" type="Node3D" parent="Buildings" unique_id=1944269300]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -9, 0, 18)
+script = ExtResource("4_build")
+depth_segments = 2
+
+[node name="B4" type="Node3D" parent="Buildings" unique_id=566044589]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 10, 0, -18)
+script = ExtResource("4_build")
+
+[node name="B5" type="Node3D" parent="Buildings" unique_id=371526346]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 10, 0, 2)
+script = ExtResource("4_build")
+width_segments = 6
+floors = 2
+
+[node name="B6" type="Node3D" parent="Buildings" unique_id=1039418382]
+transform = Transform3D(-8.742278e-08, 0, -1, 0, 1, 0, 1, 0, -8.742278e-08, 13.475895, 0, 20)
+script = ExtResource("4_build")
+width_segments = 6
+depth_segments = 6
+floors = 9
+window_model = "Brick_Inset_Window_Curved_Small"
+door_frame_model = "DoorFrame_Metal_Single"
+door_model = "Door_3"
+cornice_model = "Cornice_Trim_Center"
+corner_model = "Brick_Column_TrimBricks"
+
+[node name="Players" type="Node3D" parent="." unique_id=1562957241]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=988462728]
+spawn_path = NodePath("../Players")
+
+[node name="PlayerSpawnManager" type="Node" parent="." unique_id=676005910]
+script = ExtResource("2_spawn")
+player_scene = ExtResource("1_player")
+
+[node name="FoodServiceStand" parent="." unique_id=474521777 instance=ExtResource("3_stand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -38)

@@ -14,7 +14,8 @@ extends Control
 @onready var status_label: Label = %StatusLabel
 @onready var name_edit: LineEdit = %NameEdit
 @onready var max_players_spin: SpinBox = %MaxPlayersSpin
-const WORLD_SCENE := "res://scenes/world/shared/test_world.tscn"
+const WORLD_SCENE := "res://scenes/city/town.tscn"
+
 
 
 func _ready() -> void:

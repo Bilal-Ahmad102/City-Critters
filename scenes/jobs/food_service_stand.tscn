@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://rdy88j6ysrrt"]
+
+[ext_resource type="Script" uid="uid://dv1oviy4r8noj" path="res://scripts/jobs/food_service_stand.gd" id="1_stand"]
+[ext_resource type="Script" uid="uid://b4q3x83xrkd56" path="res://scripts/jobs/food_service_job.gd" id="2_job"]
+[ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="3_area"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/food_source.tscn" id="4_src"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/serve_table.tscn" id="5_serve"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_clock"]
+albedo_color = Color(0.35, 0.35, 0.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_clock"]
+size = Vector3(3, 2, 2)
+
+[node name="FoodServiceStand" type="Node3D"]
+script = ExtResource("1_stand")
+
+[node name="Job" type="Node" parent="."]
+script = ExtResource("2_job")
+order_time_limit = 30.0
+num_tables = 3
+
+[node name="ClockIn" type="Node3D" parent="."]
+
+[node name="Counter" type="CSGBox3D" parent="ClockIn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(2, 1, 1)
+material = SubResource("Mat_clock")
+
+[node name="InteractionArea" type="Area3D" parent="ClockIn"]
+script = ExtResource("3_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClockIn/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_clock")
+
+[node name="Prompt" type="Label3D" parent="ClockIn/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+billboard = 1
+text = "Clock In"
+font_size = 40
+
+[node name="Status" type="Label3D" parent="ClockIn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+billboard = 1
+text = "Food Service"
+font_size = 48
+
+[node name="Tables" type="Node3D" parent="."]
+
+[node name="Table0" parent="Tables" instance=ExtResource("5_serve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
+table_id = 0
+
+[node name="Table1" parent="Tables" instance=ExtResource("5_serve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+table_id = 1
+
+[node name="Table2" parent="Tables" instance=ExtResource("5_serve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
+table_id = 2
+
+[node name="BurgerSource" parent="." instance=ExtResource("4_src")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+color = Color(0.8, 0.25, 0.2, 1)
+
+[node name="FriesSource" parent="." instance=ExtResource("4_src")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+item = "fries"
+color = Color(0.9, 0.8, 0.2, 1)
+
+[node name="SodaSource" parent="." instance=ExtResource("4_src")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+item = "soda"
+color = Color(0.25, 0.45, 0.85, 1)
+
+[node name="HotdogSource" parent="." instance=ExtResource("4_src")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+item = "hotdog"
+color = Color(0.9, 0.5, 0.2, 1)

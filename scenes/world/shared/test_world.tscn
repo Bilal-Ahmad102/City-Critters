@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bnveypthejsgl" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="1_s5gpl"]
 [ext_resource type="Texture2D" uid="uid://b7qhxko8nwi20" path="res://addons/kenney_prototype_textures/green/texture_07.png" id="2_drexq"]
 [ext_resource type="Script" uid="uid://d4lgrpoc6s7w" path="res://scripts/multiplayer/player_spawner_setup.gd" id="5_spawn"]
+[ext_resource type="Script" uid="uid://cpvgxhxukxeng" path="res://scripts/jobs/job_station.gd" id="6_station"]
+[ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="7_interact"]
+[ext_resource type="PackedScene" uid="uid://5nfk6ot3oflb" path="res://scenes/jobs/food_service.tscn" id="8_foodsvc"]
+[ext_resource type="PackedScene" uid="uid://rdy88j6ysrrt" path="res://scenes/jobs/food_service_stand.tscn" id="9_stand"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2gq20"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -25,6 +29,9 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybiq7"]
 albedo_texture = ExtResource("2_drexq")
 uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_station"]
+size = Vector3(3, 2, 3)
 
 [node name="Test_World" type="Node3D" unique_id=273019376]
 
@@ -96,4 +103,31 @@ spawn_path = NodePath("../Players")
 [node name="PlayerSpawnManager" type="Node" parent="." unique_id=1736835481]
 script = ExtResource("5_spawn")
 player_scene = ExtResource("1_2gq20")
-spawn_root = NodePath("../Players")
+
+[node name="JobStation" type="Node3D" parent="." unique_id=1029128628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+script = ExtResource("6_station")
+job_scene = ExtResource("8_foodsvc")
+
+[node name="Counter" type="CSGBox3D" parent="JobStation" unique_id=1995190328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(2, 1, 1)
+material = SubResource("StandardMaterial3D_ybiq7")
+
+[node name="InteractionArea" type="Area3D" parent="JobStation" unique_id=1286442578]
+script = ExtResource("7_interact")
+prompt_text = "Press E to Work"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JobStation/InteractionArea" unique_id=606701277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_station")
+
+[node name="Prompt" type="Label3D" parent="JobStation/InteractionArea" unique_id=1999326888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+billboard = 1
+text = "Press E to Work"
+font_size = 48
+
+[node name="FoodServiceStand" parent="." unique_id=633594745 instance=ExtResource("9_stand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.39852858, 0)

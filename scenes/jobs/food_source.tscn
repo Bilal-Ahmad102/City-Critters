@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/jobs/food_source.gd" id="1_src"]
+[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_src"]
+size = Vector3(1.4, 2, 1.4)
+
+[node name="FoodSource" type="Node3D"]
+script = ExtResource("1_src")
+
+[node name="Mesh" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+size = Vector3(0.6, 0.8, 0.6)
+
+[node name="InteractionArea" type="Area3D" parent="."]
+script = ExtResource("2_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_src")
+
+[node name="Prompt" type="Label3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+visible = false
+billboard = 1
+font_size = 40
+text = "Take"

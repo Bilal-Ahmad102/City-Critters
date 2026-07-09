@@ -7,9 +7,13 @@ extends CharacterBody3D
 @export var ANIM_BLEND_SPEED: float = 8.0
 
 @onready var camera_pivot: Node3D = $third_person_controller
-@onready var mouse: Node3D = $Mouse
+@onready var model: Node3D = $soldier_girl
 @onready var animation_tree: AnimationTree = %AnimationTree
 @onready var cam_controller: Node3D = $third_person_controller
+# Split-out behaviour: carrying is in CarryComponent, replicated animation +
+# material state is in NetAnimSync. This script keeps movement / input.
+@onready var carry: CarryComponent = $CarryComponent
+@onready var net_sync: NetAnimSync = $NetAnimSync
 
 var is_moving: bool = false
 var is_running: bool = false
@@ -24,79 +28,37 @@ var prev_input_dir: Vector2 = Vector2.ZERO
 # is a proxy whose transform/animation come from the MultiplayerSynchronizer.
 var is_authority: bool = true
 
-# Replicated animation state. The owner mirrors the live AnimationTree values
-# into these vars each physics tick; on proxies the setters feed them back into
-# the AnimationTree so remote critters animate without re-running the FSM.
-var net_transition: String = "idle":
-	set(value):
-		net_transition = value
-		if not is_authority and is_node_ready():
-			animation_tree["parameters/Transition/transition_request"] = value
-var net_walk_blend: Vector2 = Vector2.ZERO:
-	set(value):
-		net_walk_blend = value
-		if not is_authority and is_node_ready():
-			animation_tree["parameters/walk/blend_position"] = value
-var net_run_blend: Vector2 = Vector2.ZERO:
-	set(value):
-		net_run_blend = value
-		if not is_authority and is_node_ready():
-			animation_tree["parameters/run/blend_position"] = value
-var net_mouse_yaw: float = 0.0:
-	set(value):
-		net_mouse_yaw = value
-		if not is_authority and is_node_ready():
-			mouse.rotation.y = value
-# Replicated body-material choice. The owner sets it from PlayerData; proxies
-# apply whatever id arrives so every peer sees this critter's chosen look.
-var net_material_id: String = PlayerData.DEFAULT_BODY_MATERIAL:
-	set(value):
-		net_material_id = value
-		if not is_authority and is_node_ready():
-			_apply_body_material(value)
-
 func _ready() -> void:
+	# Group used by NPCs and InteractionArea triggers to recognise a player body.
+	add_to_group("player")
 	is_authority = is_multiplayer_authority()
-	if is_authority:
-		# Apply this peer's chosen look and replicate the id to everyone else.
-		net_material_id = PlayerData.body_material_id
-		_apply_body_material(PlayerData.body_material_id)
-		return
-	# Proxy player: movement + animation are driven by replicated state only.
-	set_physics_process(false)
-	animation_tree["parameters/Transition/transition_request"] = net_transition
-	animation_tree["parameters/walk/blend_position"] = net_walk_blend
-	animation_tree["parameters/run/blend_position"] = net_run_blend
-	mouse.rotation.y = net_mouse_yaw
-	_apply_body_material(net_material_id)
+	# Let the network component apply the initial look / proxy animation state.
+	net_sync.setup()
+	if not is_authority:
+		# Proxy player: movement + animation are driven by replicated state only.
+		set_physics_process(false)
 
-# Applies the body material for the given catalog id to the mesh's first surface.
-func _apply_body_material(id: String) -> void:
-	var body_mesh := _find_body_mesh()
-	if body_mesh:
-		body_mesh.set_surface_override_material(0, PlayerData.get_body_material(id))
+# Carry lives in a child component; jobs reach it through this accessor so they
+# don't depend on the child node's name.
+func get_carry() -> CarryComponent:
+	return carry
 
-func _find_body_mesh() -> MeshInstance3D:
-	var skeleton := get_node_or_null("Mouse/Armature/Skeleton3D")
-	if skeleton:
-		for child in skeleton.get_children():
-			if child is MeshInstance3D:
-				return child
-	return null
+# Freezes movement + camera and frees the cursor so the player can use a UI
+# overlay (job shift, dialogue, shop). Call set_busy(false) to hand control back.
+# Only meaningful on the local authority avatar.
+func set_busy(busy: bool) -> void:
+	set_physics_process(not busy)
+	if cam_controller:
+		cam_controller.set_process(not busy)
+		cam_controller.set_process_input(not busy)
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if busy else Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
 	handle_gravity(delta)
 	handle_rotation(delta)
 	apply_root_motion()
 	move_and_slide()
-	_push_net_state()
-
-func _push_net_state() -> void:
-	# Owner-only: snapshot the live animation state for replication to proxies.
-	net_transition = animation_tree["parameters/Transition/current_state"]
-	net_walk_blend = animation_tree["parameters/walk/blend_position"]
-	net_run_blend = animation_tree["parameters/run/blend_position"]
-	net_mouse_yaw = mouse.rotation.y
+	net_sync.push_state()
 
 func handle_locomotion(locomotion:String,delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
@@ -104,7 +66,7 @@ func handle_locomotion(locomotion:String,delta: float) -> void:
 	is_running = false if !is_moving else is_running
 	if Input.is_action_just_pressed("run") and is_moving:
 		is_running = !is_running
-	
+
 	if Input.is_action_just_pressed("jump") and is_running and input_dir.distance_to(Vector2(0,1)) <= .3:
 		is_running_jump = true
 
@@ -133,12 +95,12 @@ func handle_jump() -> void:
 
 func handle_rotation(delta: float) -> void:
 	if !is_moving: return
-	# Always face the camera's forward, mouse direction
+	# Always face the camera's forward, model direction
 	var target_angle := camera_pivot.rotation.y
-	mouse.rotation.y = lerp_angle(mouse.rotation.y, target_angle, ROTATION_SPEED * delta)
+	model.rotation.y = lerp_angle(model.rotation.y, target_angle, ROTATION_SPEED * delta)
 
 func apply_root_motion() -> void:
 	var root_motion: Vector3 = animation_tree.get_root_motion_position()
-	var motion: Vector3 = mouse.global_transform.basis * root_motion
+	var motion: Vector3 = model.global_transform.basis * root_motion
 	velocity.x = motion.x / get_physics_process_delta_time()
 	velocity.z = motion.z / get_physics_process_delta_time()

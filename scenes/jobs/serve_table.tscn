@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/jobs/serve_table.gd" id="1_table"]
+[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_table"]
+size = Vector3(2.2, 2, 2.2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_table"]
+albedo_color = Color(0.45, 0.3, 0.18, 1)
+
+[node name="ServeTable" type="Node3D"]
+script = ExtResource("1_table")
+
+[node name="Mesh" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(1.4, 1, 1.4)
+material = SubResource("Mat_table")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+script = ExtResource("2_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_table")
+
+[node name="Prompt" type="Label3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+visible = false
+billboard = 1
+font_size = 36
+text = "Serve"
+
+[node name="Ticket" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+visible = false
+billboard = 1
+font_size = 44
+modulate = Color(1, 0.95, 0.6, 1)
+text = "Order"

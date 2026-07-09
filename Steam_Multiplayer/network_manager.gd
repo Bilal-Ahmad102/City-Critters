@@ -16,7 +16,7 @@ signal lobby_joined_signal(lobby_id: int)
 signal player_count_changed(count: int)
 signal session_failed(reason: String)
 
-const WORLD_SCENE := "res://scenes/world/shared/test_world.tscn"
+const WORLD_SCENE := "res://scenes/city/town.tscn"
 
 var lobby_id: int = 0
 var lobby_members: Array = []
