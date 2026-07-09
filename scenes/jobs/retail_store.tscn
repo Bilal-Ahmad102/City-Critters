@@ -1,0 +1,91 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/jobs/retail_store.gd" id="1_store"]
+[ext_resource type="Script" path="res://scripts/jobs/retail_job.gd" id="2_job"]
+[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="3_area"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/food_source.tscn" id="4_crate"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/stock_shelf.tscn" id="5_shelf"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_register"]
+albedo_color = Color(0.3, 0.4, 0.35, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_register"]
+size = Vector3(3, 2, 2)
+
+[node name="RetailStore" type="Node3D"]
+script = ExtResource("1_store")
+
+[node name="Job" type="Node" parent="."]
+script = ExtResource("2_job")
+
+[node name="Register" type="Node3D" parent="."]
+
+[node name="Counter" type="CSGBox3D" parent="Register"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(2, 1, 1)
+material = SubResource("Mat_register")
+
+[node name="InteractionArea" type="Area3D" parent="Register"]
+script = ExtResource("3_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Register/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_register")
+
+[node name="Prompt" type="Label3D" parent="Register/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+billboard = 1
+text = "Register"
+font_size = 40
+
+[node name="Status" type="Label3D" parent="Register"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+billboard = 1
+text = "Retail"
+font_size = 48
+
+[node name="CustomerSign" type="Label3D" parent="Register"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+visible = false
+billboard = 1
+text = "Customer waiting!"
+font_size = 40
+modulate = Color(1, 0.7, 0.4, 1)
+
+[node name="Shelves" type="Node3D" parent="."]
+
+[node name="Shelf0" parent="Shelves" instance=ExtResource("5_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4)
+
+[node name="Shelf1" parent="Shelves" instance=ExtResource("5_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, 4)
+shelf_id = 1
+
+[node name="Shelf2" parent="Shelves" instance=ExtResource("5_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, 4)
+shelf_id = 2
+
+[node name="Shelf3" parent="Shelves" instance=ExtResource("5_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
+shelf_id = 3
+
+[node name="ProduceCrate" parent="." instance=ExtResource("4_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+item = "produce"
+color = Color(0.35, 0.75, 0.3, 1)
+
+[node name="CansCrate" parent="." instance=ExtResource("4_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+item = "cans"
+color = Color(0.65, 0.65, 0.7, 1)
+
+[node name="SnacksCrate" parent="." instance=ExtResource("4_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+item = "snacks"
+color = Color(0.9, 0.6, 0.25, 1)
+
+[node name="ToysCrate" parent="." instance=ExtResource("4_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+item = "toys"
+color = Color(0.75, 0.35, 0.8, 1)

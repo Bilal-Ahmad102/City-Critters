@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/jobs/job_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/corporate_office.tscn" id="3_job"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_desk"]
+albedo_color = Color(0.4, 0.32, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_screen"]
+albedo_color = Color(0.2, 0.3, 0.45, 1)
+emission_enabled = true
+emission = Color(0.25, 0.45, 0.7, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_desk"]
+size = Vector3(3, 2, 2.4)
+
+[node name="CorporateDesk" type="Node3D"]
+script = ExtResource("1_station")
+job_scene = ExtResource("3_job")
+
+[node name="Desk" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+size = Vector3(1.8, 1.1, 0.9)
+material = SubResource("Mat_desk")
+
+[node name="Monitor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+size = Vector3(0.8, 0.5, 0.08)
+material = SubResource("Mat_screen")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+script = ExtResource("2_area")
+prompt_text = "Press E to Work"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_desk")
+
+[node name="Prompt" type="Label3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+visible = false
+billboard = 1
+text = "Work"
+font_size = 40
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+billboard = 1
+text = "Corporate Office"
+font_size = 48

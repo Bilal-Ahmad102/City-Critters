@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://c87hhsxwmpbmj" path="res://scripts/city/modular_building.gd" id="4_build"]
 [ext_resource type="Script" uid="uid://4jfyvs2dsnrv" path="res://scripts/city/city_street.gd" id="5_street"]
 [ext_resource type="Texture2D" uid="uid://bnveypthejsgl" path="res://addons/kenney_prototype_textures/dark/texture_04.png" id="6_tex"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/retail_store.tscn" id="7_retail"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/delivery_depot.tscn" id="8_depot"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/delivery_point.tscn" id="9_point"]
+[ext_resource type="PackedScene" path="res://scenes/jobs/corporate_desk.tscn" id="10_desk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -97,3 +101,30 @@ player_scene = ExtResource("1_player")
 
 [node name="FoodServiceStand" parent="." unique_id=474521777 instance=ExtResource("3_stand")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -38)
+
+[node name="RetailStore" parent="." instance=ExtResource("7_retail")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0.4, 32)
+
+[node name="DeliveryDepot" parent="." instance=ExtResource("8_depot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0.4, 32)
+
+[node name="CorporateDesk" parent="." instance=ExtResource("10_desk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0.4, -32)
+
+[node name="DeliveryPoints" type="Node3D" parent="."]
+
+[node name="MapleApartments" parent="DeliveryPoints" instance=ExtResource("9_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0.4, -12)
+point_name = "Maple Apartments"
+
+[node name="CornerShop" parent="DeliveryPoints" instance=ExtResource("9_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.4, 22)
+point_name = "Corner Shop"
+
+[node name="TheTower" parent="DeliveryPoints" instance=ExtResource("9_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.4, 15)
+point_name = "The Tower"
+
+[node name="NorthsideFlats" parent="DeliveryPoints" instance=ExtResource("9_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.4, -12)
+point_name = "Northside Flats"

@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/jobs/stock_shelf.gd" id="1_shelf"]
+[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_shelf"]
+size = Vector3(2.6, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_shelf"]
+albedo_color = Color(0.55, 0.42, 0.28, 1)
+
+[node name="StockShelf" type="Node3D"]
+script = ExtResource("1_shelf")
+
+[node name="Mesh" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+size = Vector3(2, 1.8, 0.6)
+material = SubResource("Mat_shelf")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+script = ExtResource("2_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.6)
+shape = SubResource("BoxShape3D_shelf")
+
+[node name="Prompt" type="Label3D" parent="InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+visible = false
+billboard = 1
+font_size = 36
+text = "Restock"
+
+[node name="Ticket" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+visible = false
+billboard = 1
+font_size = 44
+modulate = Color(1, 0.95, 0.6, 1)
+text = "Restock"
