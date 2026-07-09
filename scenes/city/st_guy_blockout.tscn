@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/jobs/delivery_depot.tscn" id="3_depot"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/delivery_point.tscn" id="4_point"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/corporate_desk.tscn" id="5_desk"]
+[ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="6_minimap"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fds1a"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -1568,3 +1569,6 @@ point_name = "Clinic"
 [node name="TavernPoint" parent="DeliveryPoints" instance=ExtResource("4_point")]
 transform = Transform3D(-0.173, 0, 0.985, 0, 1, 0, -0.985, 0, -0.173, 59.635, 0, -23.879)
 point_name = "Tavern"
+
+[node name="Minimap" parent="." instance=ExtResource("6_minimap")]
+world_range = 130.0

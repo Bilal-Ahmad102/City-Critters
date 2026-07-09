@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/jobs/delivery_depot.gd" id="1_depot"]
 [ext_resource type="Script" path="res://scripts/jobs/delivery_job.gd" id="2_job"]
 [ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="3_area"]
+[ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="4_marker"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_counter"]
 albedo_color = Color(0.3, 0.35, 0.5, 1)
@@ -21,6 +22,11 @@ script = ExtResource("1_depot")
 
 [node name="Job" type="Node" parent="."]
 script = ExtResource("2_job")
+
+[node name="MapMarker" type="Node" parent="."]
+script = ExtResource("4_marker")
+color = Color(0.35, 0.55, 0.95, 1)
+label = "Depot"
 
 [node name="ClockIn" type="Node3D" parent="."]
 

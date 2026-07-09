@@ -24,6 +24,7 @@ func _run() -> int:
 		"res://scenes/jobs/delivery_point.tscn",
 		"res://scenes/jobs/corporate_desk.tscn",
 		"res://scenes/jobs/corporate_office.tscn",
+		"res://scenes/ui/minimap.tscn",
 		"res://scenes/city/town.tscn",
 		"res://scenes/city/st_guy_blockout.tscn",
 	]:
@@ -77,6 +78,19 @@ func _run() -> int:
 	assert(s["correct"] == 5 and s["earned"] == 5 * corp.task_pay, "5 correct audits")
 	print("ok: corporate_job logic  summary=", s)
 	corp.free()
+
+	# 3. MapMarker objective group toggling (needs the tree, hence _process).
+	var holder := Node3D.new()
+	var marker: Node = (load("res://scripts/ui/map_marker.gd") as GDScript).new()
+	holder.add_child(marker)
+	root.add_child(holder)
+	assert(marker.is_in_group("map_markers"), "marker should self-register")
+	marker.set_objective(true)
+	assert(marker.is_in_group("map_objective"), "objective flag on")
+	marker.set_objective(false)
+	assert(not marker.is_in_group("map_objective"), "objective flag off")
+	print("ok: map_marker groups")
+	holder.free()
 
 	if failures == 0:
 		print("ALL CHECKS PASSED")

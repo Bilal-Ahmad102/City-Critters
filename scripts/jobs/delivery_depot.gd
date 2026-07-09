@@ -23,7 +23,9 @@ func _ready() -> void:
 	_pickup_area.interacted.connect(_on_take_parcel)
 	_pickup_area.set_active(false)
 	_job.parcel_ready.connect(func(_parcel: Dictionary): _refresh_status())
-	_job.parcel_taken.connect(func(_parcel: Dictionary): _refresh_status())
+	_job.parcel_taken.connect(func(_parcel: Dictionary):
+		_refresh_status()
+		_refresh_objective())
 	_job.parcel_delivered.connect(_on_delivered)
 	_job.job_started.connect(_on_job_started)
 	_job.shift_ended.connect(_on_shift_ended)
@@ -63,6 +65,7 @@ func _on_job_started() -> void:
 	for point in _points.values():
 		point.set_active(true)
 	_refresh_status()
+	_refresh_objective()
 
 # ── Parcels ──────────────────────────────────────────────────────────────────
 
@@ -83,6 +86,19 @@ func _on_delivery_requested(point_name: String, by: Node3D) -> void:
 
 func _on_delivered(_parcel_id: int, _payout: int) -> void:
 	_refresh_status()
+	_refresh_objective()
+
+# Minimap objective tracks the current leg: the addressed mailbox while a
+# parcel is carried, the depot itself while empty-pawed (come get the next).
+func _refresh_objective() -> void:
+	var target: String = _job.carried_parcel().get("dest", "")
+	for point_name in _points:
+		var marker: MapMarker = _points[point_name].get_node_or_null("MapMarker")
+		if marker != null:
+			marker.set_objective(_job.is_active() and point_name == target)
+	var own: MapMarker = get_node_or_null("MapMarker")
+	if own != null:
+		own.set_objective(_job.is_active() and target == "")
 
 func _color_for(dest: String) -> Color:
 	# Stable hue per destination name.
@@ -107,6 +123,7 @@ func _on_shift_ended(summary: Dictionary) -> void:
 	_pickup_area.set_active(false)
 	for point in _points.values():
 		point.set_active(false)
+	_refresh_objective()
 	# Off the clock: an undelivered parcel goes back to the depot (discarded).
 	if _worker != null and _worker.has_method("get_carry"):
 		_worker.get_carry().drop_all()

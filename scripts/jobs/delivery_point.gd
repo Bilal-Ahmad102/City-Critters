@@ -20,6 +20,10 @@ func _ready() -> void:
 	_area.interacted.connect(_on_interacted)
 	# Dormant until a depot arms it for a shift.
 	_area.set_active(false)
+	# The minimap dot inherits this point's address as its label.
+	var marker: MapMarker = get_node_or_null("MapMarker")
+	if marker != null:
+		marker.label = point_name
 
 func _on_interacted(by: Node3D) -> void:
 	delivery_requested.emit(point_name, by)

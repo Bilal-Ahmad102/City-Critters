@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="3_area"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/food_source.tscn" id="4_crate"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/stock_shelf.tscn" id="5_shelf"]
+[ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="6_marker"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_register"]
 albedo_color = Color(0.3, 0.4, 0.35, 1)
@@ -17,6 +18,11 @@ script = ExtResource("1_store")
 
 [node name="Job" type="Node" parent="."]
 script = ExtResource("2_job")
+
+[node name="MapMarker" type="Node" parent="."]
+script = ExtResource("6_marker")
+color = Color(0.4, 0.85, 0.4, 1)
+label = "Retail"
 
 [node name="Register" type="Node3D" parent="."]
 

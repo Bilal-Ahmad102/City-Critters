@@ -66,6 +66,13 @@ func _on_clock_in(by: Node3D) -> void:
 
 func _on_job_started() -> void:
 	_set_gated_active(true)
+	_set_objective(true)
+
+# While on shift the stand is the player's minimap objective.
+func _set_objective(value: bool) -> void:
+	var marker: MapMarker = get_node_or_null("MapMarker")
+	if marker != null:
+		marker.set_objective(value)
 
 # Fired by a ServeTable when the player interacts with it.
 func _on_serve(table_id: int, by: Node3D) -> void:
@@ -106,6 +113,7 @@ func _clear_order(order_id: int) -> void:
 
 func _on_shift_ended(summary: Dictionary) -> void:
 	_set_gated_active(false)
+	_set_objective(false)
 	# Off the clock: whatever the worker was carrying is discarded.
 	if _worker != null and _worker.has_method("get_carry"):
 		_worker.get_carry().drop_all()

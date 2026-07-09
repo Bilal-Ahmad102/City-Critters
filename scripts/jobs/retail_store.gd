@@ -72,6 +72,7 @@ func _on_register(by: Node3D) -> void:
 func _on_job_started() -> void:
 	_set_gated_active(true)
 	_on_customer_changed()
+	_set_objective(true)
 
 func _on_customer_changed() -> void:
 	var waiting: bool = _job.customer_waiting()
@@ -109,8 +110,15 @@ func _on_request_done(request_id: int, _payout: int = 0) -> void:
 
 # ── Shift end ────────────────────────────────────────────────────────────────
 
+# While on shift the store is the player's minimap objective.
+func _set_objective(value: bool) -> void:
+	var marker: MapMarker = get_node_or_null("MapMarker")
+	if marker != null:
+		marker.set_objective(value)
+
 func _on_shift_ended(summary: Dictionary) -> void:
 	_set_gated_active(false)
+	_set_objective(false)
 	# Off the clock: whatever the worker was carrying is discarded.
 	if _worker != null and _worker.has_method("get_carry"):
 		_worker.get_carry().drop_all()

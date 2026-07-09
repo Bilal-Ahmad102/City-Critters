@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="3_area"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/food_source.tscn" id="4_src"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/serve_table.tscn" id="5_serve"]
+[ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="6_marker"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_clock"]
 albedo_color = Color(0.35, 0.35, 0.4, 1)
@@ -19,6 +20,11 @@ script = ExtResource("1_stand")
 script = ExtResource("2_job")
 order_time_limit = 30.0
 num_tables = 3
+
+[node name="MapMarker" type="Node" parent="."]
+script = ExtResource("6_marker")
+color = Color(0.95, 0.6, 0.25, 1)
+label = "Food Service"
 
 [node name="ClockIn" type="Node3D" parent="."]
 
