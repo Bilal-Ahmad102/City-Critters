@@ -5,6 +5,9 @@ extends "res://scripts/jobs/job_base.gd"
 # at a time, runs it to the matching point, and returns for the next. Pay
 # scales with the leg distance, with a tip for beating the par time.
 
+func _init() -> void:
+	job_type = "Delivery"
+
 signal parcel_ready(parcel: Dictionary)      # a new parcel waits at the depot
 signal parcel_taken(parcel: Dictionary)
 signal parcel_delivered(parcel_id: int, payout: int)

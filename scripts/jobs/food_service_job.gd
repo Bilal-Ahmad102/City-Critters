@@ -3,6 +3,9 @@ extends "res://scripts/jobs/job_base.gd"
 # Orders arrive over the shift; the player fulfills each by picking the matching
 # menu item before its timer runs out. Faster service pays a bigger tip.
 
+func _init() -> void:
+	job_type = "Food Service"
+
 signal order_received(order: Dictionary)
 signal order_fulfilled(order_id: int, payout: int)
 signal order_expired(order_id: int)

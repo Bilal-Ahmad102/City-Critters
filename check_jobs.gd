@@ -25,6 +25,7 @@ func _run() -> int:
 		"res://scenes/jobs/corporate_desk.tscn",
 		"res://scenes/jobs/corporate_office.tscn",
 		"res://scenes/ui/minimap.tscn",
+		"res://scenes/ui/hud/hud.tscn",
 		"res://scenes/city/town.tscn",
 		"res://scenes/city/st_guy_blockout.tscn",
 	]:
@@ -67,6 +68,9 @@ func _run() -> int:
 	print("ok: delivery_job logic  payout=", pay, " summary=", delivery._build_summary())
 	delivery.free()
 
+	# Autoload globals don't resolve at compile time in `-s` mode; fetch by path.
+	var stats: Node = root.get_node("/root/JobStats")
+	var corp_before: Dictionary = stats.get_job("Corporate")
 	var corp: Node = (load("res://scripts/jobs/corporate_job.gd") as GDScript).new()
 	corp.start_job()
 	for i in 5:
@@ -78,6 +82,17 @@ func _run() -> int:
 	assert(s["correct"] == 5 and s["earned"] == 5 * corp.task_pay, "5 correct audits")
 	print("ok: corporate_job logic  summary=", s)
 	corp.free()
+
+	# JobStats aggregation — the end_job calls above must have recorded shifts.
+	var corp_after: Dictionary = stats.get_job("Corporate")
+	assert(int(corp_after.get("shifts", 0)) == int(corp_before.get("shifts", 0)) + 1,
+		"corporate shift recorded in JobStats")
+	assert(int(corp_after.get("earned", 0)) == int(corp_before.get("earned", 0)) + int(s["earned"]),
+		"corporate earnings recorded in JobStats")
+	assert(int(stats.get_job("Retail").get("shifts", 0)) >= 1, "retail shift recorded")
+	assert(int(stats.get_job("Delivery").get("shifts", 0)) >= 1, "delivery shift recorded")
+	print("ok: job_stats  total_shifts=", stats.total_shifts(),
+		" total_earned=", stats.total_earned())
 
 	# 3. MapMarker objective group toggling (needs the tree, hence _process).
 	var holder := Node3D.new()

@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/jobs/delivery_point.tscn" id="9_point"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/corporate_desk.tscn" id="10_desk"]
 [ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="11_minimap"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud/hud.tscn" id="12_hud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -131,3 +132,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.4, -12)
 point_name = "Northside Flats"
 
 [node name="Minimap" parent="." instance=ExtResource("11_minimap")]
+
+[node name="HUD" parent="." instance=ExtResource("12_hud")]

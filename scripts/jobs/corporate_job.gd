@@ -5,6 +5,9 @@ extends "res://scripts/jobs/job_base.gd"
 # approves correct rows and rejects wrong ones before the row times out.
 # Stock-market and budget rounds can be added later as extra task generators.
 
+func _init() -> void:
+	job_type = "Corporate"
+
 signal task_presented(task: Dictionary)
 signal task_answered(task_id: int, correct: bool, payout: int)
 signal task_missed(task_id: int)

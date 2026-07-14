@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cpvgxhxukxeng" path="res://scripts/jobs/job_station.gd" id="6_station"]
 [ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="7_interact"]
 [ext_resource type="PackedScene" uid="uid://5nfk6ot3oflb" path="res://scenes/jobs/food_service.tscn" id="8_foodsvc"]
+[ext_resource type="PackedScene" uid="uid://dkauuill83l47" path="res://scenes/Jobs_places/retail_store.tscn" id="9_5w8ds"]
 [ext_resource type="PackedScene" uid="uid://rdy88j6ysrrt" path="res://scenes/jobs/food_service_stand.tscn" id="9_stand"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2gq20"]
@@ -47,20 +48,12 @@ use_collision = true
 size = Vector3(50, 1, 50)
 material = SubResource("StandardMaterial3D_fn4aj")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=1102771682]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-material = SubResource("StandardMaterial3D_ybiq7")
-
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D" unique_id=1720173509]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.3194466, 1, -2.910706)
 material = SubResource("StandardMaterial3D_ybiq7")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D" unique_id=323725130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3194466, 1, -8.910706)
-material = SubResource("StandardMaterial3D_ybiq7")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D" unique_id=1229050766]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6161246, 1, 6.139366)
 material = SubResource("StandardMaterial3D_ybiq7")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSGBox3D" unique_id=816689151]
@@ -96,6 +89,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.993118, 1, 11.913937)
 material = SubResource("StandardMaterial3D_ybiq7")
 
 [node name="Players" type="Node3D" parent="." unique_id=1736835479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.329262)
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1736835480]
 spawn_path = NodePath("../Players")
@@ -108,11 +102,6 @@ player_scene = ExtResource("1_2gq20")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 script = ExtResource("6_station")
 job_scene = ExtResource("8_foodsvc")
-
-[node name="Counter" type="CSGBox3D" parent="JobStation" unique_id=1995190328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-size = Vector3(2, 1, 1)
-material = SubResource("StandardMaterial3D_ybiq7")
 
 [node name="InteractionArea" type="Area3D" parent="JobStation" unique_id=1286442578]
 script = ExtResource("7_interact")
@@ -131,3 +120,8 @@ font_size = 48
 
 [node name="FoodServiceStand" parent="." unique_id=633594745 instance=ExtResource("9_stand")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.39852858, 0)
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1582800125]
+
+[node name="RetailStore" parent="Node3D" unique_id=1426952063 instance=ExtResource("9_5w8ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.928, 0.356, -0.066)

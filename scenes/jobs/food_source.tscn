@@ -1,28 +1,32 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cy0cx0rcinwun"]
 
-[ext_resource type="Script" path="res://scripts/jobs/food_source.gd" id="1_src"]
-[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+[ext_resource type="Script" uid="uid://duq1w8wjl1opr" path="res://scripts/jobs/food_source.gd" id="1_src"]
+[ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
+[ext_resource type="PackedScene" uid="uid://c2by15jv3i554" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_CardboardBox_01.prefab.scn" id="3_louke"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_src"]
 size = Vector3(1.4, 2, 1.4)
 
-[node name="FoodSource" type="Node3D"]
+[node name="FoodSource" type="Node3D" unique_id=787836571]
 script = ExtResource("1_src")
 
-[node name="Mesh" type="CSGBox3D" parent="."]
+[node name="Mesh" type="CSGBox3D" parent="." unique_id=2082349552]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+visible = false
 size = Vector3(0.6, 0.8, 0.6)
 
-[node name="InteractionArea" type="Area3D" parent="."]
+[node name="InteractionArea" type="Area3D" parent="." unique_id=355679057]
 script = ExtResource("2_area")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=2093927632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_src")
 
-[node name="Prompt" type="Label3D" parent="InteractionArea"]
+[node name="Prompt" type="Label3D" parent="InteractionArea" unique_id=417343993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
 visible = false
 billboard = 1
-font_size = 40
 text = "Take"
+font_size = 40
+
+[node name="SM_Prop_CardboardBox_01" parent="." unique_id=1271873276 instance=ExtResource("3_louke")]

@@ -7,6 +7,9 @@ extends "res://scripts/jobs/job_base.gd"
 #      the player interacts with the register to serve them.
 # Same order-matching skeleton as FoodServiceJob so stands stay interchangeable.
 
+func _init() -> void:
+	job_type = "Retail"
+
 signal restock_requested(request: Dictionary)
 signal shelf_restocked(request_id: int, payout: int)
 signal restock_expired(request_id: int)

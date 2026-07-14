@@ -1,0 +1,374 @@
+[gd_scene format=3 uid="uid://dkauuill83l47"]
+
+[ext_resource type="PackedScene" uid="uid://dpyy5tpx8w2y7" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Shop_01.prefab.scn" id="1_lejd4"]
+[ext_resource type="PackedScene" uid="uid://bv4kqbmgtmqka" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_VendingMachine_01.prefab.scn" id="2_o5iqj"]
+[ext_resource type="PackedScene" uid="uid://3yf3v84hv43g" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Shop_Sign_01.prefab.scn" id="3_flwmh"]
+[ext_resource type="Material" uid="uid://rstla72i0rut" path="res://assets/Map/PolygonTown/Materials/PolygonTown_04_A.material" id="4_upv6o"]
+[ext_resource type="PackedScene" uid="uid://dldp82tqosdja" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Rug_03.prefab.scn" id="5_lemim"]
+[ext_resource type="PackedScene" uid="uid://deikodf0bk7xh" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_BikeStand_01.prefab.scn" id="6_rc2o3"]
+[ext_resource type="PackedScene" uid="uid://b2qgv0h4vmy17" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Phone_01.prefab.scn" id="7_s1ds2"]
+[ext_resource type="PackedScene" uid="uid://e0xeld4bl6mf" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Skylight_03.prefab.scn" id="8_48lj1"]
+[ext_resource type="PackedScene" uid="uid://b58gupubrihdt" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Airvent_02.prefab.scn" id="9_s1ds2"]
+[ext_resource type="PackedScene" uid="uid://cvgl0iu8xon0y" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Airvent_01.prefab.scn" id="10_48lj1"]
+[ext_resource type="PackedScene" uid="uid://dvegve2uiu51q" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_CeilingLight_04.prefab.scn" id="11_hhqwk"]
+[ext_resource type="PackedScene" uid="uid://d1hjil4brx4es" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopShelf_Wall_01.prefab.scn" id="12_44f4u"]
+[ext_resource type="PackedScene" uid="uid://c36y3fyfr1m3t" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_CeilingExit_01.prefab.scn" id="13_2avei"]
+[ext_resource type="PackedScene" uid="uid://df31msyjehpnx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="14_48lj1"]
+[ext_resource type="PackedScene" uid="uid://cjhu3wmoq3iu2" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopFridge_01.prefab.scn" id="16_rgp3w"]
+[ext_resource type="PackedScene" uid="uid://dxo2s5tyufkqs" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopShelf_02.prefab.scn" id="17_on1e2"]
+[ext_resource type="PackedScene" uid="uid://ccfhy2l12thhr" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_FridgeDrinks_01.prefab.scn" id="19_rr87b"]
+[ext_resource type="PackedScene" uid="uid://clba30gacvhik" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopShelf_01.prefab.scn" id="20_dxsc0"]
+[ext_resource type="PackedScene" uid="uid://dhfau7svva4da" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Concrete_Steps_01.prefab.scn" id="21_8w7m0"]
+[ext_resource type="PackedScene" uid="uid://tm1cobajtfpi" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_RubbishBin_Small_01.prefab.scn" id="22_7d5iu"]
+[ext_resource type="PackedScene" uid="uid://cioulo7cgf3yx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_GlassesStand_01.prefab.scn" id="24_tk4ax"]
+[ext_resource type="PackedScene" uid="uid://drd1doa0o8ywp" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Propane_01.prefab.scn" id="25_12f5f"]
+[ext_resource type="PackedScene" uid="uid://dwgm0umqe5rw6" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Cabinet_01.prefab.scn" id="26_2fxbc"]
+[ext_resource type="PackedScene" uid="uid://cm3osw0al0sb6" path="res://assets/Map/PolygonTown/Prefabs/Items/SM_Item_Pumpkin_01.prefab.scn" id="27_m3pvi"]
+[ext_resource type="PackedScene" uid="uid://r311in7rctmn" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopCounter_01.prefab.scn" id="28_qldev"]
+[ext_resource type="PackedScene" uid="uid://cxkee46635sml" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_SlushieMachine_01.prefab.scn" id="29_4dpfp"]
+[ext_resource type="PackedScene" uid="uid://chn6n2tdln8wo" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_HotdogHeater_01.prefab.scn" id="30_14k7d"]
+[ext_resource type="PackedScene" uid="uid://n036jbw4jfo3" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ShopCheckout_01.prefab.scn" id="31_5eixg"]
+[ext_resource type="PackedScene" uid="uid://cfb5m7psj3kwx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_FloorMat_01.prefab.scn" id="32_27drv"]
+[ext_resource type="PackedScene" uid="uid://dr5skxv7nxdaq" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Propane_Tall_01.prefab.scn" id="33_eflhm"]
+[ext_resource type="PackedScene" uid="uid://sqjfc27v5pmi" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Propanel_01.prefab.scn" id="34_bqlnx"]
+[ext_resource type="PackedScene" uid="uid://c4da8honoc5rl" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_RubbishBin_01.prefab.scn" id="35_tsfnv"]
+[ext_resource type="PackedScene" uid="uid://wnj8jimdxnmd" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Propanel_02.prefab.scn" id="36_axwx7"]
+[ext_resource type="PackedScene" uid="uid://dfntt3gf448t1" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Propane_Tall_02.prefab.scn" id="37_jmdbe"]
+[ext_resource type="PackedScene" uid="uid://bvvfk8yjxwxk6" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Shop_Concrete_01.prefab.scn" id="38_lhjr0"]
+[ext_resource type="PackedScene" uid="uid://cfj7cbmxgw4x8" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_WorkShelf_01.prefab.scn" id="39_yvvtu"]
+[ext_resource type="Script" uid="uid://cwp8x1dwlvbnv" path="res://scripts/jobs/retail_store.gd" id="40_store"]
+[ext_resource type="Script" uid="uid://d33e0ob4jw2sq" path="res://scripts/jobs/retail_job.gd" id="41_job"]
+[ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="42_area"]
+[ext_resource type="Script" uid="uid://cxmas1arm73cp" path="res://scripts/ui/map_marker.gd" id="43_marker"]
+[ext_resource type="PackedScene" uid="uid://cy0cx0rcinwun" path="res://scenes/jobs/food_source.tscn" id="44_crate"]
+[ext_resource type="PackedScene" uid="uid://dec4pb64ytp8s" path="res://scenes/jobs/stock_shelf.tscn" id="45_shelf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_register"]
+size = Vector3(3.2, 2, 3.4)
+
+[node name="RetailStore" type="Node3D" unique_id=1426952063]
+script = ExtResource("40_store")
+
+[node name="Job" type="Node" parent="." unique_id=1312659419]
+script = ExtResource("41_job")
+restock_time_limit = 60.0
+
+[node name="MapMarker" type="Node" parent="." unique_id=1287759858]
+script = ExtResource("43_marker")
+color = Color(0.4, 0.85, 0.4, 1)
+label = "Retail"
+
+[node name="Register" type="Node3D" parent="." unique_id=750580106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Prop_ShopCounter_01" parent="Register" unique_id=200576220 instance=ExtResource("28_qldev")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 67.6, 0.224, 0.6439991)
+
+[node name="SM_Prop_ShopCheckout_01" parent="Register" unique_id=1390332716 instance=ExtResource("31_5eixg")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 67.631, 1.181, -0.3600006)
+
+[node name="SM_Prop_SlushieMachine_01" parent="Register" unique_id=376980579 instance=ExtResource("29_4dpfp")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 67.586, 1.189, 1.7450008)
+
+[node name="SM_Prop_HotdogHeater_01" parent="Register" unique_id=493383920 instance=ExtResource("30_14k7d")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 67.627, 0.214, 2.7619991)
+
+[node name="InteractionArea" type="Area3D" parent="Register" unique_id=2077207080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.5, 0, 0.2)
+script = ExtResource("42_area")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Register/InteractionArea" unique_id=1733777794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_register")
+
+[node name="Prompt" type="Label3D" parent="Register/InteractionArea" unique_id=1394271105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+visible = false
+billboard = 1
+text = "Register"
+font_size = 40
+
+[node name="Status" type="Label3D" parent="Register" unique_id=181350210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.6, 2.6, 0.7)
+billboard = 1
+text = "Retail"
+font_size = 48
+
+[node name="CustomerSign" type="Label3D" parent="Register" unique_id=705155553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68.4, 1.9, 0)
+visible = false
+billboard = 1
+modulate = Color(1, 0.7, 0.4, 1)
+text = "Customer waiting!"
+font_size = 40
+
+[node name="Shelves" type="Node3D" parent="." unique_id=1116055222]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="Shelf0" parent="Shelves" unique_id=1781207297 instance=ExtResource("45_shelf")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 70.66703, 0, 0.7288532)
+
+[node name="Mesh" parent="Shelves/Shelf0" index="0" unique_id=791860872]
+visible = false
+
+[node name="CollisionShape3D" parent="Shelves/Shelf0/InteractionArea" parent_id_path=PackedInt32Array(1781207297, 240041993) index="0" unique_id=955349968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2007672, 1.590857)
+
+[node name="SM_Prop_ShopShelf_01" parent="Shelves/Shelf0" unique_id=674885500 instance=ExtResource("20_dxsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
+
+[node name="Shelf1" parent="Shelves" unique_id=1873780874 instance=ExtResource("45_shelf")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 75.31895, 0, 0.49698544)
+shelf_id = 1
+
+[node name="Mesh" parent="Shelves/Shelf1" index="0" unique_id=791860872]
+visible = false
+
+[node name="CollisionShape3D" parent="Shelves/Shelf1/InteractionArea" parent_id_path=PackedInt32Array(1873780874, 240041993) index="0" unique_id=955349968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0075838566, 1.2173988, 1.6557846)
+
+[node name="SM_Prop_ShopShelf_01" parent="Shelves/Shelf1" unique_id=803414392 instance=ExtResource("20_dxsc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.213, 0)
+
+[node name="Shelf2" parent="Shelves" unique_id=1322965698 instance=ExtResource("45_shelf")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.675026, 0, 2.261642)
+shelf_id = 2
+
+[node name="Mesh" parent="Shelves/Shelf2" index="0" unique_id=791860872]
+visible = false
+
+[node name="CollisionShape3D" parent="Shelves/Shelf2/InteractionArea" parent_id_path=PackedInt32Array(1322965698, 240041993) index="0" unique_id=955349968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2006754, -0.018749475)
+
+[node name="SM_Prop_ShopShelf_02" parent="Shelves/Shelf2" unique_id=1368951105 instance=ExtResource("17_on1e2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.212, 0)
+
+[node name="Shelf3" parent="Shelves" unique_id=1190445090 instance=ExtResource("45_shelf")]
+transform = Transform3D(-0.9999999, 0, 8.742276e-08, 0, 1, 0, -8.742276e-08, 0, -0.9999999, 73.76899, 0, 4.952941)
+shelf_id = 3
+
+[node name="Mesh" parent="Shelves/Shelf3" index="0" unique_id=791860872]
+visible = false
+
+[node name="SM_Prop_ShopShelf_Wall_01" parent="Shelves/Shelf3" unique_id=427546478 instance=ExtResource("12_44f4u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="ProduceCrate" parent="." unique_id=41103572 instance=ExtResource("44_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.965965, 0.10323095, 14.001993)
+item = "produce"
+color = Color(0.35, 0.75, 0.3, 1)
+
+[node name="CansCrate" parent="." unique_id=161804618 instance=ExtResource("44_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.03967, 0.10323024, 14.557017)
+item = "cans"
+color = Color(0.65, 0.65, 0.7, 1)
+
+[node name="SnacksCrate" parent="." unique_id=1050107966 instance=ExtResource("44_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.57557, 0.10323048, 12.12221)
+item = "snacks"
+color = Color(0.9, 0.6, 0.25, 1)
+
+[node name="ToysCrate" parent="." unique_id=823475227 instance=ExtResource("44_crate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.54426, 0.10323048, 9.782365)
+item = "toys"
+color = Color(0.75, 0.35, 0.8, 1)
+
+[node name="Building" type="Node3D" parent="." unique_id=1571296165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Bld_Shop_01" parent="Building" unique_id=649482705 instance=ExtResource("1_lejd4")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.5, 0, 2.5)
+
+[node name="SM_Bld_Shop_01_Door_L" parent="Building/SM_Bld_Shop_01" index="1" unique_id=649548972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.235, 0.25168434, 4.261436)
+
+[node name="SM_Bld_Shop_01_Door_R" parent="Building/SM_Bld_Shop_01" index="2" unique_id=1725034484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.272, 0.25168434, 4.261436)
+
+[node name="SM_Bld_Shop_Sign_01" parent="Building" unique_id=1126918437 instance=ExtResource("3_flwmh")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.5, 3.65, -2)
+
+[node name="MeshRenderer" parent="Building/SM_Bld_Shop_Sign_01" index="0"]
+surface_material_override/0 = ExtResource("4_upv6o")
+
+[node name="SM_Bld_Shop_Sign_01 (2)" parent="Building" unique_id=531706234 instance=ExtResource("3_flwmh")]
+transform = Transform3D(-5.6746302e-08, 0, 0.34830642, 0, 0.3483063, 0, -0.3483063, 0, -5.674632e-08, 65.715, 2.243, 1.0419998)
+
+[node name="SM_Bld_Skylight_03 (4)" parent="Building" unique_id=1536658096 instance=ExtResource("8_48lj1")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 72.729996, 4.72, 1.6900005)
+
+[node name="SM_Bld_Skylight_03 (5)" parent="Building" unique_id=1195034948 instance=ExtResource("8_48lj1")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 69.33, 4.72, 1.6900005)
+
+[node name="SM_Bld_House_Concrete_Steps_01 (6)" parent="Building" unique_id=1896815185 instance=ExtResource("21_8w7m0")]
+transform = Transform3D(-1.6292068e-07, 0, 1, 0, 0.8, 0, -1, 0, -1.6292068e-07, 72.316, -0.312, 6.889)
+
+[node name="SM_Bld_Shop_Concrete_01 (1)" parent="Building" unique_id=1912403603 instance=ExtResource("38_lhjr0")]
+transform = Transform3D(-0.5, 0, -2.6226834e-08, 0, 2, 0, 4.371139e-08, 0, -0.3, 68.155, -0.241, 8.620138)
+
+[node name="Ceiling" type="Node3D" parent="." unique_id=1248403555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Prop_CeilingLight_04 (2)" parent="Ceiling" unique_id=1219026736 instance=ExtResource("11_hhqwk")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 68.129, 3.341, 3.1369991)
+
+[node name="SM_Prop_CeilingLight_04 (3)" parent="Ceiling" unique_id=1521694285 instance=ExtResource("11_hhqwk")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 68.129, 3.341, 0.22900009)
+
+[node name="SM_Prop_CeilingLight_04 (1)" parent="Ceiling" unique_id=1462976637 instance=ExtResource("11_hhqwk")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 72.31, 3.341, 3.1369991)
+
+[node name="SM_Prop_CeilingLight_04" parent="Ceiling" unique_id=1445721768 instance=ExtResource("11_hhqwk")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 72.31, 3.341, 0.22900009)
+
+[node name="SM_Prop_CeilingExit_01" parent="Ceiling" unique_id=1143187080 instance=ExtResource("13_2avei")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 66.888, 3.266, 4.257)
+
+[node name="Roof" type="Node3D" parent="." unique_id=2095032433]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Prop_Airvent_02" parent="Roof" unique_id=1259368754 instance=ExtResource("9_s1ds2")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 67.130005, 4.667, 3.6000004)
+
+[node name="SM_Prop_Airvent_01 (2)" parent="Roof" unique_id=1021660775 instance=ExtResource("10_48lj1")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 74.369995, 4.691, 0.38699913)
+
+[node name="SM_Prop_Airvent_01 (1)" parent="Roof" unique_id=352586592 instance=ExtResource("10_48lj1")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 74.369995, 4.691, -0.7600002)
+
+[node name="SM_Prop_Antenna_01 (3)" parent="Roof" unique_id=1427931033 instance=ExtResource("14_48lj1")]
+transform = Transform3D(0.6166905, 0, -0.7872057, 0, 1, 0, 0.7872057, 0, 0.6166905, 66.405, 4.702, -1.0620003)
+
+[node name="Fixtures" type="Node3D" parent="." unique_id=1844520088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Prop_ShopFridge_01" parent="Fixtures" unique_id=1926586896 instance=ExtResource("16_rgp3w")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.612, 0.198, 4.5690002)
+
+[node name="SM_Prop_ShopFridge_01_Door_02" parent="Fixtures/SM_Prop_ShopFridge_01" index="3"]
+transform = Transform3D(0.9494216, 0, -0.31400424, 0, 1, 0, 0.31400424, 0, 0.9494216, -0.583385, 0.30799076, 0.5014392)
+
+[node name="SM_Prop_FridgeDrinks_01" parent="Fixtures" unique_id=5385468 instance=ExtResource("19_rr87b")]
+transform = Transform3D(-1.1920929e-07, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -1.1920929e-07, 74.993, 0.216, 3.0009995)
+
+[node name="SM_Prop_FridgeDrinks_Contents_01" parent="Fixtures/SM_Prop_FridgeDrinks_01" index="2"]
+transform = Transform3D(0.4923777, 0, 0.87038165, 0, 1, 0, -0.87038165, 0, 0.4923777, 0.34080505, 0.1487187, 0.34081054)
+
+[node name="SM_Prop_ShopShelf_Wall_01" parent="Fixtures" unique_id=416851992 instance=ExtResource("12_44f4u")]
+transform = Transform3D(1.7285347e-06, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 1.7285347e-06, 65.782, 1.655, 1.0739994)
+
+[node name="SM_Prop_Cabinet_01 (1)" parent="Fixtures" unique_id=1814807159 instance=ExtResource("26_2fxbc")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 65.854004, 0.216, 4.509001)
+
+[node name="SM_Prop_Cabinet_01" parent="Fixtures" unique_id=1183401594 instance=ExtResource("26_2fxbc")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 65.854004, 0.216, -0.597)
+
+[node name="SM_Prop_GlassesStand_01" parent="Fixtures" unique_id=1882466915 instance=ExtResource("24_tk4ax")]
+transform = Transform3D(0.4066044, 0, 0.9136043, 0, 1, 0, -0.9136043, 0, 0.4066044, 68.059, 0.213, -1.1170006)
+
+[node name="SM_Item_Pumpkin_01" parent="Fixtures" unique_id=66692251 instance=ExtResource("27_m3pvi")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1.6353017, 0, 8.742278e-08, 0, -1, 65.887, 2.298, -0.5739994)
+
+[node name="SM_Prop_RubbishBin_Small_01 (1)" parent="Fixtures" unique_id=1393616618 instance=ExtResource("22_7d5iu")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 68.21, 0.226, 4.632)
+
+[node name="SM_Prop_FloorMat_01 (1)" parent="Fixtures" unique_id=649410225 instance=ExtResource("32_27drv")]
+transform = Transform3D(-1.6292068e-07, 0, 1, 0, 1, 0, -1, 0, -1.6292068e-07, 68.40752, 0.224, 0.68499947)
+
+[node name="SM_Prop_FloorMat_01 (2)" parent="Fixtures" unique_id=220929684 instance=ExtResource("32_27drv")]
+transform = Transform3D(-1.6292068e-07, 0, 1, 0, 1, 0, -1, 0, -1.6292068e-07, 66.721, 0.224, 0.68499947)
+
+[node name="Exterior" type="Node3D" parent="." unique_id=1403764188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+
+[node name="SM_Prop_VendingMachine_01" parent="Exterior" unique_id=1129938020 instance=ExtResource("2_o5iqj")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 74.25, 0.149, -1.7649994)
+
+[node name="SM_Prop_Rug_03 (2)" parent="Exterior" unique_id=1965311883 instance=ExtResource("5_lemim")]
+transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 1, 0, 4.371139e-08, 0, -0.5, 70.542, 0.16, -2.261)
+
+[node name="SM_Prop_BikeStand_01" parent="Exterior" unique_id=1982235868 instance=ExtResource("6_rc2o3")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 68.34116, 0.15, -2.20088)
+
+[node name="SM_Prop_Phone_01 (3)" parent="Exterior" unique_id=433502788 instance=ExtResource("7_s1ds2")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 66.275, 0.147, -1.9869995)
+
+[node name="SM_Prop_Phone_01 (2)" parent="Exterior" unique_id=599878546 instance=ExtResource("7_s1ds2")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 67.276, 0.147, -1.9869995)
+
+[node name="SM_Prop_Propane_01 (1)" parent="Exterior" unique_id=442773647 instance=ExtResource("25_12f5f")]
+transform = Transform3D(-1.6292068e-07, 0, 1, 0, 1, 0, -1, 0, -1.6292068e-07, 76.39, 0, 0.5639992)
+
+[node name="SM_Prop_Propane_Tall_01 (1)" parent="Exterior" unique_id=886515803 instance=ExtResource("33_eflhm")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 66.06858, 0, 9.015909)
+
+[node name="SM_Prop_Propanel_01 (2)" parent="Exterior" unique_id=1806129757 instance=ExtResource("34_bqlnx")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.39059, 0, 9.353357)
+
+[node name="SM_Prop_Propane_Tall_01" parent="Exterior" unique_id=2060353137 instance=ExtResource("33_eflhm")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 69.874596, 0, 9.129448)
+
+[node name="SM_Prop_RubbishBin_03" parent="Exterior" unique_id=505930010 instance=ExtResource("35_tsfnv")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.23796, 0, 8.550343)
+
+[node name="SM_Prop_Propanel_02 (1)" parent="Exterior" unique_id=138552925 instance=ExtResource("36_axwx7")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.074524, 0, 7.944578)
+
+[node name="SM_Prop_Propane_Tall_02 (1)" parent="Exterior" unique_id=774903151 instance=ExtResource("37_jmdbe")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 69.281456, 0, 9.208984)
+
+[node name="SM_Prop_Propane_01" parent="Exterior" unique_id=1777733858 instance=ExtResource("25_12f5f")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 67.79, 0, 8.35)
+
+[node name="SM_Prop_WorkShelf_01" parent="Exterior" unique_id=1996853941 instance=ExtResource("39_yvvtu")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 66.617004, 0.199, 6.8390007)
+
+[editable path="Register/SM_Prop_ShopCounter_01"]
+[editable path="Register/SM_Prop_ShopCheckout_01"]
+[editable path="Register/SM_Prop_SlushieMachine_01"]
+[editable path="Register/SM_Prop_HotdogHeater_01"]
+[editable path="Shelves/Shelf0"]
+[editable path="Shelves/Shelf1"]
+[editable path="Shelves/Shelf2"]
+[editable path="Shelves/Shelf3"]
+[editable path="ProduceCrate"]
+[editable path="Building/SM_Bld_Shop_01"]
+[editable path="Building/SM_Bld_Shop_Sign_01"]
+[editable path="Building/SM_Bld_Shop_Sign_01 (2)"]
+[editable path="Building/SM_Bld_Skylight_03 (4)"]
+[editable path="Building/SM_Bld_Skylight_03 (5)"]
+[editable path="Building/SM_Bld_House_Concrete_Steps_01 (6)"]
+[editable path="Building/SM_Bld_Shop_Concrete_01 (1)"]
+[editable path="Ceiling/SM_Prop_CeilingLight_04 (2)"]
+[editable path="Ceiling/SM_Prop_CeilingLight_04 (3)"]
+[editable path="Ceiling/SM_Prop_CeilingLight_04 (1)"]
+[editable path="Ceiling/SM_Prop_CeilingLight_04"]
+[editable path="Ceiling/SM_Prop_CeilingExit_01"]
+[editable path="Roof/SM_Prop_Airvent_02"]
+[editable path="Roof/SM_Prop_Airvent_01 (2)"]
+[editable path="Roof/SM_Prop_Airvent_01 (1)"]
+[editable path="Roof/SM_Prop_Antenna_01 (3)"]
+[editable path="Fixtures/SM_Prop_ShopFridge_01"]
+[editable path="Fixtures/SM_Prop_FridgeDrinks_01"]
+[editable path="Fixtures/SM_Prop_ShopShelf_Wall_01"]
+[editable path="Fixtures/SM_Prop_Cabinet_01 (1)"]
+[editable path="Fixtures/SM_Prop_Cabinet_01"]
+[editable path="Fixtures/SM_Prop_GlassesStand_01"]
+[editable path="Fixtures/SM_Item_Pumpkin_01"]
+[editable path="Fixtures/SM_Prop_RubbishBin_Small_01 (1)"]
+[editable path="Fixtures/SM_Prop_FloorMat_01 (1)"]
+[editable path="Fixtures/SM_Prop_FloorMat_01 (2)"]
+[editable path="Exterior/SM_Prop_VendingMachine_01"]
+[editable path="Exterior/SM_Prop_Rug_03 (2)"]
+[editable path="Exterior/SM_Prop_BikeStand_01"]
+[editable path="Exterior/SM_Prop_Phone_01 (3)"]
+[editable path="Exterior/SM_Prop_Phone_01 (2)"]
+[editable path="Exterior/SM_Prop_Propane_01 (1)"]
+[editable path="Exterior/SM_Prop_Propane_Tall_01 (1)"]
+[editable path="Exterior/SM_Prop_Propanel_01 (2)"]
+[editable path="Exterior/SM_Prop_Propane_Tall_01"]
+[editable path="Exterior/SM_Prop_RubbishBin_03"]
+[editable path="Exterior/SM_Prop_Propanel_02 (1)"]
+[editable path="Exterior/SM_Prop_Propane_Tall_02 (1)"]
+[editable path="Exterior/SM_Prop_Propane_01"]
+[editable path="Exterior/SM_Prop_WorkShelf_01"]

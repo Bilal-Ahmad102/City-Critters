@@ -6,11 +6,13 @@ signal currency_changed(new_amount: int)
 
 func earn(amount: int) -> void:
 	PlayerData.add_currency(amount)
+	PlayerData.save()
 	currency_changed.emit(PlayerData.currency)
 
 func spend(amount: int) -> bool:
 	if PlayerData.currency >= amount:
 		PlayerData.currency -= amount
+		PlayerData.save()
 		currency_changed.emit(PlayerData.currency)
 		return true
 	return false

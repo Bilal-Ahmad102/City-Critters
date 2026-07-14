@@ -10,6 +10,9 @@ signal shift_ended(summary: Dictionary)      # totals for the payout screen
 
 @export var base_pay: int = 50
 @export var shift_length: float = 60.0
+# Display name used to bucket lifetime stats in JobStats. Subclasses assign
+# their own in _init (an @export here can't be re-exported by a subclass).
+var job_type: String = "Job"
 
 var _elapsed: float = 0.0
 var _active: bool = false
@@ -35,7 +38,9 @@ func end_job(success: bool = true) -> void:
 		job_completed.emit(_earned)
 	else:
 		job_failed.emit()
-	shift_ended.emit(_build_summary())
+	var summary := _build_summary()
+	JobStats.record_shift(job_type, summary)
+	shift_ended.emit(summary)
 
 func is_active() -> bool:
 	return _active

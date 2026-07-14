@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/jobs/delivery_point.tscn" id="4_point"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/corporate_desk.tscn" id="5_desk"]
 [ext_resource type="PackedScene" path="res://scenes/ui/minimap.tscn" id="6_minimap"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud/hud.tscn" id="7_hud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fds1a"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -1572,3 +1573,5 @@ point_name = "Tavern"
 
 [node name="Minimap" parent="." instance=ExtResource("6_minimap")]
 world_range = 130.0
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
