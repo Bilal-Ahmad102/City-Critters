@@ -42,6 +42,7 @@
 [ext_resource type="Script" uid="uid://cxmas1arm73cp" path="res://scripts/ui/map_marker.gd" id="43_marker"]
 [ext_resource type="PackedScene" uid="uid://cy0cx0rcinwun" path="res://scenes/jobs/food_source.tscn" id="44_crate"]
 [ext_resource type="PackedScene" uid="uid://dec4pb64ytp8s" path="res://scenes/jobs/stock_shelf.tscn" id="45_shelf"]
+[ext_resource type="Texture2D" uid="uid://d3cxvy8q5el1e" path="res://addons/at-icons/node/shopping_cart.svg" id="90_icon"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_register"]
 size = Vector3(3.2, 2, 3.4)
@@ -57,9 +58,11 @@ restock_time_limit = 60.0
 script = ExtResource("43_marker")
 color = Color(0.4, 0.85, 0.4, 1)
 label = "Retail"
+icon = ExtResource("90_icon")
+legend = "Retail Store (stocking job)"
 
 [node name="Register" type="Node3D" parent="." unique_id=750580106]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Prop_ShopCounter_01" parent="Register" unique_id=200576220 instance=ExtResource("28_qldev")]
 transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 67.6, 0.224, 0.6439991)
@@ -103,7 +106,7 @@ text = "Customer waiting!"
 font_size = 40
 
 [node name="Shelves" type="Node3D" parent="." unique_id=1116055222]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="Shelf0" parent="Shelves" unique_id=1781207297 instance=ExtResource("45_shelf")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 70.66703, 0, 0.7288532)
@@ -154,27 +157,27 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="ProduceCrate" parent="." unique_id=41103572 instance=ExtResource("44_crate")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.965965, 0.10323095, 14.001993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.923172, 0.10323095, 8.416963)
 item = "produce"
 color = Color(0.35, 0.75, 0.3, 1)
 
 [node name="CansCrate" parent="." unique_id=161804618 instance=ExtResource("44_crate")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.03967, 0.10323024, 14.557017)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8494644, 0.10323024, 8.971987)
 item = "cans"
 color = Color(0.65, 0.65, 0.7, 1)
 
 [node name="SnacksCrate" parent="." unique_id=1050107966 instance=ExtResource("44_crate")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.57557, 0.10323048, 12.12221)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6864319, 0.10323048, 6.537179)
 item = "snacks"
 color = Color(0.9, 0.6, 0.25, 1)
 
 [node name="ToysCrate" parent="." unique_id=823475227 instance=ExtResource("44_crate")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.54426, 0.10323048, 9.782365)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.655121, 0.10323048, 4.1973343)
 item = "toys"
 color = Color(0.75, 0.35, 0.8, 1)
 
 [node name="Building" type="Node3D" parent="." unique_id=1571296165]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Bld_Shop_01" parent="Building" unique_id=649482705 instance=ExtResource("1_lejd4")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.5, 0, 2.5)
@@ -207,7 +210,7 @@ transform = Transform3D(-1.6292068e-07, 0, 1, 0, 0.8, 0, -1, 0, -1.6292068e-07, 
 transform = Transform3D(-0.5, 0, -2.6226834e-08, 0, 2, 0, 4.371139e-08, 0, -0.3, 68.155, -0.241, 8.620138)
 
 [node name="Ceiling" type="Node3D" parent="." unique_id=1248403555]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Prop_CeilingLight_04 (2)" parent="Ceiling" unique_id=1219026736 instance=ExtResource("11_hhqwk")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 68.129, 3.341, 3.1369991)
@@ -225,7 +228,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 72.31, 3.341, 0.22900009)
 transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 66.888, 3.266, 4.257)
 
 [node name="Roof" type="Node3D" parent="." unique_id=2095032433]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Prop_Airvent_02" parent="Roof" unique_id=1259368754 instance=ExtResource("9_s1ds2")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 67.130005, 4.667, 3.6000004)
@@ -240,7 +243,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 74.369995, 4.691, -0.760000
 transform = Transform3D(0.6166905, 0, -0.7872057, 0, 1, 0, 0.7872057, 0, 0.6166905, 66.405, 4.702, -1.0620003)
 
 [node name="Fixtures" type="Node3D" parent="." unique_id=1844520088]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Prop_ShopFridge_01" parent="Fixtures" unique_id=1926586896 instance=ExtResource("16_rgp3w")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 70.612, 0.198, 4.5690002)
@@ -279,7 +282,7 @@ transform = Transform3D(-1.6292068e-07, 0, 1, 0, 1, 0, -1, 0, -1.6292068e-07, 68
 transform = Transform3D(-1.6292068e-07, 0, 1, 0, 1, 0, -1, 0, -1.6292068e-07, 66.721, 0.224, 0.68499947)
 
 [node name="Exterior" type="Node3D" parent="." unique_id=1403764188]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.73)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.88914, 0, -2.8550305)
 
 [node name="SM_Prop_VendingMachine_01" parent="Exterior" unique_id=1129938020 instance=ExtResource("2_o5iqj")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 74.25, 0.149, -1.7649994)

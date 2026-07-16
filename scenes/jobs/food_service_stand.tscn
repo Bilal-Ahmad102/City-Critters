@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/jobs/food_source.tscn" id="4_src"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/serve_table.tscn" id="5_serve"]
 [ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="6_marker"]
+[ext_resource type="Texture2D" path="res://addons/at-icons/node/meat.svg" id="90_icon"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_clock"]
 albedo_color = Color(0.35, 0.35, 0.4, 1)
@@ -25,6 +26,8 @@ num_tables = 3
 script = ExtResource("6_marker")
 color = Color(0.95, 0.6, 0.25, 1)
 label = "Food Service"
+icon = ExtResource("90_icon")
+legend = "Food Stand (cooking job)"
 
 [node name="ClockIn" type="Node3D" parent="."]
 

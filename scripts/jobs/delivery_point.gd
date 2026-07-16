@@ -24,6 +24,10 @@ func _ready() -> void:
 	var marker: MapMarker = get_node_or_null("MapMarker")
 	if marker != null:
 		marker.label = point_name
+		if marker.icon == null:
+			marker.icon = preload("res://addons/at-icons/node/mailbox.svg")
+		if marker.legend == "":
+			marker.legend = "Delivery point (mailbox)"
 
 func _on_interacted(by: Node3D) -> void:
 	delivery_requested.emit(point_name, by)

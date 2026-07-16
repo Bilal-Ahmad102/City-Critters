@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="2_area"]
 [ext_resource type="PackedScene" path="res://scenes/jobs/corporate_office.tscn" id="3_job"]
 [ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="4_marker"]
+[ext_resource type="Texture2D" path="res://addons/at-icons/node/briefcase.svg" id="90_icon"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_desk"]
 albedo_color = Color(0.4, 0.32, 0.25, 1)
@@ -24,6 +25,8 @@ job_scene = ExtResource("3_job")
 script = ExtResource("4_marker")
 color = Color(0.7, 0.55, 0.9, 1)
 label = "Office"
+icon = ExtResource("90_icon")
+legend = "Office (corporate job)"
 
 [node name="Desk" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)

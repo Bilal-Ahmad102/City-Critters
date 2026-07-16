@@ -7,6 +7,13 @@ class_name MapMarker
 
 @export var color: Color = Color.WHITE
 @export var label: String = ""
+# Optional glyph drawn instead of the plain dot. Single-color icons (the
+# addons/at-icons set) work best: the minimap tints them with `color`.
+@export var icon: Texture2D = null
+# What this icon means, shown in the minimap's TAB legend (falls back to
+# `label`). Markers sharing an icon should share a legend so they collapse
+# into one legend row.
+@export var legend: String = ""
 
 func _ready() -> void:
 	add_to_group("map_markers")

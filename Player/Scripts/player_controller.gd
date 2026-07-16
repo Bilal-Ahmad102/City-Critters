@@ -3,6 +3,10 @@ extends CharacterBody3D
 @export var move_speed: float = 5.0
 @export var run_speed: float = 9.0
 @export var jump_velocity: float = 5.5
+# Impulse strength when walking into RigidBody3D props (crates, balls, bags).
+@export var push_force: float = 6.0
+# Max ledge height the player walks straight up (stairs, curbs). 0 disables.
+@export var step_height: float = 0.4
 @export var ROTATION_SPEED: float = 10.0
 @export var ANIM_BLEND_SPEED: float = 8.0
 
@@ -62,8 +66,72 @@ func _physics_process(delta: float) -> void:
 	handle_gravity(delta)
 	handle_rotation(delta)
 	apply_root_motion()
+	# move_and_slide strips the into-wall velocity component; remember what we
+	# WANTED to do so the step-up probe knows the real travel direction.
+	var desired_velocity := velocity
 	move_and_slide()
+	try_step_up(delta, desired_velocity)
+	push_rigid_bodies(delta)
 	net_sync.push_state()
+
+# CharacterBody3D doesn't impart forces on rigid bodies by itself: shove
+# anything we slid into. Horizontal only, so props get pushed, not launched.
+func push_rigid_bodies(delta: float) -> void:
+	for i in get_slide_collision_count():
+		var col: KinematicCollision3D = get_slide_collision(i)
+		var body: Object = col.get_collider()
+		if body is RigidBody3D:
+			var push_dir: Vector3 = -col.get_normal()
+			push_dir.y = 0.0
+			if push_dir.length_squared() < 0.001:
+				continue
+			var speed: float = maxf(velocity.length(), 1.0)
+			body.apply_central_impulse(push_dir.normalized() * push_force * speed * delta)
+
+# CharacterBody3D has no stair stepping: walking into a low ledge just slides.
+# When the wall we hit is blocking our travel, probe up -> forward -> down with
+# collision-test motions; if that path clears and lands higher than we stand,
+# it's a step — teleport onto it and keep walking.
+func try_step_up(_delta: float, desired_velocity: Vector3) -> void:
+	if step_height <= 0.0 or not is_on_wall():
+		return
+	if not is_on_floor() and velocity.y > 0.0:
+		return  # rising jump: don't ledge-snap
+	var forward := Vector3(desired_velocity.x, 0.0, desired_velocity.z)
+	if forward.length_squared() < 0.0001:
+		return
+	var dir := forward.normalized()
+	# Only bother when the wall actually opposes our direction of travel.
+	if get_wall_normal().dot(dir) > -0.3:
+		return
+	var from := global_transform
+	var up := _test_motion_travel(from, Vector3.UP * step_height)
+	if up.y < 0.01:
+		return  # ceiling right above
+	from.origin += up
+	# Probe far enough to plant the whole capsule on the tread — a per-frame
+	# motion step is millimetres and would leave us grinding the ledge edge.
+	var ahead_len := 0.3
+	var ahead := _test_motion_travel(from, dir * ahead_len)
+	if ahead.length() < ahead_len * 0.5:
+		return  # still blocked at raised height: a real wall, not a step
+	from.origin += ahead
+	var down := _test_motion_travel(from, Vector3.DOWN * (up.y + 0.05))
+	if -down.y >= up.y - 0.005:
+		return  # came all the way back down: nothing to stand on
+	global_position = from.origin + down
+	velocity.y = 0.0
+	apply_floor_snap()
+
+# How far this body travels along `motion` from `from` before hitting anything.
+func _test_motion_travel(from: Transform3D, motion: Vector3) -> Vector3:
+	var params := PhysicsTestMotionParameters3D.new()
+	params.from = from
+	params.motion = motion
+	var result := PhysicsTestMotionResult3D.new()
+	if PhysicsServer3D.body_test_motion(get_rid(), params, result):
+		return result.get_travel()
+	return motion
 
 func handle_locomotion(locomotion:String,delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
