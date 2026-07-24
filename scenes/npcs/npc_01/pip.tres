@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/npc_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "pip"
+display_name = "Pip"
+species = "mouse"
+schedule = []
+dialogue_lines = ["Hi hi! You're the new critter everyone keeps talking about!", "I've smelled everything the diner cooks. From out here. Through the wall.", "If you ever end up with a spare soda... I'm just saying. I'm right here."]
+gift_preferences = ["soda", "fries"]
+unlock_item = ""

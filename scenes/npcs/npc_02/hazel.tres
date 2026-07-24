@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/npc_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "hazel"
+display_name = "Hazel"
+species = "mouse"
+schedule = []
+dialogue_lines = ["Welcome to the shopping district, dear. Mind the delivery bikes.", "The store never stocks itself, you know. Someone dependable ought to help out.", "A warm burger after a long shift... that's the good life, if you ask me."]
+gift_preferences = ["burger"]
+unlock_item = ""

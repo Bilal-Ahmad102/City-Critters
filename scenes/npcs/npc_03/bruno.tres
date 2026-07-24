@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/systems/npc_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+npc_id = "bruno"
+display_name = "Bruno"
+species = "mouse"
+schedule = []
+dialogue_lines = ["Hmph. You here to gawk or to work? Depot's always short on couriers.", "Fourteen letterboxes in this town and I know every squeaky hinge by name.", "Long routes make a critter hungry. A hotdog wouldn't go unnoticed."]
+gift_preferences = ["hotdog"]
+unlock_item = ""

@@ -60,6 +60,7 @@ func save() -> void:
 	cfg.set_value("player", "currency", currency)
 	cfg.set_value("player", "name", player_name)
 	cfg.set_value("player", "body_material_id", body_material_id)
+	cfg.set_value("player", "rapport", rapport)
 	cfg.save(SAVE_PATH)
 
 func load_saved() -> void:
@@ -69,9 +70,13 @@ func load_saved() -> void:
 	currency = int(cfg.get_value("player", "currency", currency))
 	player_name = str(cfg.get_value("player", "name", player_name))
 	body_material_id = str(cfg.get_value("player", "body_material_id", body_material_id))
+	var saved_rapport: Variant = cfg.get_value("player", "rapport", rapport)
+	if saved_rapport is Dictionary:
+		rapport = saved_rapport
 
 func get_rapport(npc_id: String) -> int:
 	return rapport.get(npc_id, 0)
 
 func increase_rapport(npc_id: String, amount: int) -> void:
 	rapport[npc_id] = get_rapport(npc_id) + amount
+	save()
