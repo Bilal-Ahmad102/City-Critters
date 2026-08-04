@@ -46,18 +46,32 @@ class_name Minimap
 var _player: Node3D = null
 var _legend: CanvasLayer = null
 var _legend_rows: VBoxContainer = null
+var _clock_label: Label = null
 
 func _ready() -> void:
 	# Never eat clicks meant for the game.
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_build_clock()
 	_apply_layout()
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 	if Engine.is_editor_hint():
 		return
+	_clock_label.text = GameClock.time_string()
 	if Input.is_action_just_pressed("map_legend"):
 		_toggle_legend()
+
+# Game-time readout ("12:00") sitting right on top of the map square.
+func _build_clock() -> void:
+	_clock_label = Label.new()
+	_clock_label.text = "12:00"
+	_clock_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_clock_label.add_theme_font_size_override("font_size", 16)
+	_clock_label.add_theme_color_override("font_outline_color", Color(0.05, 0.07, 0.09, 0.9))
+	_clock_label.add_theme_constant_override("outline_size", 6)
+	_clock_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_clock_label)
 
 # Pins the map to the bottom-left corner at the exported size/margin.
 func _apply_layout() -> void:
@@ -71,6 +85,9 @@ func _apply_layout() -> void:
 	offset_bottom = -screen_margin.y
 	grow_horizontal = Control.GROW_DIRECTION_END
 	grow_vertical = Control.GROW_DIRECTION_BEGIN
+	if _clock_label != null:
+		_clock_label.position = Vector2(0, -24)
+		_clock_label.size = Vector2(map_size.x, 22)
 
 # The local player's avatar (cached; re-found if it despawns).
 func _find_player() -> Node3D:

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActivityResource" format=3 uid="uid://dqp0r2nthw52q"]
+
+[ext_resource type="Script" uid="uid://bse02roo5y8sv" path="res://NPC/data/activirt_resource.gd" id="1_fgg4w"]
+
+[resource]
+script = ExtResource("1_fgg4w")
+id = &"sleep"
+location_tag = &"own_home"
+animation = &"sleeping"
+min_duration_minutes = 480

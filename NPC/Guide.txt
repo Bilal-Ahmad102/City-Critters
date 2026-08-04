@@ -1,0 +1,752 @@
+# NPC Architecture: step by step build
+
+Each step ends with a **gate**. Do not start the next step until the gate passes. The point of the ordering is that every layer is testable without the layer above it.
+
+```
+res://
+  npc/
+	npc_base.gd               # NPCBase (CharacterBody3D) + root motion locomotion
+	brain.gd                  # schedule polling + goal stack
+	activity_task.gd
+  data/
+	activity_resource.gd
+	schedule_entry.gd
+	npc_schedule.gd
+	route_hint.gd
+	resources/                # .tres files live here
+  world/
+	world_location.gd
+	smart_object.gd
+	autoload/
+	  game_clock.gd
+	  location_registry.gd
+```
+
+---
+
+## Step 1. Clock plus schedule, NPCs teleport
+
+No navigation, no animation. You are validating the data model only.
+
+### game_clock.gd (autoload)
+
+```gdscript
+extends Node
+
+signal minute_changed(total_minutes: int)
+signal hour_changed(hour: int)
+
+const MINUTES_PER_DAY := 1440
+
+@export var minutes_per_second: float = 12.0   # 12 -> a full day in 2 real minutes
+@export var paused: bool = false
+
+var total_minutes: int = 6 * 60
+var _accum: float = 0.0
+
+var hour: int:
+	get: return total_minutes / 60
+
+func _process(delta: float) -> void:
+	if paused:
+		return
+	_accum += delta * minutes_per_second
+	while _accum >= 1.0:
+		_accum -= 1.0
+		var prev_hour := hour
+		total_minutes = (total_minutes + 1) % MINUTES_PER_DAY
+		minute_changed.emit(total_minutes)
+		if hour != prev_hour:
+			hour_changed.emit(hour)
+
+func set_time(h: int, m: int = 0) -> void:
+	total_minutes = (h * 60 + m) % MINUTES_PER_DAY
+	minute_changed.emit(total_minutes)
+```
+
+Crank `minutes_per_second` to 200 while testing. Add a debug key that calls `set_time(3)` so you can jump straight to any hour.
+
+### The data resources
+
+```gdscript
+# activity_resource.gd
+class_name ActivityResource extends Resource
+
+@export var id: StringName
+@export var location_tag: StringName          # "bakery", "own_home", "town_square"
+@export var object_type: StringName           # "counter", "bed", "stool", "" for none
+@export var animation: StringName = &"idle"
+@export var min_duration_minutes: int = 15
+@export var interruptible: bool = true
+@export var wander_radius: float = 0.0        # 0 means stand still at the slot
+```
+
+```gdscript
+# schedule_entry.gd
+class_name ScheduleEntry extends Resource
+
+@export_range(0, 23) var start_hour: int = 8
+@export_range(0, 59) var start_minute: int = 0
+@export var activity: ActivityResource
+
+var start_minutes: int:
+	get: return start_hour * 60 + start_minute
+```
+
+Store **start times only** and derive each window from the next entry. Start plus end lets you author gaps and overlaps, and then the NPC has nothing to do at 03:14 and just stands there.
+
+```gdscript
+# npc_schedule.gd
+class_name NPCSchedule extends Resource
+
+@export var entries: Array[ScheduleEntry] = []
+
+var _sorted: Array[ScheduleEntry] = []
+
+func _ensure_sorted() -> void:
+	if _sorted.size() == entries.size():
+		return
+	_sorted = entries.duplicate()
+	_sorted.sort_custom(func(a, b): return a.start_minutes < b.start_minutes)
+
+func entry_at(minutes: int) -> ScheduleEntry:
+	_ensure_sorted()
+	if _sorted.is_empty():
+		return null
+	# before the first entry of the day you are still doing last night's activity
+    var found: ScheduleEntry = _sorted[-1]
+    for e in _sorted:
+        if e.start_minutes <= minutes:
+            found = e
+        else:
+            break
+    return found
+```
+
+### The world side
+
+```gdscript
+# world_location.gd
+class_name WorldLocation extends Node3D
+
+@export var tag: StringName
+@export var owner_id: StringName = &""        # set to an npc_id for "own_home"
+
+func _ready() -> void:
+    LocationRegistry.register(self)
+
+func _exit_tree() -> void:
+    LocationRegistry.unregister(self)
+```
+
+```gdscript
+# location_registry.gd (autoload)
+extends Node
+
+var _by_tag: Dictionary = {}   # StringName -> Array[WorldLocation]
+
+func register(loc: WorldLocation) -> void:
+    if not _by_tag.has(loc.tag):
+        _by_tag[loc.tag] = []
+    _by_tag[loc.tag].append(loc)
+
+func unregister(loc: WorldLocation) -> void:
+    if _by_tag.has(loc.tag):
+        _by_tag[loc.tag].erase(loc)
+
+func get_location(tag: StringName, npc_id: StringName = &"") -> WorldLocation:
+    var list: Array = _by_tag.get(tag, [])
+    if list.is_empty():
+        push_warning("No location registered for tag: %s" % tag)
+        return null
+    if npc_id != &"":
+        for loc in list:
+            if loc.owner_id == npc_id:
+                return loc
+    return list[0]
+```
+
+Activities reference tags, never node paths. Move the bakery across town and nothing else changes.
+
+### Minimal NPC
+
+```gdscript
+# npc_base.gd
+class_name NPCBase extends CharacterBody3D
+
+@export var npc_id: StringName
+@export var schedule: NPCSchedule
+
+var current_activity: ActivityResource
+
+func _ready() -> void:
+    GameClock.minute_changed.connect(_on_minute_changed)
+    _on_minute_changed(GameClock.total_minutes)
+
+func _on_minute_changed(minutes: int) -> void:
+    var entry := schedule.entry_at(minutes)
+    if entry == null or entry.activity == current_activity:
+        return
+    current_activity = entry.activity
+    var loc := LocationRegistry.get_location(current_activity.location_tag, npc_id)
+    if loc:
+        global_position = loc.global_position
+```
+
+**Gate:** three NPCs with different schedules, running a compressed day, teleport to the right places at the right times. Print the activity id on change. If the day does not read correctly here it will never read correctly with movement on top.
+
+---
+
+## Step 2. Movement (root motion)
+
+Bake a `NavigationRegion3D`. Add a `NavigationAgent3D` and an `AnimationTree` under the NPC, and set the AnimationTree **Root Motion Track** to the hip bone (Mixamo rigs: `Armature/Skeleton3D:mixamorig_Hips`).
+
+Locomotion lives on `NPCBase` itself rather than in a child controller node, because root motion has to be read on the same tick as `move_and_slide`, on the node that owns both the AnimationTree and the body. The contract the rest of the system sees is identical either way.
+
+```gdscript
+# npc_base.gd
+extends CharacterBody3D
+class_name NPCBase
+
+# Contract for everything above this node:
+#   move_to(pos)              walk there, emits arrived
+#   align_to(basis)           turn in place, for settling into a slot
+#   stop()                    cancel
+#   is_moving / is_running    READ ONLY, the FSM or BT picks animation from these
+#
+# The state machine never writes is_moving or is_running. It reads them.
+
+signal arrived
+signal path_failed
+
+const ARRIVE_DIST: float = 0.4
+const RUN_DIST: float = 25.0
+const TURN_SPEED: float = 8.0
+const GRAVITY: float = 9.8
+const FLOOR_STICK: float = -0.5
+
+@onready var _model: Node3D = $Model
+@onready var _tree: AnimationTree = $AnimationTree
+@onready var _agent: NavigationAgent3D = $NavigationAgent3D
+
+var is_moving: bool = false
+var is_running: bool = false
+
+var _has_target: bool = false
+var _face_override: bool = false
+var _face_yaw: float = 0.0
+var _nav_ready: bool = false
+
+func _ready() -> void:
+    _agent.path_desired_distance = ARRIVE_DIST
+    _agent.target_desired_distance = ARRIVE_DIST
+    call_deferred("_wait_for_nav")
+
+func _wait_for_nav() -> void:
+    # the navigation map needs one physics frame before the first query
+    await get_tree().physics_frame
+    _nav_ready = true
+
+# ---------------------------------------------------------------- public API
+
+func move_to(target: Vector3) -> void:
+    _face_override = false
+    _agent.target_position = target
+    _has_target = true
+
+func align_to(target_basis: Basis) -> void:
+    # settling into a slot: stop walking, turn to face the slot direction
+    _has_target = false
+    _face_override = true
+    _face_yaw = target_basis.get_euler().y
+
+func stop() -> void:
+    _has_target = false
+    _face_override = false
+    is_moving = false
+    is_running = false
+    velocity.x = 0.0
+    velocity.z = 0.0
+
+func is_facing_target(tolerance_deg: float = 5.0) -> bool:
+    if not _face_override:
+        return true
+    return absf(angle_difference(rotation.y, _face_yaw)) < deg_to_rad(tolerance_deg)
+
+# ------------------------------------------------------------------ per tick
+
+func _physics_process(delta: float) -> void:
+    _update_intent()
+    _face(delta)
+    _apply_root_motion(delta)
+
+    if is_on_floor():
+        velocity.y = FLOOR_STICK
+    else:
+        velocity.y -= GRAVITY * delta
+
+    move_and_slide()
+
+func _update_intent() -> void:
+    if not _has_target or not _nav_ready:
+        is_moving = false
+        is_running = false
+        return
+
+    if not _agent.is_target_reachable():
+        _has_target = false
+        is_moving = false
+        is_running = false
+        path_failed.emit()
+        return
+
+    if _agent.is_navigation_finished():
+        _has_target = false
+        is_moving = false
+        is_running = false
+        arrived.emit()
+        return
+
+    is_moving = true
+    is_running = _agent.distance_to_target() > RUN_DIST
+
+func _face(delta: float) -> void:
+    var wanted_yaw: float
+    if _face_override:
+        wanted_yaw = _face_yaw
+    elif is_moving:
+        var to: Vector3 = _agent.get_next_path_position() - global_position
+        to.y = 0.0
+        if to.length_squared() < 0.0001:
+            return
+        # mesh fronts +Z, so atan2(x, z) aims +Z along dir
+        var dir: Vector3 = to.normalized()
+        wanted_yaw = atan2(dir.x, dir.z)
+    else:
+        return
+    rotation.y = lerp_angle(rotation.y, wanted_yaw, TURN_SPEED * delta)
+
+func _apply_root_motion(delta: float) -> void:
+    if not is_moving or delta <= 0.0:
+        velocity.x = 0.0
+        velocity.z = 0.0
+        return
+	# the active clip's root bone displacement, rotated into world space, is
+	# this tick's horizontal velocity. orthonormalized() strips any scale on
+    # the model node, which would otherwise multiply the motion.
+    var root_motion: Vector3 = _tree.get_root_motion_position()
+    var motion: Vector3 = _model.global_transform.basis.orthonormalized() * root_motion
+    velocity.x = motion.x / delta
+    velocity.z = motion.z / delta
+```
+
+Swap the teleport from step 1 for `move_to(loc.global_position)`.
+
+**Facing follows the path, not the goal.** `_face` aims at `get_next_path_position()`, not at the final target. Aim at the target and the NPC leans into walls on every corner.
+
+**Never write intent from a state.** If a LimboHSM state calls something like `handle_locomotion()` to set `is_moving`, then intent only refreshes while that state happens to be active, and one state that forgets leaves the NPC sliding forever. Intent is computed once per physics tick here, states only read it:
+
+```gdscript
+# locomotion state
+func _update(delta: float) -> void:
+    if not agent.is_moving:
+        dispatch(EVENT_FINISHED)
+    elif agent.is_running and _current != "running":
+        _play("running")
+```
+
+**Set loop mode at import**, not at runtime. Looping the clip in `_ready` mutates a shared Animation resource once per instance, so two hundred NPCs do the same edit two hundred times at load. Use Advanced Import Settings on the .glb.
+
+Use `NavigationLink3D` for doors, ladders and jumps. Do not special case them in NPC code. The agent routes through them and you handle traversal when `get_next_path_position()` lands inside a link.
+
+### The root motion tradeoff
+
+**Avoidance does not compose with root motion.** `velocity_computed` hands you a corrected velocity that you cannot honour, because speed is whatever the animation produced. Two options:
+
+- leave avoidance off and let slot reservation (step 3) keep NPCs apart, which is enough for scheduled town NPCs
+- keep avoidance and scale playback: `_tree.set(&"parameters/TimeScale/scale", clampf(safe.length() / nominal_speed, 0.3, 1.5))`
+
+**Speed is authored, not tuned.** You cannot set `speed = 3.0` any more. Walk pace comes from the clip, so if an NPC needs to be faster you either scale the TimeScale node or blend toward the run clip earlier by lowering `RUN_DIST`.
+
+**Gate:** NPCs walk their schedule with feet planted, take corners without clipping walls, and recover correctly if you drop one on the far side of the map mid day.
+
+---
+
+## Step 3. Smart objects with slots and reservation
+
+This is what makes the system scale. Place a new bench and every NPC can use it.
+
+```gdscript
+# smart_object.gd
+class_name SmartObject extends Node3D
+
+@export var object_type: StringName          # "counter", "bed", "stool"
+@export var location_tag: StringName         # which WorldLocation it belongs to
+@export var slots: Array[NodePath] = []      # Marker3D children
+
+var _reserved: Dictionary = {}               # slot index -> npc_id
+
+func _ready() -> void:
+    LocationRegistry.register_object(self)
+
+func free_slot(npc_id: StringName) -> int:
+    for i in slots.size():
+        if not _reserved.has(i):
+            return i
+        if _reserved[i] == npc_id:
+            return i                          # already ours
+    return -1
+
+func reserve(index: int, npc_id: StringName) -> bool:
+    if index < 0 or index >= slots.size():
+        return false
+    if _reserved.has(index) and _reserved[index] != npc_id:
+        return false
+    _reserved[index] = npc_id
+    return true
+
+func release(npc_id: StringName) -> void:
+    for i in _reserved.keys():
+        if _reserved[i] == npc_id:
+            _reserved.erase(i)
+
+func slot_transform(index: int) -> Transform3D:
+    return (get_node(slots[index]) as Node3D).global_transform
+```
+
+Add to the registry:
+
+```gdscript
+func find_object(location_tag: StringName, object_type: StringName,
+                 npc_id: StringName) -> SmartObject:
+    for obj in _objects.get(location_tag, []):
+        if obj.object_type == object_type and obj.free_slot(npc_id) != -1:
+            return obj
+    return null
+```
+
+Always release on death, on despawn and on interruption. A leaked reservation is the bug you will spend an evening on: one stool nobody can ever sit on again.
+
+**Gate:** five NPCs given the same tavern activity spread across five stools, and the sixth waits or picks a fallback instead of clipping into someone.
+
+---
+
+## Step 4. ActivityTask, the runtime half of an activity
+
+`ActivityResource` is shared between every NPC using it, so it must stay read only. All mutable state goes here.
+
+```gdscript
+# activity_task.gd
+class_name ActivityTask extends RefCounted
+
+enum State { GOTO, SETTLE, PERFORM, DONE, FAILED }
+
+var resource: ActivityResource
+var npc: NPCBase
+var state: State = State.GOTO
+var object: SmartObject
+var slot: int = -1
+var minutes_done: int = 0
+var window_end: int = -1        # schedule minute this task stops making sense
+
+func _init(res: ActivityResource, owner: NPCBase) -> void:
+    resource = res
+    npc = owner
+
+func still_valid(now: int) -> bool:
+    if window_end < 0:
+        return true
+    return now < window_end
+
+func release() -> void:
+    if object:
+        object.release(npc.npc_id)
+        object = null
+        slot = -1
+
+func pause() -> void:
+    release()
+    npc.stop()
+
+func finish() -> void:
+    release()
+    state = State.DONE
+```
+
+`create_task()` on the resource keeps construction in one place:
+
+```gdscript
+# in activity_resource.gd
+func create_task(npc: NPCBase) -> ActivityTask:
+    return ActivityTask.new(self, npc)
+```
+
+**Gate:** interrupt an NPC halfway to the tavern, confirm the stool is released immediately and another NPC can claim it.
+
+---
+
+## Step 5. Goal stack and player commands
+
+Interruption is a stack, not a transition table. Every transition you write by hand is a combination you have to maintain.
+
+```gdscript
+# brain.gd
+class_name Brain extends Node
+
+@export var schedule: NPCSchedule
+@export var personality: NPCPersonality
+
+var npc: NPCBase
+var current: ActivityTask
+var _stack: Array[ActivityTask] = []
+
+func _ready() -> void:
+    npc = get_parent()
+    GameClock.minute_changed.connect(_on_minute_changed)
+
+func _on_minute_changed(now: int) -> void:
+    if current and current.state in [ActivityTask.State.DONE, ActivityTask.State.FAILED]:
+        pop_goal()
+        return
+    if _stack.is_empty():
+        var wanted := schedule.entry_at(now)
+        if wanted and (current == null or current.resource != wanted.activity):
+            _replace_scheduled(wanted.activity)
+
+func push_goal(task: ActivityTask) -> void:
+    if current:
+        if not current.resource.interruptible:
+            return
+        current.pause()
+        _stack.push_back(current)
+    current = task
+    npc.blackboard.set_var(&"goal", task)
+
+func pop_goal() -> void:
+    var now := GameClock.total_minutes
+    if current:
+        current.release()
+    while not _stack.is_empty():
+        var t: ActivityTask = _stack.pop_back()
+        if t.still_valid(now):
+            current = t
+            npc.blackboard.set_var(&"goal", t)
+            return
+    _replace_scheduled(schedule.entry_at(now).activity)
+
+func _replace_scheduled(res: ActivityResource) -> void:
+    if current:
+        current.release()
+    current = res.create_task(npc)
+    npc.blackboard.set_var(&"goal", current)
+```
+
+`still_valid` is the line that makes it believable. If the player holds an NPC in conversation for two in game hours, resuming "walk to the bakery" is wrong. Ask the schedule again.
+
+Player commands ride the same rail:
+
+```gdscript
+func receive_command(cmd: ActivityResource, from_player: Node) -> bool:
+    var reaction := personality.evaluate(cmd, self)
+    match reaction:
+        NPCPersonality.Reaction.REFUSE:
+            npc.say(personality.refusal_line)
+            return false
+        NPCPersonality.Reaction.DELAY:
+            npc.say(personality.delay_line)
+            return false
+        _:
+            var task := cmd.create_task(npc)
+            task.window_end = GameClock.total_minutes + 120
+            push_goal(task)
+            return true
+```
+
+Refusal is simply never pushing the goal. No special case anywhere else in the system.
+
+**Gate:** interrupt an NPC at 08:00, hold them until 12:30, release. They should go to the noon activity, not resume the morning one. Interrupt at 08:00 and release at 08:05 and they should resume exactly what they were doing.
+
+---
+
+## Step 6. Swap the runner for a LimboAI tree
+
+Blackboard keys the tree reads:
+
+| key | written by |
+|---|---|
+| `goal` | Brain |
+| `target_position` | BTResolveTarget |
+| `smart_object` / `slot` | BTReserveSlot |
+| `threat` | perception |
+| `player_focus` | interaction area |
+
+Tree shape, a reactive selector so higher branches preempt without any manual transition:
+
+```
+Selector (reactive)
+├── Sequence  "threat"
+│     ├── CheckVar threat != null
+│     └── Flee
+├── Sequence  "player interaction"
+│     ├── CheckVar player_focus != null
+│     └── FaceAndTalk
+├── Sequence  "run current goal"
+│     ├── BTResolveTarget      goal -> location -> smart object -> slot transform
+│     ├── BTReserveSlot
+│     ├── BTMoveTo             calls move_to, RUNNING until the arrived signal
+│     ├── BTAlignToSlot        calls align_to, RUNNING until is_facing_target()
+│     └── BTPerformActivity    plays animation, ticks minutes_done, SUCCESS at min_duration
+└── BTWander                   fallback
+```
+
+Template for a custom task:
+
+```gdscript
+# bt_move_to.gd
+@tool
+class_name BTMoveTo extends BTAction
+
+@export var position_var: StringName = &"target_position"
+
+var _requested: bool = false
+var _done: bool = false
+var _failed: bool = false
+
+func _enter() -> void:
+    var npc: NPCBase = agent
+    _requested = false
+    _done = false
+    _failed = false
+    npc.arrived.connect(_on_arrived)
+    npc.path_failed.connect(_on_failed)
+
+func _exit() -> void:
+    var npc: NPCBase = agent
+    npc.arrived.disconnect(_on_arrived)
+    npc.path_failed.disconnect(_on_failed)
+    if _requested and not _done:
+        npc.stop()
+
+func _tick(_delta: float) -> Status:
+    var npc: NPCBase = agent
+    if not _requested:
+        npc.move_to(blackboard.get_var(position_var, Vector3.ZERO))
+        _requested = true
+        return RUNNING
+    if _failed:
+        return FAILURE
+    if _done:
+        return SUCCESS
+    return RUNNING
+
+func _on_arrived() -> void:
+    _done = true
+
+func _on_failed() -> void:
+    _failed = true
+```
+
+Drive the task off the `arrived` and `path_failed` signals rather than polling the agent. With root motion the body can still be finishing its last stride when the agent reports the path complete, and the signal fires on the tick the locomotion layer actually considers itself done.
+
+`BTAlignToSlot` is the same shape, one line shorter:
+
+```gdscript
+func _tick(_delta: float) -> Status:
+    var npc: NPCBase = agent
+    if not _requested:
+        npc.align_to(blackboard.get_var(&"slot_transform", Transform3D.IDENTITY).basis)
+        _requested = true
+    return SUCCESS if npc.is_facing_target() else RUNNING
+```
+
+Rule to hold to: **tasks read the blackboard, never the Brain.** The moment a BT task calls back into scheduling logic you have coupled the two and interruption starts producing surprises.
+
+**Gate:** a threat spawned mid activity preempts instantly without you writing a single transition, and the NPC returns to the correct goal afterwards.
+
+---
+
+## Step 7. Simulation LOD
+
+Only now, once you can feel the cost.
+
+```gdscript
+enum Lod { FULL, SIMPLE, ABSTRACT }
+
+func set_lod(new_lod: Lod) -> void:
+    if new_lod == lod:
+        return
+    match new_lod:
+        Lod.FULL:
+            if lod == Lod.ABSTRACT:
+                _place_at_abstract_position()
+            skeleton.visible = true
+            _tree.active = true
+            _use_root_motion = true
+            set_physics_process(true)
+        Lod.SIMPLE:
+            skeleton.visible = true
+            _tree.active = false          # no animation, so no root motion either
+            _use_root_motion = false      # fall back to a flat velocity
+            set_physics_process(true)
+        Lod.ABSTRACT:
+            _abstract_arrival = GameClock.total_minutes + _estimate_travel_minutes()
+            skeleton.visible = false
+            _tree.active = false
+            set_physics_process(false)
+    lod = new_lod
+```
+
+Root motion adds one wrinkle the velocity approach does not have: **an inactive AnimationTree produces no displacement**, so a SIMPLE NPC would stand still forever. Give `_apply_root_motion` a fallback branch:
+
+```gdscript
+func _apply_root_motion(delta: float) -> void:
+    if not is_moving or delta <= 0.0:
+        velocity.x = 0.0
+        velocity.z = 0.0
+        return
+
+    if not _use_root_motion:
+        # SIMPLE lod: nominal speed, sampled once from the walk clip at startup
+        var dir: Vector3 = (_agent.get_next_path_position() - global_position)
+        dir.y = 0.0
+        var flat: Vector3 = dir.normalized() * (RUN_SPEED if is_running else WALK_SPEED)
+        velocity.x = flat.x
+        velocity.z = flat.z
+        return
+
+    var root_motion: Vector3 = _tree.get_root_motion_position()
+    var motion: Vector3 = _model.global_transform.basis.orthonormalized() * root_motion
+    velocity.x = motion.x / delta
+    velocity.z = motion.z / delta
+```
+
+Measure `WALK_SPEED` and `RUN_SPEED` once from the clips rather than guessing, otherwise NPCs visibly change pace as they cross the LOD boundary:
+
+```gdscript
+# @tool helper: run once, paste the printed numbers in as constants
+func measure_clip_speed(clip_name: String) -> float:
+    var clip: Animation = _model.get_node("AnimationPlayer").get_animation(clip_name)
+    if clip == null or clip.length <= 0.0:
+        return 0.0
+    var track := clip.find_track("Armature/Skeleton3D:mixamorig_Hips", Animation.TYPE_POSITION_3D)
+    if track < 0:
+        return 0.0
+    var first: Vector3 = clip.position_track_interpolate(track, 0.0)
+    var last: Vector3 = clip.position_track_interpolate(track, clip.length)
+    return Vector2(last.x - first.x, last.z - first.z).length() / clip.length
+```
+
+At ABSTRACT an NPC is three values: current activity, location tag, arrival minute. Promotion places them at the right spot and hands the goal to the tree, which picks it up as though nothing happened. This works only because the Brain never touched nodes directly, which is the whole reason for the layering.
+
+**Gate:** two hundred NPCs, stable frame time, and walking up to any of them shows someone doing the right thing for the current hour.
+
+---
+
+## Debug tooling worth building at step 1
+
+- an overlay listing every NPC, current activity, task state and reserved slot
+- a time scrubber
+- `draw` of the current nav path
+- a button that force pushes a test command onto a selected NPC
+
+The overlay pays for itself before you finish step 3.

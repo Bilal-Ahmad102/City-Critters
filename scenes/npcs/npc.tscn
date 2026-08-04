@@ -1,56 +1,192 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://cnqxxxm754gcr"]
 
-[ext_resource type="Script" path="res://scripts/npcs/npc_base.gd" id="1_npc"]
-[ext_resource type="PackedScene" path="res://assets/Player/models/Mouse.blend" id="2_model"]
-[ext_resource type="Script" path="res://scripts/interaction/interaction_area.gd" id="3_ia"]
-[ext_resource type="Script" path="res://scripts/ui/map_marker.gd" id="4_marker"]
-[ext_resource type="Texture2D" path="res://addons/at-icons/node/happy_face.svg" id="5_icon"]
+[ext_resource type="Script" uid="uid://vepjl7mk4c0i" path="res://scripts/npcs/npc_base.gd" id="1_npc"]
+[ext_resource type="PackedScene" uid="uid://boj2sqnhveqfg" path="res://assets/NPC/casual_girl.blend" id="2_model"]
+[ext_resource type="Script" uid="uid://dr8pn8w6a1x82" path="res://scripts/npcs/state_machine.gd" id="3_sm"]
+[ext_resource type="Script" uid="uid://be4peydngc0lo" path="res://scripts/npcs/states/idle.gd" id="4_idle"]
+[ext_resource type="Script" uid="uid://kie4u0imkilq" path="res://scripts/npcs/states/walk.gd" id="5_walk"]
+[ext_resource type="Script" uid="uid://daq1s1dh50lyd" path="res://scripts/npcs/states/run.gd" id="6_run"]
+[ext_resource type="Script" uid="uid://ckcqksof7khb1" path="res://scripts/npcs/states/drinking.gd" id="7_1uxhp"]
+[ext_resource type="Script" uid="uid://c7wy8ootxm4m4" path="res://scripts/npcs/activities_handler.gd" id="8_myfjo"]
 
 [sub_resource type="CapsuleShape3D" id="body_cap"]
-radius = 0.3
-height = 1.3
+radius = 0.225
+height = 1.37
 
-[sub_resource type="CylinderShape3D" id="talk_cyl"]
-radius = 1.5
-height = 2.0
+[sub_resource type="AnimationNodeTransition" id="trans"]
+xfade_time = 0.15
+input_0/name = "idle"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "walk"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "run"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+input_3/name = "sit_park"
+input_3/auto_advance = false
+input_3/break_loop_at_end = false
+input_3/reset = true
+input_4/name = "sit_drink"
+input_4/auto_advance = false
+input_4/break_loop_at_end = false
+input_4/reset = true
+input_5/name = "drink"
+input_5/auto_advance = false
+input_5/break_loop_at_end = false
+input_5/reset = true
+input_6/name = "pickup"
+input_6/auto_advance = false
+input_6/break_loop_at_end = false
+input_6/reset = true
+input_7/name = "box_idle"
+input_7/auto_advance = false
+input_7/break_loop_at_end = false
+input_7/reset = true
+input_8/name = "looking"
+input_8/auto_advance = false
+input_8/break_loop_at_end = false
+input_8/reset = true
+input_9/name = "talking"
+input_9/auto_advance = false
+input_9/break_loop_at_end = false
+input_9/reset = true
+input_10/name = "waving"
+input_10/auto_advance = false
+input_10/break_loop_at_end = false
+input_10/reset = true
+input_11/name = "yawn"
+input_11/auto_advance = false
+input_11/break_loop_at_end = false
+input_11/reset = true
+input_12/name = "sleeping"
+input_12/auto_advance = false
+input_12/break_loop_at_end = false
+input_12/reset = true
 
-[node name="NPC" type="CharacterBody3D"]
+[sub_resource type="AnimationNodeAnimation" id="a_idle"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="a_run"]
+animation = &"running"
+
+[sub_resource type="AnimationNodeAnimation" id="a_walk"]
+animation = &"walking"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1uxhp"]
+animation = &"Drinking"
+
+[sub_resource type="AnimationNodeAnimation" id="a_sit_park"]
+animation = &"Sitting_in_park"
+
+[sub_resource type="AnimationNodeAnimation" id="a_box_idle"]
+animation = &"Box Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="a_looking"]
+animation = &"Looking Around"
+
+[sub_resource type="AnimationNodeAnimation" id="a_sleeping"]
+animation = &"Sleeping Idle"
+
+[sub_resource type="AnimationNodeBlendTree" id="tree"]
+nodes/output/position = Vector2(640, 120)
+nodes/a_idle/node = SubResource("a_idle")
+nodes/a_idle/position = Vector2(80, 40)
+nodes/a_walk/node = SubResource("a_walk")
+nodes/a_walk/position = Vector2(80, 160)
+nodes/a_run/node = SubResource("a_run")
+nodes/a_run/position = Vector2(80, 280)
+nodes/Transition/node = SubResource("trans")
+nodes/Transition/position = Vector2(380, 120)
+nodes/drinking/node = SubResource("AnimationNodeAnimation_1uxhp")
+nodes/drinking/position = Vector2(80, 380)
+nodes/a_sit_park/node = SubResource("a_sit_park")
+nodes/a_sit_park/position = Vector2(80, 480)
+nodes/a_box_idle/node = SubResource("a_box_idle")
+nodes/a_box_idle/position = Vector2(80, 580)
+nodes/a_looking/node = SubResource("a_looking")
+nodes/a_looking/position = Vector2(80, 680)
+nodes/a_sleeping/node = SubResource("a_sleeping")
+nodes/a_sleeping/position = Vector2(80, 780)
+node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"a_idle", &"Transition", 1, &"a_walk", &"Transition", 2, &"a_run", &"Transition", 5, &"drinking", &"Transition", 3, &"a_sit_park", &"Transition", 7, &"a_box_idle", &"Transition", 8, &"a_looking", &"Transition", 12, &"a_sleeping"]
+
+[node name="NPC" type="CharacterBody3D" unique_id=530122288]
 script = ExtResource("1_npc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1387170386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68, 0)
 shape = SubResource("body_cap")
 
-[node name="Model" parent="." instance=ExtResource("2_model")]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1120050001]
+target_desired_distance = 1.2
+path_max_distance = 3.0
 
-[node name="InteractionArea" type="Area3D" parent="."]
-script = ExtResource("3_ia")
-prompt_text = "Talk"
+[node name="Model" parent="." unique_id=1567274946 instance=ExtResource("2_model")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("talk_cyl")
+[node name="Skeleton3D" parent="Model/Armature" parent_id_path=PackedInt32Array(1567274946, 575171748) index="0" unique_id=354343201]
+bones/1/position = Vector3(0.012394642, 1.0714885, -0.045207296)
+bones/1/rotation = Quaternion(-0.028881432, -0.1356255, 0.02676406, 0.9899774)
+bones/2/rotation = Quaternion(-0.031235823, -0.0013482108, -0.055702534, 0.9979578)
+bones/3/rotation = Quaternion(0.021251492, -0.011011912, -0.016244147, 0.9995815)
+bones/4/rotation = Quaternion(0.021277249, -0.009801858, -0.01646804, 0.99959)
+bones/5/position = Vector3(8.8475645e-09, 0.25007972, -7.847104e-09)
+bones/5/rotation = Quaternion(0.035123296, 0.0070602363, 0.029293863, 0.99892867)
+bones/6/position = Vector3(9.313226e-10, 0.18133236, 0.001872105)
+bones/6/rotation = Quaternion(-0.10479908, 0.022655554, 0.008638672, 0.9941978)
+bones/8/position = Vector3(0.154065, 0.23686522, 0.0006140629)
+bones/8/rotation = Quaternion(0.61683464, 0.38106728, -0.5357595, 0.43274078)
+bones/9/rotation = Quaternion(0.5139572, 0.0077470746, -0.045964368, 0.8565485)
+bones/10/rotation = Quaternion(-0.04094876, 0.0068469667, 0.20789766, 0.97726905)
+bones/12/position = Vector3(-0.15406613, 0.23685643, 0.00026626585)
+bones/12/rotation = Quaternion(0.5954698, -0.4020318, 0.54640716, 0.4303784)
+bones/13/position = Vector3(-6.936685e-09, 0.25806287, 3.4869404e-07)
+bones/13/rotation = Quaternion(0.543431, -0.065063186, -0.030099226, 0.83638734)
+bones/14/position = Vector3(2.5474753e-08, 0.52183133, -5.6105534e-08)
+bones/14/rotation = Quaternion(-0.041852262, -0.008198127, -0.24364059, 0.9689275)
+bones/16/rotation = Quaternion(0.006996416, 0.028719785, 0.99568003, 0.08802066)
+bones/17/rotation = Quaternion(-0.20293762, -0.07716807, -0.006821622, 0.97612244)
+bones/18/rotation = Quaternion(0.7493759, 0.2944069, -0.16565265, 0.5694908)
+bones/19/rotation = Quaternion(0.013740376, -0.0032528976, 0.11662229, 0.993076)
+bones/21/rotation = Quaternion(-0.07207346, 0.12729146, 0.98571384, 0.083490185)
+bones/22/rotation = Quaternion(-0.3237116, -0.060625914, 0.0021929706, 0.9442089)
+bones/23/rotation = Quaternion(0.7564359, -0.3274157, 0.2876043, 0.48773727)
+bones/24/rotation = Quaternion(0.00089422497, -0.0033059157, -0.09595564, 0.99537975)
 
-[node name="Prompt" type="Label3D" parent="InteractionArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
-visible = false
-pixel_size = 0.005
-billboard = 1
-text = "Talk"
-font_size = 48
-outline_size = 12
+[node name="AnimationPlayer" parent="Model" index="1" unique_id=1004629256]
+root_motion_track = NodePath("Armature/Skeleton3D:root")
 
-[node name="NameTag" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
-modulate = Color(1, 0.95, 0.8, 1)
-pixel_size = 0.004
-billboard = 1
-text = "NPC"
-font_size = 40
-outline_size = 10
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=766442117]
+unique_name_in_owner = true
+root_node = NodePath("%AnimationTree/../Model")
+root_motion_track = NodePath("Armature/Skeleton3D:root")
+tree_root = SubResource("tree")
+anim_player = NodePath("../Model/AnimationPlayer")
+parameters/Transition/current_state = "idle"
+parameters/Transition/transition_request = ""
+parameters/Transition/current_index = 0
 
-[node name="MapMarker" type="Node3D" parent="."]
-script = ExtResource("4_marker")
-color = Color(1, 0.6, 0.75, 1)
-icon = ExtResource("5_icon")
-legend = "Townsfolk (talk & gift)"
+[node name="state_machine" type="LimboHSM" parent="." unique_id=456896294]
+unique_name_in_owner = true
+script = ExtResource("3_sm")
+
+[node name="idle" type="LimboState" parent="state_machine" unique_id=938047640]
+script = ExtResource("4_idle")
+
+[node name="walk" type="LimboState" parent="state_machine" unique_id=1610233879]
+script = ExtResource("5_walk")
+
+[node name="run" type="LimboState" parent="state_machine" unique_id=126664703]
+script = ExtResource("6_run")
+
+[node name="drinking" type="LimboState" parent="state_machine" unique_id=1000320671]
+script = ExtResource("7_1uxhp")
+
+[node name="Activities_Handler" type="Node" parent="." unique_id=751020406]
+script = ExtResource("8_myfjo")
+
+[editable path="Model"]

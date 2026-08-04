@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActivityResource" format=3 uid="uid://p47panrj5l8d"]
+
+[ext_resource type="Script" uid="uid://bse02roo5y8sv" path="res://NPC/data/activirt_resource.gd" id="1_suc2k"]
+
+[resource]
+script = ExtResource("1_suc2k")
+id = &"wait"
+location_tag = &"Waiting_Area"
+object_type = &"bench"
+animation = &"sit_park"
+metadata/_custom_type_script = "uid://bse02roo5y8sv"

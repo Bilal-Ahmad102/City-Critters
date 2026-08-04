@@ -27,9 +27,16 @@ GameManager="*uid://co30255acx5hd"
 MultiplayerManager="*uid://becb51omqicym"
 PlayerData="*uid://21ergkekotih"
 JobStats="*res://autoloads/job_stats.gd"
+GameClock="*res://autoloads/game_clock.gd"
 SteamManager="*res://Steam_Multiplayer/steam.gd"
 MultiplayerGlobal="*res://Steam_Multiplayer/multiplayer_global.gd"
 Multiplayer="*res://Steam_Multiplayer/network_manager.gd"
+LocationRegistry="*uid://dqutrh2hpdbj2"
+
+[debug]
+
+shapes/navigation/3d/enable_agent_paths=false
+shapes/navigation/2d/enable_agent_paths=false
 
 [display]
 
@@ -37,7 +44,7 @@ window/size/mode=3
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/godotsteam/plugin.cfg")
+enabled=PackedStringArray("res://addons/godotsteam/plugin.cfg", "res://addons/sky_3d/plugin.cfg")
 
 [input]
 

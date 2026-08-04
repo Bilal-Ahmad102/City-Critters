@@ -11,8 +11,9 @@ Godot binary on this machine: `/home/bilal_ahmad/Documents/Godot_v4.7-stable_lin
 ## Commands
 
 ```bash
-# Smoke test (scene loads + job/stats logic asserts) — run after any change:
+# Smoke tests — run after any change:
 godot --headless --path . -s check_jobs.gd        # expect "ALL CHECKS PASSED"
+godot --headless --path . -s check_npcs.gd        # expect "ALL NPC CHECKS PASSED" (clock/sky/nav/schedules/dialogue)
 
 # After adding/renaming a class_name or new resources, rebuild the import/class cache once,
 # or headless runs will parse-fail on the new class:
@@ -36,6 +37,7 @@ There is no lint step; the editor/engine parse is the check. **GDScript warnings
 - `CurrencySystem` → `PlayerData` — single wallet. Jobs never touch `PlayerData.currency` directly; they call `CurrencySystem.earn()`, which saves and emits `currency_changed` (HUD listens).
 - `PlayerData` — currency, cosmetics, NPC rapport; persists to `user://player.cfg`.
 - `JobStats` — lifetime per-job stats fed by `job_base.end_job`; persists to `user://job_stats.cfg`. Both saves are **skipped when headless** so tests don't pollute real saves — but windowed test runs DO save.
+- `GameClock` — canonical in-game time (`hour` float, `day`, signals `time_changed`/`hour_changed`/`day_changed`; 20 real minutes = 1 game day; persists to `user://clock.cfg`, headless-skipped). If the world has a Sky3D node in the `"sky3d"` group (Demo.scn does), the clock disables Sky3D's own time and pushes `current_time` every frame — GameClock is the single time source. NPC schedules and the HUD clock label listen to it. The `addons/sky_3d` copy was hand-fixed (removed a broken `WeatherController` reference); don't blindly re-download it.
 
 ### Job system (`scripts/jobs/`)
 All four jobs (Food Service, Retail, Delivery, Corporate) extend `job_base.gd`, which owns the shift lifecycle: `start_job()` → `_on_job_tick()` → `end_job()` pays `_earned` once via `CurrencySystem` and records the summary in `JobStats`. A new job overrides `_on_job_started/_on_job_tick/_on_job_ended/_build_summary`, calls `_award(pay)` for good play, and sets `job_type` in `_init` — currency, stats, and the stats screen then work with no extra wiring.
@@ -49,13 +51,15 @@ Entry point for all world interaction is `InteractionArea` (`scripts/interaction
 
 ### UI wiring is group-based, not reference-based
 - `MapMarker` (`scripts/ui/map_marker.gd`) — child of any Node3D, self-joins `"map_markers"`; `set_objective(true)` adds `"map_objective"`. The `Minimap` control scans these groups every frame — drop a marker under anything and it appears on the map.
-- HUD (`scenes/ui/hud/hud.tscn`) — currency label + notifications + `JobStatsScreen` (toggled by the `job_stats` input action, J).
+- HUD (`scenes/ui/hud/hud.tscn`) — currency label + notifications + `JobStatsScreen` (toggled by the `job_stats` input action, J) + `NPCScheduleDebug` (F3 = per-NPC schedule status panel, H = advance GameClock one hour, F4 = spectator camera that orbits each NPC in turn and exits after the last). Instanced in town.tscn, st_guy_blockout.tscn, AND Demo.scn (added by repack). The Minimap draws a game-clock label ("12:00") above the map square.
 - Job overlays (`food_service_ui.gd`, `corporate_ui.gd`) build their UI trees in code; the .tscn files stay trivial on purpose.
 
 ### Worlds
 `scenes/city/town.tscn` (main map; buildings assembled by parametric `@tool` scripts `ModularBuilding`/`CityStreet`) and `scenes/city/st_guy_blockout.tscn` (CSG-only village generated from a watabou map). Each world contains job stations, delivery points, Minimap + HUD instances, and a `MultiplayerSpawner` + `PlayerSpawnManager` that spawns one player per peer (or one local player when offline).
 
-Early skeletons awaiting content: NPCs (`scripts/npcs/`), hobbies (`scripts/hobbies/`), housing grid placement (`scripts/housing/`), dialogue UI.
+NPCs (`scripts/npcs/npc_base.gd` + `scenes/npcs/npc.tscn`): talk/gift/rapport + GameClock schedules. Movement = NavigationAgent3D path following + root motion (AnimationTree Transition "idle"/"walk", same root_motion_track as the player; walk ≈ 0.73 m/s). Demo.scn contains a baked `NavRegion` (NavigationRegion3D, baked offline from static colliders via a repack script — rebake after changing town geometry).
+
+Early skeletons awaiting content: hobbies (`scripts/hobbies/`), housing grid placement (`scripts/housing/`).
 
 ## Gotchas (each of these has cost real debugging time)
 

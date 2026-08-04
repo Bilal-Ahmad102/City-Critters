@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ActivityResource" format=3]
+
+[ext_resource type="Script" path="res://NPC/data/activirt_resource.gd" id="1_ppki7"]
+
+[resource]
+script = ExtResource("1_ppki7")
+id = &"work"
+location_tag = &"store"
+object_type = &""
+animation = &"box_idle"
+min_duration_minutes = 600
+interruptible = true
+wander_radius = 0.0

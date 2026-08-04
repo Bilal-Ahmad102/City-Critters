@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="NPCSchedule" format=3 uid="uid://bgnttt2f2l2m3"]
+
+[ext_resource type="Script" uid="uid://drrvt3h86ro54" path="res://NPC/data/npc_schedule.gd" id="1_dpxnb"]
+[ext_resource type="Script" uid="uid://bse02roo5y8sv" path="res://NPC/data/activirt_resource.gd" id="2_5uy46"]
+[ext_resource type="Script" uid="uid://nclx8evxr6qn" path="res://NPC/data/schedule_entry.gd" id="3_x0m00"]
+
+[sub_resource type="Resource" id="Resource_hne1e"]
+script = ExtResource("2_5uy46")
+id = &"work"
+location_tag = &"store"
+min_duration_minutes = 600
+
+[sub_resource type="Resource" id="Resource_rmkra"]
+script = ExtResource("1_dpxnb")
+activity = SubResource("Resource_hne1e")
+
+[sub_resource type="Resource" id="Resource_avej0"]
+script = ExtResource("2_5uy46")
+id = &"relax"
+location_tag = &"park"
+min_duration_minutes = 240
+
+[sub_resource type="Resource" id="Resource_vn33r"]
+script = ExtResource("1_dpxnb")
+start_hour = 18
+activity = SubResource("Resource_avej0")
+
+[resource]
+script = ExtResource("3_x0m00")
+entries = Array[ExtResource("1_dpxnb")]([SubResource("Resource_rmkra"), SubResource("Resource_vn33r")])

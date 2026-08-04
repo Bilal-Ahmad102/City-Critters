@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ActivityResource" format=3]
+
+[ext_resource type="Script" path="res://NPC/data/activirt_resource.gd" id="1_m48lk"]
+
+[resource]
+script = ExtResource("1_m48lk")
+id = &"relax"
+location_tag = &"park"
+object_type = &""
+animation = &"sit_park"
+min_duration_minutes = 240
+interruptible = true
+wander_radius = 0.0

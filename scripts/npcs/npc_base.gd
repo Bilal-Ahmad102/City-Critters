@@ -1,111 +1,311 @@
+# npc_base.gd
 extends CharacterBody3D
 class_name NPCBase
-# NPCBase — a townsfolk critter. Stands at its post playing Idle and chats when
-# the player presses E in range (InteractionArea child). Empty-handed = talk
-# (small rapport bonus on the first chat each session); carrying food = gift it,
-# and items in NPCData.gift_preferences pay extra rapport. Rapport lives in
-# PlayerData.rapport and persists with the save.
-# Schedules / navigation come later, once a game clock exists.
 
-const DIALOGUE_UI_SCENE := preload("res://scenes/ui/menus/dialogue/dialogue_ui.tscn")
+# Contract for everything above this node:
+#   move_to(pos)              walk there, emits arrived
+#   align_to(basis)           turn in place, for settling into a slot
+#   stop()                    cancel
+#   is_moving / is_running    READ ONLY, the FSM or BT picks animation from these
+#
+# The state machine never writes is_moving or is_running. It reads them.
 
-@export var npc_data: NPCData
-# Optional recolor for the shared critter mesh (see PlayerData.BODY_MATERIALS).
-@export var body_material: Material
+signal arrived
+signal path_failed
 
-@export var talk_rapport: int = 2         # first chat per session
-@export var gift_rapport: int = 10        # any gift
-@export var loved_gift_rapport: int = 25  # gift listed in gift_preferences
+const ARRIVE_DIST: float = 0.4
+# The baked navmesh sits ~0.5 above the floor the NPC stands on. NavigationAgent3D
+# measures waypoint arrival in full 3D, so the desired distances must clear that
+# vertical gap or the agent never advances past the first path point.
+const PATH_DESIRED: float = 1.0
+const TARGET_DESIRED: float = 1.2
+const RUN_DIST: float = 25.0
+# Time to slide+turn from the approach point into a seat pose once arrived.
+const SETTLE_TIME: float = 0.3
+# How long the target may stay unreachable before we give up. The nav map takes a
+# few frames (a big navmesh can take ~200) to compute a path after move_to(), during
+# which is_target_reachable() reads false; a one-frame abort would kill every route.
+const UNREACHABLE_TIMEOUT: float = 3.0
+const TURN_SPEED: float = 8.0
+const GRAVITY: float = 9.8
+const FLOOR_STICK: float = -0.5
 
-var _talked: bool = false
+@onready var _model: Node3D = $Model
+@onready var _tree: AnimationTree = $AnimationTree
+@onready var _agent: NavigationAgent3D = $NavigationAgent3D
 
-@onready var _interaction: InteractionArea = $InteractionArea
-@onready var _name_tag: Label3D = $NameTag
-@onready var _anim: AnimationPlayer = $Model/AnimationPlayer
+var is_moving: bool = false
+var is_running: bool = false
+
+# Shared runtime scratch for the Brain / behaviour tree (goal, slot, timer).
+var blackboard: Blackboard = Blackboard.new()
+
+var _has_target: bool = false
+var _face_override: bool = false
+var _face_yaw: float = 0.0
+var _nav_ready: bool = false
+var _unreachable_time: float = 0.0
+
+@export var npc_id: StringName
+@export var schedule: NPCSchedule
+
+var current_activity: ActivityResource
+
+# The clip the idle state plays when the NPC is standing still. move_to resets it to
+# "idle"; on arrival it becomes the current activity's animation (sleeping/sit_park/…).
+var stationary_anim: StringName = &"idle"
+var _activity_start_minute: int = -1
+
+# step 3: the SmartObject slot this NPC has reserved for the current activity (a chair,
+# a counter stool, a bed). -1 / null means the activity just uses the location centre.
+var _object: SmartObject = null
+var _slot: int = -1
+
+# Seat settling / seated state (physically on a bench). While seated, physics is
+# frozen so gravity doesn't drop her off the object.
+var _settling: bool = false
+var _seated: bool = false
+var _settle_t: float = 0.0
+var _seat_xform: Transform3D = Transform3D.IDENTITY
+var _settle_from_pos: Vector3 = Vector3.ZERO
+var _settle_from_yaw: float = 0.0
+
 
 func _ready() -> void:
-	add_to_group("npcs")
-	_name_tag.text = display_name()
-	var marker: Node = get_node_or_null("MapMarker")
-	if marker != null:
-		marker.label = display_name()
-	if body_material != null:
-		var mesh: MeshInstance3D = $Model/Armature/Skeleton3D/Ch14
-		for i in mesh.mesh.get_surface_count():
-			mesh.set_surface_override_material(i, body_material)
-	if _anim.has_animation("Idle"):
-		_anim.get_animation("Idle").loop_mode = Animation.LOOP_LINEAR
-		_anim.play("Idle")
-	_interaction.interacted.connect(_on_interacted)
+	add_to_group("npc")
 
-func display_name() -> String:
-	if npc_data != null and npc_data.display_name != "":
-		return npc_data.display_name
-	return String(name)
+	# Mixamo clips import with loop_mode=0 (play-once). A root-motion locomotion clip
+	# would play once then hold its end pose (zero motion delta) and freeze the NPC
+	# mid-walk; a sustained activity clip (sleeping/sitting) would snap back to frame 0
+	# after one cycle. Force the looping ones to loop.
+	var ap: AnimationPlayer = $Model/AnimationPlayer
+	for clip in ["walking", "running", "Idle",
+			"Sleeping Idle", "Sitting_in_park", "Looking Around", "Box Idle"]:
+		if ap.has_animation(clip):
+			ap.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 
-func npc_id() -> String:
-	if npc_data != null and npc_data.npc_id != "":
-		return npc_data.npc_id
-	return String(name).to_lower()
+	arrived.connect(_on_arrived)
+	GameClock.minute_changed.connect(_on_minute_changed)
+	# Apply the opening schedule entry deferred, not inline: WorldLocation nodes
+	# register with LocationRegistry in their own _ready, which may run after this
+	# NPC's. Querying now would miss them ("No location registered").
+	call_deferred("_apply_current_schedule")
 
-func _on_interacted(by: Node3D) -> void:
-	_face(by)
-	var lines: Array = []
-	var carry: CarryComponent = null
-	if by.has_method("get_carry"):
-		carry = by.get_carry()
-	if carry != null and carry.is_carrying():
-		lines = _gift_lines(carry)
+	_agent.path_desired_distance = PATH_DESIRED
+	_agent.target_desired_distance = TARGET_DESIRED
+	call_deferred("_wait_for_nav")
+	
+func _physics_process(delta: float) -> void:
+	if _seated:
+		return                       # frozen on the seat until the schedule moves her
+	if _settling:
+		_settle(delta)
+		return
+
+	_update_intent(delta)
+	_face(delta)
+	_apply_root_motion(delta)
+
+	if !is_on_floor():
+		velocity.y -= GRAVITY * delta
+
+	move_and_slide()
+
+# Slide + turn from the approach spot into the seat pose over SETTLE_TIME, then hold.
+func _settle(delta: float) -> void:
+	_settle_t = minf(_settle_t + delta / SETTLE_TIME, 1.0)
+	var e: float = smoothstep(0.0, 1.0, _settle_t)
+	global_position = _settle_from_pos.lerp(_seat_xform.origin, e)
+	rotation.y = lerp_angle(_settle_from_yaw, _seat_xform.basis.get_euler().y, e)
+	if _settle_t >= 1.0:
+		global_position = _seat_xform.origin
+		_settling = false
+		_seated = true
+
+# Get off the seat and back onto the navmesh (the approach marker) before walking away.
+func _stand_up() -> void:
+	if _object != null and _slot >= 0 and (_seated or _settling):
+		global_position = _object.slot_transform(_slot).origin
+	_settling = false
+	_seated = false
+func _wait_for_nav() -> void:
+	# the navigation map needs one physics frame before the first query
+	await get_tree().physics_frame
+	_nav_ready = true
+
+func _apply_current_schedule() -> void:
+	_on_minute_changed(GameClock.total_minutes)
+
+func _on_minute_changed(minutes: int) -> void:
+	if schedule == null:
+		return
+	var entry: ScheduleEntry = schedule.entry_at(minutes)
+	if entry == null or entry.activity == current_activity:
+		return
+	var loc: WorldLocation = LocationRegistry.get_location(entry.activity.location_tag, npc_id)
+	if loc == null:
+		# Location not registered yet (or missing). Do NOT commit the activity, so
+		# the next minute tick retries instead of treating it as already handled.
+		return
+	current_activity = entry.activity
+	_stand_up()                     # get off any seat, back onto the navmesh
+	_release_slot()                 # let go of the previous activity's slot
+	_go_to_activity(entry.activity, loc)
+
+# Walk to the activity. If it names an object_type, reserve a free slot on a matching
+# SmartObject near the location and head for that exact slot; otherwise the location
+# centre (step 2 behaviour).
+func _go_to_activity(act: ActivityResource, loc: WorldLocation) -> void:
+	if act.object_type != &"":
+		var obj: SmartObject = LocationRegistry.find_object(
+				act.location_tag, act.object_type, npc_id, loc.global_position)
+		if obj != null:
+			var s: int = obj.free_slot(npc_id)
+			if s != -1 and obj.reserve(s, npc_id):
+				_object = obj
+				_slot = s
+				move_to(obj.slot_transform(s).origin)
+				return
+	move_to(loc.global_position)
+
+func _release_slot() -> void:
+	if _object != null:
+		_object.release(npc_id)
+	_object = null
+	_slot = -1
+
+func _exit_tree() -> void:
+	_release_slot()
+
+func _on_arrived() -> void:
+	# step 4: settle into the activity — play its clip and remember when it began so
+	# performed_minutes() / min_duration checks (used by interruption later) can read it.
+	_activity_start_minute = GameClock.total_minutes
+	if current_activity != null and current_activity.animation != &"":
+		stationary_anim = current_activity.animation
 	else:
-		lines = _talk_lines()
-	var ui: DialogueUI = _get_dialogue_ui()
-	# Dormant while chatting so the "Talk" prompt doesn't float over the box;
-	# re-armed when the dialogue closes.
-	_interaction.set_active(false)
-	ui.closed.connect(func() -> void: _interaction.set_active(true), CONNECT_ONE_SHOT)
-	ui.open_dialogue(display_name(), lines, by)
+		stationary_anim = &"idle"
+	_tree["parameters/Transition/transition_request"] = String(stationary_anim)
 
-func _talk_lines() -> Array:
-	var lines: Array = []
-	if npc_data != null:
-		lines = npc_data.dialogue_lines.duplicate()
-	if lines.is_empty():
-		lines = ["..."]
-	if not _talked:
-		_talked = true
-		lines.append(_award_rapport(talk_rapport))
-	return lines
+	# step 3: settle onto the reserved slot.
+	if _object != null and _slot >= 0:
+		if _object.has_seat(_slot):
+			# physically sit on the object: slide/turn from here into the seat pose.
+			_seat_xform = _object.seat_transform(_slot)
+			_settle_from_pos = global_position
+			_settle_from_yaw = rotation.y
+			_settle_t = 0.0
+			_settling = true
+			velocity = Vector3.ZERO
+		else:
+			# no seat: just face the way the slot points (counter, stand spot).
+			align_to(_object.slot_transform(_slot).basis)
 
-func _gift_lines(carry: CarryComponent) -> Array:
-	var item: String = carry.get_held_item()
-	carry.drop_item(item)
-	var loved: bool = npc_data != null and npc_data.gift_preferences.has(item)
-	var lines: Array = []
-	if loved:
-		lines.append("%s?! My absolute favorite! You remembered!" % item.capitalize())
-		lines.append(_award_rapport(loved_gift_rapport))
+# How many game-minutes the NPC has been performing the current activity.
+func performed_minutes() -> int:
+	if _activity_start_minute < 0:
+		return 0
+	return GameClock.total_minutes - _activity_start_minute
+
+# -------------------------------- public API
+
+func move_to(target: Vector3) -> void:
+	_face_override = false
+	_agent.target_position = target
+	_has_target = true
+	_unreachable_time = 0.0
+	# Walking overrides any activity pose; default the stationary clip back to idle
+	# until the NPC arrives and _on_arrived assigns the destination activity's clip.
+	stationary_anim = &"idle"
+
+func align_to(target_basis: Basis) -> void:
+	# settling into a slot: stop walking, turn to face the slot direction
+	_has_target = false
+	_face_override = true
+	_face_yaw = target_basis.get_euler().y
+
+func stop() -> void:
+	_has_target = false
+	_face_override = false
+	is_moving = false
+	is_running = false
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+func say(line: String) -> void:
+	# placeholder until dialogue UI; Brain / personality call this
+	print("[%s] %s" % [npc_id, line])
+
+func is_facing_target(tolerance_deg: float = 5.0) -> bool:
+	if not _face_override:
+		return true
+	return absf(angle_difference(rotation.y, _face_yaw)) < deg_to_rad(tolerance_deg)
+
+# ------------------------------------------------------------------ per tick
+
+
+
+func _update_intent(delta: float) -> void:
+	if not _has_target or not _nav_ready:
+		is_moving = false
+		is_running = false
+		return
+
+	# The nav map needs a few frames to build a path after move_to(); until it does,
+	# is_target_reachable() reads false. Treat that as "wait", not "fail" — only give
+	# up once it has stayed unreachable past UNREACHABLE_TIMEOUT.
+	if not _agent.is_target_reachable():
+		is_moving = false
+		is_running = false
+		_unreachable_time += delta
+		if _unreachable_time > UNREACHABLE_TIMEOUT:
+			_has_target = false
+			path_failed.emit()
+		return
+	_unreachable_time = 0.0
+
+	# is_navigation_finished() is ALSO true on the frames before the agent has
+	# computed a path (empty path == "finished"), which would fire a bogus arrival
+	# the instant move_to() is called. Only count it as arrival when we are actually
+	# within reach of the target.
+	var dist: float = _agent.distance_to_target()
+	if _agent.is_navigation_finished() and dist <= TARGET_DESIRED + 0.1:
+		_has_target = false
+		is_moving = false
+		is_running = false
+		arrived.emit()
+		return
+
+	is_moving = true
+	is_running = dist > RUN_DIST
+
+func _face(delta: float) -> void:
+	var wanted_yaw: float
+	if _face_override:
+		wanted_yaw = _face_yaw
+	elif is_moving:
+		var to: Vector3 = _agent.get_next_path_position() - global_position
+		to.y = 0.0
+		if to.length_squared() < 0.0001:
+			return
+		# mesh fronts +Z, so atan2(x, z) aims +Z along dir
+		var dir: Vector3 = to.normalized()
+		wanted_yaw = atan2(dir.x, dir.z)
 	else:
-		lines.append("A %s, for me? That's so kind of you!" % item)
-		lines.append(_award_rapport(gift_rapport))
-	return lines
+		return
+	rotation.y = lerp_angle(rotation.y, wanted_yaw, TURN_SPEED * delta)
 
-func _award_rapport(amount: int) -> String:
-	PlayerData.increase_rapport(npc_id(), amount)
-	var total: int = PlayerData.get_rapport(npc_id())
-	return "[color=#ff9dbb]♥ +%d rapport (%d total)[/color]" % [amount, total]
-
-# Turn to face whoever is talking to us (yaw only). The critter mesh fronts
-# +Z (Mixamo), so aim look_at (which points -Z) the opposite way.
-func _face(target: Node3D) -> void:
-	var to := target.global_position - global_position
-	to.y = 0.0
-	if to.length_squared() > 0.001:
-		look_at(global_position - to, Vector3.UP)
-
-func _get_dialogue_ui() -> DialogueUI:
-	var existing: Node = get_tree().get_first_node_in_group("dialogue_ui")
-	if existing is DialogueUI:
-		return existing
-	var ui: DialogueUI = DIALOGUE_UI_SCENE.instantiate()
-	get_tree().root.add_child(ui)
-	return ui
+func _apply_root_motion(delta: float) -> void:
+	if not is_moving or delta <= 0.0:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		return
+	# the active clip's root bone displacement, rotated into world space, is this
+	# tick's horizontal velocity. Use the FULL model basis (with its 0.4 scale) like
+	# the player does: the clip authors displacement in the model's local space, so
+	# the body must travel displacement * model_scale to match the feet — stripping
+	# the scale makes the body glide ~2.5x faster than the animation (foot sliding).
+	var root_motion: Vector3 = _tree.get_root_motion_position()
+	var motion: Vector3 = _model.global_transform.basis * root_motion
+	velocity.x = motion.x / delta
+	velocity.z = motion.z / delta

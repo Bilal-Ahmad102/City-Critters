@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Large source art distributed outside git (exceeds GitHub's 100MB limit).
+# Godot only needs the imported cache; keep the .blend.import, ship the .blend separately.
+assets/NPC/casual_girl.blend
+assets/NPC/casual_girl.zip
+*.blend1
