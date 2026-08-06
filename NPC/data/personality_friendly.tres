@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NPCPersonality" format=3 uid="uid://bfriend0perso"]
+
+[ext_resource type="Script" uid="uid://c7v2ynmyusuom" path="res://NPC/data/npc_personality.gd" id="1_pers"]
+
+[resource]
+script = ExtResource("1_pers")
+takes_orders = true
+refuses = Array[StringName]([])
+compliance = 1.0
+stubborn = false
+refusal_line = "Not today, sorry."
+delay_line = "One sec, I'm busy."

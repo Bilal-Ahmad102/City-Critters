@@ -8,10 +8,16 @@
 [ext_resource type="Script" uid="uid://daq1s1dh50lyd" path="res://scripts/npcs/states/run.gd" id="6_run"]
 [ext_resource type="Script" uid="uid://ckcqksof7khb1" path="res://scripts/npcs/states/drinking.gd" id="7_1uxhp"]
 [ext_resource type="Script" uid="uid://c7wy8ootxm4m4" path="res://scripts/npcs/activities_handler.gd" id="8_myfjo"]
+[ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="9_area"]
+[ext_resource type="Script" path="res://scripts/npcs/npc_commands.gd" id="10_cmd"]
+[ext_resource type="BehaviorTree" path="res://NPC/data/bt/npc_brain.tres" id="11_brain"]
 
 [sub_resource type="CapsuleShape3D" id="body_cap"]
 radius = 0.225
 height = 1.37
+
+[sub_resource type="SphereShape3D" id="interact_sphere"]
+radius = 1.8
 
 [sub_resource type="AnimationNodeTransition" id="trans"]
 xfade_time = 0.15
@@ -116,6 +122,7 @@ node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"a_idle", &"
 
 [node name="NPC" type="CharacterBody3D" unique_id=530122288]
 script = ExtResource("1_npc")
+use_behavior_tree = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1387170386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68, 0)
@@ -188,5 +195,27 @@ script = ExtResource("7_1uxhp")
 
 [node name="Activities_Handler" type="Node" parent="." unique_id=751020406]
 script = ExtResource("8_myfjo")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=624001010]
+script = ExtResource("9_area")
+prompt_text = "Talk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=624001011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("interact_sphere")
+
+[node name="Prompt" type="Label3D" parent="InteractionArea" unique_id=624001012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
+billboard = 1
+text = "Talk"
+font_size = 40
+
+[node name="Commands" type="Node" parent="." unique_id=624001013]
+script = ExtResource("10_cmd")
+
+[node name="BTPlayer" type="BTPlayer" parent="." unique_id=624001014]
+behavior_tree = ExtResource("11_brain")
+agent_node = NodePath("..")
 
 [editable path="Model"]

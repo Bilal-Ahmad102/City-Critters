@@ -30,6 +30,17 @@ const TURN_SPEED: float = 8.0
 const GRAVITY: float = 9.8
 const FLOOR_STICK: float = -0.5
 
+# step 7: simulation LOD. An NPC far from every player runs cheap — physics locomotion,
+# root-motion sampling and the AnimationTree are skipped, and a schedule/command move
+# becomes an instant teleport to the destination instead of a navmesh walk. The BTPlayer
+# keeps ticking, so an offscreen NPC still follows its schedule (it jumps between the
+# scheduled locations at the right game time). A hysteresis band avoids flip-flop at the
+# boundary; with no players in the scene there is nothing to observe, so we stay HIGH.
+enum Lod { HIGH, LOW }
+const LOD_HIGH_ENTER: float = 28.0   # become HIGH when a player is within this
+const LOD_LOW_EXIT: float = 35.0     # become LOW when the nearest player is beyond this
+const LOD_INTERVAL: float = 0.5      # seconds between LOD re-evaluations
+
 @onready var _model: Node3D = $Model
 @onready var _tree: AnimationTree = $AnimationTree
 @onready var _agent: NavigationAgent3D = $NavigationAgent3D
@@ -46,10 +57,27 @@ var _face_yaw: float = 0.0
 var _nav_ready: bool = false
 var _unreachable_time: float = 0.0
 
+var _lod: int = Lod.HIGH
+var _lod_accum: float = 0.0
+var _move_target: Vector3 = Vector3.ZERO   # last move_to destination (for LOD teleport)
+
 @export var npc_id: StringName
 @export var schedule: NPCSchedule
+## Archetype deciding how this NPC answers player commands (accept / delay / refuse).
+@export var personality: NPCPersonality
+## When true a child BTPlayer (LimboAI behaviour tree) owns goal selection instead of
+## the built-in GameClock.minute_changed runner. The BT polls scheduled_activity_now()
+## / is_command_active() every tick and calls begin_activity()/end_command(); the
+## locomotion HSM and movement below are unchanged either way.
+@export var use_behavior_tree: bool = false
+
+signal command_answered(reaction: int)   # NPCPersonality.Reaction
 
 var current_activity: ActivityResource
+
+# step 5: a player command currently overriding the schedule. While active the schedule
+# is suppressed; when it ends (min_duration reached or cancelled) the schedule resumes.
+var _command_active: bool = false
 
 # The clip the idle state plays when the NPC is standing still. move_to resets it to
 # "idle"; on arrival it becomes the current activity's animation (sleeping/sit_park/…).
@@ -85,17 +113,88 @@ func _ready() -> void:
 			ap.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 
 	arrived.connect(_on_arrived)
-	GameClock.minute_changed.connect(_on_minute_changed)
-	# Apply the opening schedule entry deferred, not inline: WorldLocation nodes
-	# register with LocationRegistry in their own _ready, which may run after this
-	# NPC's. Querying now would miss them ("No location registered").
-	call_deferred("_apply_current_schedule")
+	# In BT mode the child BTPlayer polls the schedule every tick, so the built-in
+	# minute-driven runner is left disconnected (having both would double-decide).
+	if not use_behavior_tree:
+		GameClock.minute_changed.connect(_on_minute_changed)
+		# Apply the opening schedule entry deferred, not inline: WorldLocation nodes
+		# register with LocationRegistry in their own _ready, which may run after this
+		# NPC's. Querying now would miss them ("No location registered").
+		call_deferred("_apply_current_schedule")
 
 	_agent.path_desired_distance = PATH_DESIRED
 	_agent.target_desired_distance = TARGET_DESIRED
 	call_deferred("_wait_for_nav")
-	
+
+	# Spread the LOD checks across frames so N NPCs don't all scan on the same one.
+	_lod_accum = randf() * LOD_INTERVAL
+
+# --------------------------------------------------------------------- step 7: LOD
+
+func _process(delta: float) -> void:
+	_lod_accum += delta
+	if _lod_accum < LOD_INTERVAL:
+		return
+	_lod_accum = 0.0
+	_update_lod()
+
+func _update_lod() -> void:
+	var d2: float = _nearest_player_dist_sq()
+	if d2 == INF:
+		_set_lod(Lod.HIGH)   # nobody to observe — run normally
+		return
+	if _lod == Lod.HIGH:
+		if d2 > LOD_LOW_EXIT * LOD_LOW_EXIT:
+			_set_lod(Lod.LOW)
+	elif d2 < LOD_HIGH_ENTER * LOD_HIGH_ENTER:
+		_set_lod(Lod.HIGH)
+
+func _nearest_player_dist_sq() -> float:
+	var best: float = INF
+	for p in get_tree().get_nodes_in_group("player"):
+		var n3: Node3D = p as Node3D
+		if n3 == null:
+			continue
+		var dd: float = global_position.distance_squared_to(n3.global_position)
+		if dd < best:
+			best = dd
+	return best
+
+func _set_lod(new_lod: int) -> void:
+	if new_lod == _lod:
+		return
+	_lod = new_lod
+	if _lod == Lod.LOW:
+		# Finish any in-progress trip instantly, then stop simulating physics/animation.
+		if _has_target:
+			_teleport_to(_move_target)
+		if _settling:
+			# was mid-slide into a seat; the settle lerp won't run offscreen, so snap.
+			global_position = _seat_xform.origin
+			rotation.y = _seat_xform.basis.get_euler().y
+			_settling = false
+			_seated = true
+		_tree.active = false
+	else:
+		_tree.active = true
+
+# Whether this NPC is currently cheap-simulated (for the debug panel / tests).
+func lod_string() -> String:
+	return "HIGH" if _lod == Lod.HIGH else "LOW"
+
+# Snap straight to a destination (LOD teleport). Behaves like an instant arrival so the
+# schedule/BT and slot settling proceed exactly as after a walk.
+func _teleport_to(target: Vector3) -> void:
+	global_position = target
+	_has_target = false
+	is_moving = false
+	is_running = false
+	velocity = Vector3.ZERO
+	arrived.emit()
+
 func _physics_process(delta: float) -> void:
+	if _lod == Lod.LOW:
+		return                       # cheap-simulated: no locomotion/root motion offscreen
 	if _seated:
 		return                       # frozen on the seat until the schedule moves her
 	if _settling:
@@ -139,18 +238,101 @@ func _apply_current_schedule() -> void:
 func _on_minute_changed(minutes: int) -> void:
 	if schedule == null:
 		return
+	# step 5: a player command overrides the schedule. Hold it until it has run its
+	# min_duration, then hand control back to the schedule.
+	if _command_active:
+		if current_activity != null \
+				and performed_minutes() >= current_activity.min_duration_minutes:
+			_end_command()
+		return
 	var entry: ScheduleEntry = schedule.entry_at(minutes)
 	if entry == null or entry.activity == current_activity:
 		return
-	var loc: WorldLocation = LocationRegistry.get_location(entry.activity.location_tag, npc_id)
+	_begin_activity(entry.activity)
+
+# Resolve an activity's location and start heading there (stand off any seat, drop the
+# old slot first). No-op if the location isn't registered yet, so the next tick retries.
+func _begin_activity(act: ActivityResource) -> bool:
+	var loc: WorldLocation = LocationRegistry.get_location(act.location_tag, npc_id)
 	if loc == null:
-		# Location not registered yet (or missing). Do NOT commit the activity, so
-		# the next minute tick retries instead of treating it as already handled.
-		return
-	current_activity = entry.activity
+		return false
+	current_activity = act
 	_stand_up()                     # get off any seat, back onto the navmesh
 	_release_slot()                 # let go of the previous activity's slot
-	_go_to_activity(entry.activity, loc)
+	_go_to_activity(act, loc)
+	return true
+
+# --------------------------------------------------------------- player commands
+
+# Player asks the NPC to perform an activity now. Personality decides; on ACCEPT the
+# command overrides the schedule until its min_duration elapses or cancel_command().
+# Returns the NPCPersonality.Reaction.
+func receive_command(cmd: ActivityResource) -> int:
+	var cur_task: ActivityTask = null
+	if current_activity != null:
+		cur_task = ActivityTask.new(current_activity, self)
+	var reaction: int = NPCPersonality.Reaction.ACCEPT
+	if personality != null:
+		reaction = personality.evaluate(cmd, cur_task)
+
+	match reaction:
+		NPCPersonality.Reaction.REFUSE:
+			say(personality.refusal_line if personality != null else "No.")
+		NPCPersonality.Reaction.DELAY:
+			say(personality.delay_line if personality != null else "In a moment.")
+		NPCPersonality.Reaction.ACCEPT:
+			if _begin_activity(cmd):
+				_command_active = true
+				# Count the command's duration from now, not the previous activity's
+				# arrival — otherwise a stale start could read as already-expired on the
+				# BT's very next tick. _on_arrived resets it to the real arrival time.
+				_activity_start_minute = GameClock.total_minutes
+	command_answered.emit(reaction)
+	return reaction
+
+# End the command early (player dismiss, or "stop"). Schedule resumes immediately.
+func cancel_command() -> void:
+	if _command_active:
+		_end_command()
+
+func _end_command() -> void:
+	end_command()
+	# Legacy runner needs a manual re-tick to pick the schedule back up; the BT does
+	# that on its own next frame.
+	if not use_behavior_tree:
+		_on_minute_changed(GameClock.total_minutes)
+
+# ---------------------------------------------- behaviour-tree decision surface
+# Thin public API the LimboAI brain tasks call, so the BT never reaches into the
+# runner's private state. Behaviour is identical to the minute-driven runner.
+
+# True while a player command is overriding the schedule (BTIsCommanded).
+func is_command_active() -> bool:
+	return _command_active
+
+# The active command has run at least its min_duration (BTRunCommand end test).
+func command_expired() -> bool:
+	return current_activity != null \
+			and performed_minutes() >= current_activity.min_duration_minutes
+
+# Clear the command override; the caller (BT or legacy) re-selects the schedule.
+func end_command() -> void:
+	_command_active = false
+	current_activity = null
+
+# The activity the schedule wants at the current game time, or null if none.
+func scheduled_activity_now() -> ActivityResource:
+	if schedule == null:
+		return null
+	var entry: ScheduleEntry = schedule.entry_at(GameClock.total_minutes)
+	if entry == null:
+		return null
+	return entry.activity
+
+# Public alias for the BT: start heading to an activity. Returns false if its location
+# isn't registered yet (the tree retries next tick).
+func begin_activity(act: ActivityResource) -> bool:
+	return _begin_activity(act)
 
 # Walk to the activity. If it names an object_type, reserve a free slot on a matching
 # SmartObject near the location and head for that exact slot; otherwise the location
@@ -190,13 +372,23 @@ func _on_arrived() -> void:
 	# step 3: settle onto the reserved slot.
 	if _object != null and _slot >= 0:
 		if _object.has_seat(_slot):
-			# physically sit on the object: slide/turn from here into the seat pose.
 			_seat_xform = _object.seat_transform(_slot)
-			_settle_from_pos = global_position
-			_settle_from_yaw = rotation.y
-			_settle_t = 0.0
-			_settling = true
-			velocity = Vector3.ZERO
+			if _lod == Lod.LOW:
+				# offscreen: snap straight into the seat pose, no settle animation
+				# (the per-frame _settle runs in _physics_process, which LOW skips).
+				global_position = _seat_xform.origin
+				rotation.y = _seat_xform.basis.get_euler().y
+				velocity = Vector3.ZERO
+				_seated = true
+			else:
+				# physically sit on the object: slide/turn from here into the seat pose.
+				_settle_from_pos = global_position
+				_settle_from_yaw = rotation.y
+				_settle_t = 0.0
+				_settling = true
+				velocity = Vector3.ZERO
+		elif _lod == Lod.LOW:
+			rotation.y = _object.slot_transform(_slot).basis.get_euler().y
 		else:
 			# no seat: just face the way the slot points (counter, stand spot).
 			align_to(_object.slot_transform(_slot).basis)
@@ -211,6 +403,11 @@ func performed_minutes() -> int:
 
 func move_to(target: Vector3) -> void:
 	_face_override = false
+	_move_target = target
+	# LOD: offscreen NPCs teleport to the destination instead of walking there.
+	if _lod == Lod.LOW:
+		_teleport_to(target)
+		return
 	_agent.target_position = target
 	_has_target = true
 	_unreachable_time = 0.0

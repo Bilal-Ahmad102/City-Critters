@@ -1,0 +1,37 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://3tdvs5y3fryd"]
+
+[ext_resource type="Script" uid="uid://bqdn1hsb3i3b4" path="res://scripts/npcs/bt/bt_is_commanded.gd" id="1_mf0wx"]
+[ext_resource type="Script" uid="uid://ci5hotj2rkt62" path="res://scripts/npcs/bt/bt_run_command.gd" id="2_jko5g"]
+[ext_resource type="Script" uid="uid://hibronyh4h0o" path="res://scripts/npcs/bt/bt_pick_schedule_entry.gd" id="3_1jddm"]
+[ext_resource type="Script" uid="uid://g6l223efkpg2" path="res://scripts/npcs/bt/bt_begin_activity.gd" id="4_or0u0"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_mf0wx"]
+
+[sub_resource type="BTCondition" id="BTCondition_6bcjn"]
+script = ExtResource("1_mf0wx")
+
+[sub_resource type="BTAction" id="BTAction_28g0h"]
+script = ExtResource("2_jko5g")
+
+[sub_resource type="BTSequence" id="BTSequence_81t2l"]
+custom_name = "command"
+children = [SubResource("BTCondition_6bcjn"), SubResource("BTAction_28g0h")]
+
+[sub_resource type="BTAction" id="BTAction_htkgr"]
+script = ExtResource("3_1jddm")
+
+[sub_resource type="BTAction" id="BTAction_dfx2r"]
+script = ExtResource("4_or0u0")
+
+[sub_resource type="BTSequence" id="BTSequence_16pjf"]
+custom_name = "schedule"
+children = [SubResource("BTAction_htkgr"), SubResource("BTAction_dfx2r")]
+
+[sub_resource type="BTSelector" id="BTSelector_011t8"]
+custom_name = "brain"
+children = [SubResource("BTSequence_81t2l"), SubResource("BTSequence_16pjf")]
+
+[resource]
+description = "NPC decision brain: player command overrides schedule."
+blackboard_plan = SubResource("BlackboardPlan_mf0wx")
+root_task = SubResource("BTSelector_011t8")

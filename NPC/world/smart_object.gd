@@ -10,8 +10,7 @@ var _reserved: Dictionary = {}               # slot index -> npc_id
 
 func _ready() -> void:
 	LocationRegistry.register_object(self)
-func _process(delta: float) -> void:
-	print(_reserved)
+
 func free_slot(npc_id: StringName) -> int:
 	for i in slots.size():
 		if not _reserved.has(i):
@@ -19,7 +18,7 @@ func free_slot(npc_id: StringName) -> int:
 		if _reserved[i] == npc_id:
 			return i                          # already ours
 	return -1
-
+ 
 func reserve(index: int, npc_id: StringName) -> bool:
 	if index < 0 or index >= slots.size():
 		return false
