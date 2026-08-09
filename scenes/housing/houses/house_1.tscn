@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/housing/house_property.gd" id="1_35kkg"]
+[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_04.prefab.scn" id="1_76i02"]
+[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_03_B.material" id="2_isgns"]
+[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_GardenShed_01.prefab.scn" id="3_r8bfo"]
+[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Preset_04.SM_Bld_House_Preset_04.mesh" id="3_u7p5q"]
+[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/PolygonTown_01_A.material" id="5_x23qy"]
+[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Misc/Window_Glass_Opaque.material" id="6_ftdom"]
+[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_GardenShed_01.SM_Bld_GardenShed_01.mesh" id="8_f8ned"]
+[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_GardenShed_01.SM_Bld_GardenShed_Door_01.mesh" id="9_up8xp"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o48b6"]
+data = PackedVector3Array(-1.6601, 4.2275, 6.4841, -1.6601, 0, 6.4841, -1.6601, 0, -6.4396, -1.6601, 0, -6.4396, -1.6601, 4.2275, -6.4396, -1.6601, 4.2275, 6.4841, 2.2674, 6.3006997, 2.7352, -1.6601, 4.2275, 6.4841, -1.6601, 4.2275, -6.4396, -1.6601, 4.2275, -6.4396, 2.2674, 6.3006997, -2.7437, 2.2674, 6.3006997, 2.7352, 6.3178997, 0, 6.4841, 6.3178997, 4.2275, 6.4841, 6.3178997, 4.2275, -6.4396, 6.3178997, 4.2275, -6.4396, 6.3178997, 0, -6.4396, 6.3178997, 0, 6.4841, -1.6601, 0, 6.4841, 2.2674, 0, 6.4841, 2.2674, 0, -6.4396, 2.2674, 0, -6.4396, -1.6601, 0, -6.4396, -1.6601, 0, 6.4841, 6.3178997, 0, -6.4396, 2.2674, 0, -6.4396, 2.2674, 0, 6.4841, 2.2674, 0, 6.4841, 6.3178997, 0, 6.4841, 6.3178997, 0, -6.4396, 6.3178997, 4.2275, 6.4841, -1.6601, 4.2275, 6.4841, 2.2674, 6.3006997, 2.7352, 2.2674, 6.3006997, -2.7437, -1.6601, 4.2275, -6.4396, 6.3178997, 4.2275, -6.4396, 6.3178997, 4.2275, -6.4396, 6.3178997, 4.2275, 6.4841, 2.2674, 6.3006997, 2.7352, 2.2674, 6.3006997, 2.7352, 2.2674, 6.3006997, -2.7437, 6.3178997, 4.2275, -6.4396, 2.2674, 0, 6.4841, 6.3178997, 4.2275, 6.4841, 6.3178997, 0, 6.4841, 2.2674, 0, 6.4841, -1.6601, 4.2275, 6.4841, 6.3178997, 4.2275, 6.4841, 2.2674, 0, 6.4841, -1.6601, 0, 6.4841, -1.6601, 4.2275, 6.4841, 6.3178997, 4.2275, -6.4396, 2.2674, 0, -6.4396, 6.3178997, 0, -6.4396, 6.3178997, 4.2275, -6.4396, -1.6601, 4.2275, -6.4396, 2.2674, 0, -6.4396, -1.6601, 4.2275, -6.4396, -1.6601, 0, -6.4396, 2.2674, 0, -6.4396, 2.8537, 4.0926, 6.4427, 2.8537, 0, 6.4427, -6.7096996, 0, 6.4427, -6.7096996, 0, 6.4427, -6.7096996, 4.0926, 6.4427, 2.8537, 4.0926, 6.4427, -6.7096996, 5.6552, 3.7766, 2.8537, 5.6552, 3.7766, 2.8537, 4.0926, 6.4427, 2.8537, 4.0926, 6.4427, -6.7096996, 4.0926, 6.4427, -6.7096996, 5.6552, 3.7766, 2.8537, 0, 1.027, 2.8537, 4.0926, 1.027, -6.7096996, 4.0926, 1.027, -6.7096996, 4.0926, 1.027, -6.7096996, 0, 1.027, 2.8537, 0, 1.027, 2.8537, 0, 6.4427, 2.8537, 0, 3.7766, -6.7096996, 0, 3.7766, -6.7096996, 0, 3.7766, -6.7096996, 0, 6.4427, 2.8537, 0, 6.4427, -6.7096996, 0, 1.027, -6.7096996, 0, 3.7766, 2.8537, 0, 3.7766, 2.8537, 0, 3.7766, 2.8537, 0, 1.027, -6.7096996, 0, 1.027, 2.8537, 4.0926, 1.027, 2.8537, 4.0926, 6.4427, 2.8537, 5.6552, 3.7766, -6.7096996, 5.6552, 3.7766, -6.7096996, 4.0926, 6.4427, -6.7096996, 4.0926, 1.027, 2.8537, 4.0926, 1.027, 2.8537, 5.6552, 3.7766, -6.7096996, 5.6552, 3.7766, -6.7096996, 5.6552, 3.7766, -6.7096996, 4.0926, 1.027, 2.8537, 4.0926, 1.027, 2.8537, 0, 3.7766, 2.8537, 4.0926, 1.027, 2.8537, 0, 1.027, 2.8537, 0, 3.7766, 2.8537, 0, 6.4427, 2.8537, 4.0926, 1.027, 2.8537, 0, 6.4427, 2.8537, 4.0926, 6.4427, 2.8537, 4.0926, 1.027, -6.7096996, 4.0926, 1.027, -6.7096996, 0, 3.7766, -6.7096996, 0, 1.027, -6.7096996, 4.0926, 1.027, -6.7096996, 0, 6.4427, -6.7096996, 0, 3.7766, -6.7096996, 4.0926, 1.027, -6.7096996, 4.0926, 6.4427, -6.7096996, 0, 6.4427)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_toiy8"]
+points = PackedVector3Array(-0.43774092, 1.0815028, 1.2867306, -1.0994003, -0.022064209, 1.2422718, -0.43774092, 0.9929652, 1.2867306, 1.1062837, -0.022064209, 1.2417749, 1.1453931, 2.193293, 1.19061, 0.0034415722, 2.7782438, 1.2214082, -1.1414831, 2.195212, 1.1943356, -1.1414831, 2.195212, -1.2230872, -1.0529721, 0.03741767, -1.1763929, 1.0598555, 0.03714356, -1.1766413, 1.1950233, 2.0074465, -1.1403787, 1.1456218, 2.193019, -1.21961, -0.080952525, 2.738498, 1.1866361, 0.0034415722, 2.7776957, -1.2506567, -0.080952525, 2.738498, -1.2153876)
+
+[node name="House_1" type="Node3D" unique_id=1169116261]
+script = ExtResource("1_35kkg")
+
+[node name="SM_Bld_House_Preset_04" parent="." unique_id=1079360136 instance=ExtResource("1_76i02")]
+transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -1.1920929e-07, 0, 0, 0)
+
+[node name="MeshRenderer" parent="SM_Bld_House_Preset_04" index="0"]
+gi_mode = 2
+mesh = ExtResource("3_u7p5q")
+surface_material_override/0 = ExtResource("2_isgns")
+surface_material_override/1 = ExtResource("5_x23qy")
+surface_material_override/2 = ExtResource("6_ftdom")
+
+[node name="CollisionShape3D" parent="SM_Bld_House_Preset_04/MeshCollider" index="0"]
+shape = SubResource("ConcavePolygonShape3D_o48b6")
+
+[node name="SM_Bld_GardenShed_01 (2)" parent="." unique_id=1394325501 instance=ExtResource("3_r8bfo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.52089, 1.0387671, -2.188573)
+
+[node name="MeshRenderer" parent="SM_Bld_GardenShed_01 (2)" index="0"]
+gi_mode = 2
+mesh = ExtResource("8_f8ned")
+surface_material_override/0 = ExtResource("5_x23qy")
+
+[node name="CollisionShape3D" parent="SM_Bld_GardenShed_01 (2)/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_toiy8")
+
+[node name="SM_Bld_GardenShed_Door_01" parent="SM_Bld_GardenShed_01 (2)" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47734863, 1.0262008, 1.1742477)
+
+[node name="MeshRenderer" parent="SM_Bld_GardenShed_01 (2)/SM_Bld_GardenShed_Door_01" index="0"]
+gi_mode = 2
+mesh = ExtResource("9_up8xp")
+surface_material_override/0 = ExtResource("5_x23qy")
+
+[editable path="SM_Bld_House_Preset_04"]
+[editable path="SM_Bld_GardenShed_01 (2)"]

@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var notification_label: Label = $NotificationLabel
 
 func _ready() -> void:
+	add_to_group("hud")
 	CurrencySystem.currency_changed.connect(_on_currency_changed)
 	_on_currency_changed(PlayerData.currency)
 
