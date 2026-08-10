@@ -507,6 +507,10 @@ func _snap_to_navmesh(target: Vector3) -> Vector3:
 	var map: RID = _agent.get_navigation_map()
 	if not map.is_valid():
 		return target
+	# A valid map may still be pre-synchronization for the first ~frames after load;
+	# querying it then errors (iteration id 0). Keep the raw target until it syncs.
+	if NavigationServer3D.map_get_iteration_id(map) == 0:
+		return target
 	var p: Vector3 = NavigationServer3D.map_get_closest_point(map, target)
 	if p.distance_to(target) > NAV_SNAP_MAX:
 		return target
