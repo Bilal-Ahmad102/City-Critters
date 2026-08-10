@@ -26,24 +26,22 @@ const SETTLE_TIME: float = 0.3
 # few frames (a big navmesh can take ~200) to compute a path after move_to(), during
 # which is_target_reachable() reads false; a one-frame abort would kill every route.
 const UNREACHABLE_TIMEOUT: float = 3.0
+# move_to snaps its goal onto the navmesh so a target placed slightly off it (a location centre
+# that sits inside a building, a seat slot on grass) is still reachable. A snap farther than
+# this is treated as "no good navmesh nearby" and the raw target is kept (don't yank the goal
+# across the map to a far island or to the origin when the mesh isn't ready).
+const NAV_SNAP_MAX: float = 5.0
 const TURN_SPEED: float = 8.0
 const GRAVITY: float = 9.8
 const FLOOR_STICK: float = -0.5
 
-# step 7: simulation LOD. An NPC far from every player runs cheap — physics locomotion,
-# root-motion sampling and the AnimationTree are skipped, and a schedule/command move
-# becomes an instant teleport to the destination instead of a navmesh walk. The BTPlayer
-# keeps ticking, so an offscreen NPC still follows its schedule (it jumps between the
-# scheduled locations at the right game time). A hysteresis band avoids flip-flop at the
-# boundary; with no players in the scene there is nothing to observe, so we stay HIGH.
-enum Lod { HIGH, LOW }
-const LOD_HIGH_ENTER: float = 28.0   # become HIGH when a player is within this
-const LOD_LOW_EXIT: float = 35.0     # become LOW when the nearest player is beyond this
-const LOD_INTERVAL: float = 0.5      # seconds between LOD re-evaluations
+# The activity-animation (enter/loop/exit) system lives in a dedicated child node; this node
+# only orchestrates it. See animation_controller.gd.
 
 @onready var _model: Node3D = $Model
 @onready var _tree: AnimationTree = $AnimationTree
 @onready var _agent: NavigationAgent3D = $NavigationAgent3D
+@onready var _anim: NPCAnimationController = $AnimationController
 
 var is_moving: bool = false
 var is_running: bool = false
@@ -57,9 +55,20 @@ var _face_yaw: float = 0.0
 var _nav_ready: bool = false
 var _unreachable_time: float = 0.0
 
-var _lod: int = Lod.HIGH
-var _lod_accum: float = 0.0
+# The player currently interacting (pressed E). While set, the NPC halts its
+# schedule/BT trip and turns to face them; clearing it resumes the interrupted walk.
+var _attending_player: Node3D = null
+var _attend_resume: bool = false   # true if a trip was interrupted to attend
+var _area: InteractionArea = null  # this NPC's "press E" area (disabled while sleeping)
+
 var _move_target: Vector3 = Vector3.ZERO   # last move_to destination (for LOD teleport)
+
+# Hybrid waypoint routing: move_to() asks the WaypointNetwork for a high-level
+# path (a list of waypoint positions), then walks each hop with the navmesh. The
+# public `arrived` signal fires only when the FINAL target is reached.
+var _route: Array[Vector3] = []            # remaining waypoint sub-goals
+var _final_target: Vector3 = Vector3.ZERO  # the real destination (last leg)
+var _leg_final: bool = true                # current leg heads straight to _final_target
 
 @export var npc_id: StringName
 @export var schedule: NPCSchedule
@@ -70,6 +79,9 @@ var _move_target: Vector3 = Vector3.ZERO   # last move_to destination (for LOD t
 ## / is_command_active() every tick and calls begin_activity()/end_command(); the
 ## locomotion HSM and movement below are unchanged either way.
 @export var use_behavior_tree: bool = false
+## Print every activity animation event (enter/loop/exit phase changes, clip requests) to
+## the output, prefixed with this NPC's id. Leave off in normal play.
+@export var debug_anim: bool = false
 
 signal command_answered(reaction: int)   # NPCPersonality.Reaction
 
@@ -84,6 +96,9 @@ var _command_active: bool = false
 var stationary_anim: StringName = &"idle"
 var _activity_start_minute: int = -1
 
+# The activity queued to travel to once the EXIT (stand-up) animation finishes.
+var _pending_after_exit: ActivityResource = null
+
 # step 3: the SmartObject slot this NPC has reserved for the current activity (a chair,
 # a counter stool, a bed). -1 / null means the activity just uses the location centre.
 var _object: SmartObject = null
@@ -96,7 +111,7 @@ var _seated: bool = false
 var _settle_t: float = 0.0
 var _seat_xform: Transform3D = Transform3D.IDENTITY
 var _settle_from_pos: Vector3 = Vector3.ZERO
-var _settle_from_yaw: float = 0.0
+var _settle_from_basis: Basis = Basis.IDENTITY
 
 
 func _ready() -> void:
@@ -113,6 +128,22 @@ func _ready() -> void:
 			ap.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 
 	arrived.connect(_on_arrived)
+
+	# Activity animation lives in the AnimationController child: give it the tree/player and
+	# let it tell us (exit_finished) when a stand-up clip is done so we can walk on.
+	_anim.setup(_tree, ap, npc_id)
+	_anim.debug_anim = debug_anim
+	_anim.exit_finished.connect(_finish_exit)
+	# When the enter clip finishes the anim node switches to the loop; hold that pose in idle.
+	_anim.loop_reached.connect(func(loop_input: StringName) -> void: stationary_anim = loop_input)
+
+	# The command layer calls begin_interaction() when the player presses E; the NPC
+	# then stops and faces them. player_exited ends it if they walk out of range.
+	# Optional — some NPC scenes may have no InteractionArea.
+	_area = get_node_or_null("InteractionArea") as InteractionArea
+	if _area != null:
+		_area.player_exited.connect(_on_player_exited)
+
 	# In BT mode the child BTPlayer polls the schedule every tick, so the built-in
 	# minute-driven runner is left disconnected (having both would double-decide).
 	if not use_behavior_tree:
@@ -126,75 +157,7 @@ func _ready() -> void:
 	_agent.target_desired_distance = TARGET_DESIRED
 	call_deferred("_wait_for_nav")
 
-	# Spread the LOD checks across frames so N NPCs don't all scan on the same one.
-	_lod_accum = randf() * LOD_INTERVAL
-
-# --------------------------------------------------------------------- step 7: LOD
-
-func _process(delta: float) -> void:
-	_lod_accum += delta
-	if _lod_accum < LOD_INTERVAL:
-		return
-	_lod_accum = 0.0
-	_update_lod()
-
-func _update_lod() -> void:
-	var d2: float = _nearest_player_dist_sq()
-	if d2 == INF:
-		_set_lod(Lod.HIGH)   # nobody to observe — run normally
-		return
-	if _lod == Lod.HIGH:
-		if d2 > LOD_LOW_EXIT * LOD_LOW_EXIT:
-			_set_lod(Lod.LOW)
-	elif d2 < LOD_HIGH_ENTER * LOD_HIGH_ENTER:
-		_set_lod(Lod.HIGH)
-
-func _nearest_player_dist_sq() -> float:
-	var best: float = INF
-	for p in get_tree().get_nodes_in_group("player"):
-		var n3: Node3D = p as Node3D
-		if n3 == null:
-			continue
-		var dd: float = global_position.distance_squared_to(n3.global_position)
-		if dd < best:
-			best = dd
-	return best
-
-func _set_lod(new_lod: int) -> void:
-	if new_lod == _lod:
-		return
-	_lod = new_lod
-	if _lod == Lod.LOW:
-		# Finish any in-progress trip instantly, then stop simulating physics/animation.
-		if _has_target:
-			_teleport_to(_move_target)
-		if _settling:
-			# was mid-slide into a seat; the settle lerp won't run offscreen, so snap.
-			global_position = _seat_xform.origin
-			rotation.y = _seat_xform.basis.get_euler().y
-			_settling = false
-			_seated = true
-		_tree.active = false
-	else:
-		_tree.active = true
-
-# Whether this NPC is currently cheap-simulated (for the debug panel / tests).
-func lod_string() -> String:
-	return "HIGH" if _lod == Lod.HIGH else "LOW"
-
-# Snap straight to a destination (LOD teleport). Behaves like an instant arrival so the
-# schedule/BT and slot settling proceed exactly as after a walk.
-func _teleport_to(target: Vector3) -> void:
-	global_position = target
-	_has_target = false
-	is_moving = false
-	is_running = false
-	velocity = Vector3.ZERO
-	arrived.emit()
-
 func _physics_process(delta: float) -> void:
-	if _lod == Lod.LOW:
-		return                       # cheap-simulated: no locomotion/root motion offscreen
 	if _seated:
 		return                       # frozen on the seat until the schedule moves her
 	if _settling:
@@ -210,14 +173,19 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-# Slide + turn from the approach spot into the seat pose over SETTLE_TIME, then hold.
+# Slide + turn from the approach spot into the seat pose over SETTLE_TIME, then hold. Copies
+# the seat marker's FULL orientation (not just yaw), so a tilted/angled seat tilts the NPC too.
 func _settle(delta: float) -> void:
 	_settle_t = minf(_settle_t + delta / SETTLE_TIME, 1.0)
 	var e: float = smoothstep(0.0, 1.0, _settle_t)
 	global_position = _settle_from_pos.lerp(_seat_xform.origin, e)
-	rotation.y = lerp_angle(_settle_from_yaw, _seat_xform.basis.get_euler().y, e)
+	var seat_basis: Basis = _seat_xform.basis.orthonormalized()
+	var q: Quaternion = _settle_from_basis.get_rotation_quaternion().slerp(
+			seat_basis.get_rotation_quaternion(), e)
+	global_transform.basis = Basis(q)
 	if _settle_t >= 1.0:
 		global_position = _seat_xform.origin
+		global_transform.basis = seat_basis
 		_settling = false
 		_seated = true
 
@@ -225,6 +193,8 @@ func _settle(delta: float) -> void:
 func _stand_up() -> void:
 	if _object != null and _slot >= 0 and (_seated or _settling):
 		global_position = _object.slot_transform(_slot).origin
+		# a tilted seat may have tilted the body; return upright (keep only yaw) for walking.
+		global_transform.basis = Basis(Vector3.UP, global_transform.basis.get_euler().y)
 	_settling = false
 	_seated = false
 func _wait_for_nav() -> void:
@@ -253,14 +223,63 @@ func _on_minute_changed(minutes: int) -> void:
 # Resolve an activity's location and start heading there (stand off any seat, drop the
 # old slot first). No-op if the location isn't registered yet, so the next tick retries.
 func _begin_activity(act: ActivityResource) -> bool:
+	# While attending a player, hold position — don't let a schedule/BT boundary walk
+	# the NPC off mid-interaction. The caller retries after the player leaves range.
+	if _attending_player != null:
+		return false
 	var loc: WorldLocation = LocationRegistry.get_location(act.location_tag, npc_id)
 	if loc == null:
 		return false
+	# If the NPC is currently performing an activity that has an exit clip (stand up),
+	# play that first and defer the trip to the new activity until it finishes. Only when
+	# actually performing (LOOP phase, not mid-walk).
+	var outgoing: ActivityResource = current_activity
+	var exit_anim: StringName = _exit_clip(outgoing)
+	if exit_anim != &"" and _anim.phase == NPCAnimationController.Phase.LOOP \
+			and not _has_target:
+		current_activity = act          # claim the goal so the BT won't re-trigger this
+		_pending_after_exit = act
+		_begin_exit(exit_anim)
+		return true
 	current_activity = act
+	_set_interactable(true)         # interactable while travelling; re-checked on arrival
 	_stand_up()                     # get off any seat, back onto the navmesh
 	_release_slot()                 # let go of the previous activity's slot
 	_go_to_activity(act, loc)
 	return true
+
+# The exit clip for leaving an activity: an explicit exit_animation, else empty (no exit
+# phase).
+func _exit_clip(act: ActivityResource) -> StringName:
+	if act == null:
+		return &""
+	return act.exit_animation
+
+# Play the outgoing activity's stand-up clip in place; the AnimationController's exit_finished
+# signal resumes the trip (via _finish_exit) once it ends. Stand off any seat first.
+func _begin_exit(exit_anim: StringName) -> void:
+	_stand_up()
+	stationary_anim = exit_anim   # hold the stand-up pose in idle while it plays
+	_anim.begin_exit(exit_anim)
+
+# The stand-up clip finished: drop the old slot and start travelling to the queued activity.
+func _finish_exit() -> void:
+	var act: ActivityResource = _pending_after_exit
+	_pending_after_exit = null
+	if act == null:
+		return
+	var loc: WorldLocation = LocationRegistry.get_location(act.location_tag, npc_id)
+	if loc == null:
+		return
+	_set_interactable(true)
+	_release_slot()
+	_go_to_activity(act, loc)
+
+# Arm/disarm the "press E" area. Non-interruptible activities (sleep) disarm it so the
+# player can't talk to the NPC while it performs them.
+func _set_interactable(value: bool) -> void:
+	if _area != null:
+		_area.set_active(value)
 
 # --------------------------------------------------------------- player commands
 
@@ -363,35 +382,38 @@ func _on_arrived() -> void:
 	# step 4: settle into the activity — play its clip and remember when it began so
 	# performed_minutes() / min_duration checks (used by interruption later) can read it.
 	_activity_start_minute = GameClock.total_minutes
-	if current_activity != null and current_activity.animation != &"":
-		stationary_anim = current_activity.animation
-	else:
-		stationary_anim = &"idle"
-	_tree["parameters/Transition/transition_request"] = String(stationary_anim)
+	# Non-interruptible activities (sleep) disable interaction once the NPC is performing.
+	_set_interactable(current_activity == null or current_activity.interruptible)
+	_start_activity_anim()
 
 	# step 3: settle onto the reserved slot.
 	if _object != null and _slot >= 0:
 		if _object.has_seat(_slot):
+			# physically sit on the object: slide/turn from here into the seat pose.
 			_seat_xform = _object.seat_transform(_slot)
-			if _lod == Lod.LOW:
-				# offscreen: snap straight into the seat pose, no settle animation
-				# (the per-frame _settle runs in _physics_process, which LOW skips).
-				global_position = _seat_xform.origin
-				rotation.y = _seat_xform.basis.get_euler().y
-				velocity = Vector3.ZERO
-				_seated = true
-			else:
-				# physically sit on the object: slide/turn from here into the seat pose.
-				_settle_from_pos = global_position
-				_settle_from_yaw = rotation.y
-				_settle_t = 0.0
-				_settling = true
-				velocity = Vector3.ZERO
-		elif _lod == Lod.LOW:
-			rotation.y = _object.slot_transform(_slot).basis.get_euler().y
+			_settle_from_pos = global_position
+			_settle_from_basis = global_transform.basis
+			_settle_t = 0.0
+			_settling = true
+			velocity = Vector3.ZERO
 		else:
 			# no seat: just face the way the slot points (counter, stand spot).
 			align_to(_object.slot_transform(_slot).basis)
+
+# Begin the activity's animation on arrival: the AnimationController plays the enter clip once
+# then switches to the loop (or straight to the loop when there's no enter clip). We keep
+# stationary_anim in sync so the idle HSM state holds the same pose.
+func _start_activity_anim() -> void:
+	var loop_anim: StringName = &"idle"
+	if current_activity != null and current_activity.animation != &"":
+		loop_anim = current_activity.animation
+	var enter: StringName = &""
+	if current_activity != null:
+		enter = current_activity.enter_animation
+	# Hold the ENTER clip in idle while it plays (else the idle state would stomp it with the
+	# loop); loop_reached flips stationary_anim to the loop once the enter clip finishes.
+	stationary_anim = enter if enter != &"" else loop_anim
+	_anim.start(enter, loop_anim)
 
 # How many game-minutes the NPC has been performing the current activity.
 func performed_minutes() -> int:
@@ -399,21 +421,96 @@ func performed_minutes() -> int:
 		return 0
 	return GameClock.total_minutes - _activity_start_minute
 
+# -------------------------------- attend player during interaction
+
+# Player pressed E: stop the current trip and turn to face them. A seated or settling
+# NPC is already stopped in its activity pose, so leave it be (menu still opens).
+func begin_interaction(by: Node3D) -> void:
+	if _seated or _settling:
+		return
+	_attending_player = by
+	_attend_resume = _has_target   # remember whether we interrupted a walk
+	_has_target = false            # stop locomotion; _face now turns toward the player
+	is_moving = false
+	is_running = false
+
+# Player left range (walked off): end the attend hold and resume the schedule.
+func _on_player_exited(_by: Node3D) -> void:
+	end_interaction()
+
+# End the attend/face hold, whether the player walked away or finished the command
+# menu. If a player command took over, that command owns the destination; otherwise
+# resume the interrupted schedule trip. Idempotent.
+func end_interaction() -> void:
+	if _attending_player == null and not _attend_resume:
+		return
+	_attending_player = null
+	_face_override = false
+	if _command_active:
+		_attend_resume = false
+		return
+	if _attend_resume:
+		_attend_resume = false
+		move_to(_move_target)
+
 # -------------------------------- public API
 
 func move_to(target: Vector3) -> void:
 	_face_override = false
-	_move_target = target
-	# LOD: offscreen NPCs teleport to the destination instead of walking there.
-	if _lod == Lod.LOW:
-		_teleport_to(target)
-		return
-	_agent.target_position = target
-	_has_target = true
-	_unreachable_time = 0.0
+	_anim.reset()                # leave any activity pose; walking clip takes over
+	var dest: Vector3 = _snap_to_navmesh(target)
+	_move_target = dest
+	_final_target = dest
+	# Ask the waypoint graph for a route (empty when no network / go-direct); then
+	# walk it hop by hop with the navmesh.
+	_route = _build_route(global_position, dest)
 	# Walking overrides any activity pose; default the stationary clip back to idle
 	# until the NPC arrives and _on_arrived assigns the destination activity's clip.
 	stationary_anim = &"idle"
+	_start_next_leg()
+
+# Query the WaypointNetwork (if one is in the scene) for the ordered waypoint
+# positions between here and the destination. Trims a leading/trailing waypoint
+# that the NPC or the target is already sitting on top of, to avoid a backtrack.
+func _build_route(from: Vector3, to: Vector3) -> Array[Vector3]:
+	var net: Node = get_tree().get_first_node_in_group("waypoint_network")
+	if net == null or not net.has_method("route"):
+		return []
+	var pts: PackedVector3Array = net.route(from, to)
+	var out: Array[Vector3] = []
+	for p in pts:
+		out.append(p)
+	if not out.is_empty() and out[0].distance_to(from) <= TARGET_DESIRED:
+		out.remove_at(0)
+	if not out.is_empty() and out[out.size() - 1].distance_to(to) <= TARGET_DESIRED:
+		out.remove_at(out.size() - 1)
+	return out
+
+# Point the agent at the next hop (a waypoint) or, when the route is exhausted, at
+# the final target. Legs are snapped onto the navmesh like the final target.
+func _start_next_leg() -> void:
+	var goal: Vector3
+	if _route.is_empty():
+		goal = _final_target
+		_leg_final = true
+	else:
+		goal = _snap_to_navmesh(_route.pop_front())
+		_leg_final = false
+	_agent.target_position = goal
+	_has_target = true
+	_unreachable_time = 0.0
+
+# Nearest point on the agent's navmesh to `target`, so a goal placed a little off the mesh is
+# still reachable. Returns the raw target if the nav map isn't ready or the nearest point is
+# farther than NAV_SNAP_MAX (empty/unbaked map, or a genuinely distant/disconnected goal).
+func _snap_to_navmesh(target: Vector3) -> Vector3:
+	var map: RID = _agent.get_navigation_map()
+	if not map.is_valid():
+		return target
+	var p: Vector3 = NavigationServer3D.map_get_closest_point(map, target)
+	if p.distance_to(target) > NAV_SNAP_MAX:
+		return target
+	return p
 
 func align_to(target_basis: Basis) -> void:
 	# settling into a slot: stop walking, turn to face the slot direction
@@ -467,10 +564,14 @@ func _update_intent(delta: float) -> void:
 	# within reach of the target.
 	var dist: float = _agent.distance_to_target()
 	if _agent.is_navigation_finished() and dist <= TARGET_DESIRED + 0.1:
-		_has_target = false
-		is_moving = false
-		is_running = false
-		arrived.emit()
+		if _leg_final:
+			_has_target = false
+			is_moving = false
+			is_running = false
+			arrived.emit()
+		else:
+			# Reached a waypoint; head for the next hop without emitting arrived.
+			_start_next_leg()
 		return
 
 	is_moving = true
@@ -478,6 +579,15 @@ func _update_intent(delta: float) -> void:
 
 func _face(delta: float) -> void:
 	var wanted_yaw: float
+	# Attending a player overrides everything: keep turning to look at them as they move.
+	if _attending_player != null:
+		var to_p: Vector3 = _attending_player.global_position - global_position
+		to_p.y = 0.0
+		if to_p.length_squared() > 0.0001:
+			var dir_p: Vector3 = to_p.normalized()
+			wanted_yaw = atan2(dir_p.x, dir_p.z)
+			rotation.y = lerp_angle(rotation.y, wanted_yaw, TURN_SPEED * delta)
+		return
 	if _face_override:
 		wanted_yaw = _face_yaw
 	elif is_moving:
