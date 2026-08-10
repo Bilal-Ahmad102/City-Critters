@@ -89,11 +89,23 @@ func _apply_layout() -> void:
 		_clock_label.position = Vector2(0, -24)
 		_clock_label.size = Vector2(map_size.x, 22)
 
-# The local player's avatar (cached; re-found if it despawns).
+# The local player's avatar. Resolved from the ACTIVE CAMERA's owning player —
+# that is the one this screen is actually following, which stays correct even
+# when several player nodes exist (e.g. offline, where is_multiplayer_authority()
+# reads true for every player, so "first authority player" can pick the wrong
+# one and the map ends up centred on someone else). Falls back to the first
+# authority player if there's no camera yet.
 func _find_player() -> Node3D:
+	var camera := get_viewport().get_camera_3d()
+	if camera != null:
+		var n: Node = camera
+		while n != null:
+			if n is Node3D and n.is_in_group("player"):
+				_player = n as Node3D
+				return _player
+			n = n.get_parent()
 	if _player != null and is_instance_valid(_player):
 		return _player
-	_player = null
 	for node in get_tree().get_nodes_in_group("player"):
 		if node is Node3D and node.is_multiplayer_authority():
 			_player = node
