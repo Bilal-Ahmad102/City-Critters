@@ -29,12 +29,14 @@ var _built: bool = false
 
 func _ready() -> void:
 	add_to_group("waypoint_network")
-	# Defer: colliders and the physics space need to exist before the clear-check.
+	# Warm up the graph a couple of frames in (once colliders/physics exist), but
+	# route() also builds on demand so an NPC that asks earlier never races it.
 	call_deferred("_build")
 
 
 func _build() -> void:
-	await get_tree().physics_frame
+	if _built:
+		return
 
 	_points = PackedVector3Array()
 	for c in get_children():
@@ -78,7 +80,9 @@ func _segment_clear(space: PhysicsDirectSpaceState3D, a: Vector3, b: Vector3) ->
 # across the graph, start waypoint first, goal waypoint last. Empty when there is
 # no graph, no reachable path, or both ends map to the same waypoint (go direct).
 func route(from: Vector3, to: Vector3) -> PackedVector3Array:
-	if not _built or _points.is_empty():
+	if not _built:
+		_build()  # build on demand so the first NPC to ask never races the deferred build
+	if _points.is_empty():
 		return PackedVector3Array()
 	var s: int = _nearest(from)
 	var g: int = _nearest(to)
