@@ -1,39 +1,24 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://fkiwjgcunc8u"]
 
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_04.prefab.scn" id="1_b8pi6"]
-[ext_resource type="Script" path="res://scripts/housing/house_property.gd" id="1_vvgeh"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_03.prefab.scn" id="2_eyig6"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_02.prefab.scn" id="3_ow1ry"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Bush_04.SM_Env_Bush_04.mesh" id="3_xa3dn"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_03.prefab.scn" id="4_7hna1"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/PolygonTown_01_A.material" id="4_kgnso"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_04_B.material" id="5_a1p7k"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Roof_Window_02.prefab.scn" id="6_frgek"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Bush_03.SM_Env_Bush_03.mesh" id="6_qaxt1"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Misc/Window_Glass_Opaque.material" id="7_4vj4l"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Bush_02.SM_Env_Bush_02.mesh" id="8_26hjq"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_GardenShed_01.prefab.scn" id="8_vleui"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="9_p5bkm"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_01.prefab.scn" id="10_t0asj"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Preset_03.SM_Bld_House_Preset_03.mesh" id="10_tlsct"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_02_C.material" id="11_qh8x1"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_TreeDead_01.prefab.scn" id="12_jw6y5"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_SatelliteDish_01.prefab.scn" id="13_6euxy"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_Tall_01.prefab.scn" id="14_a1p7k"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Roof_Window_02.SM_Bld_House_Roof_Window_02.mesh" id="14_g3j5l"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_04.prefab.scn" id="15_frgek"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_03.prefab.scn" id="16_4vj4l"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_GardenShed_01.SM_Bld_GardenShed_01.mesh" id="16_82how"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_GardenShed_01.SM_Bld_GardenShed_Door_01.mesh" id="17_15alj"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_01.prefab.scn" id="17_vleui"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Props/extracted/SM_Prop_Antenna_01.SM_Prop_Antenna_01.mesh" id="19_58bbg"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Preset_01.SM_Bld_House_Preset_01.mesh" id="21_i04o5"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Generic/extracted/SM_Generic_TreeDead_01.SM_Generic_TreeDead_01.mesh" id="24_b7rkj"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Props/extracted/SM_Prop_SatelliteDish_01.SM_Prop_SatelliteDish_01.mesh" id="26_wv88y"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_Tall_01.SM_Env_Tree_Tall_01.mesh" id="28_onags"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Generic/extracted/SM_Generic_Tree_04.SM_Generic_Tree_04.mesh" id="30_g2c1m"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Generic/extracted/SM_Generic_Tree_03.SM_Generic_Tree_03.mesh" id="32_o7mhk"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_01.SM_Env_Tree_01.mesh" id="34_2m2ee"]
+[ext_resource type="PackedScene" uid="uid://cjbblhu1q1pqv" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_04.prefab.scn" id="1_b8pi6"]
+[ext_resource type="Script" uid="uid://2ewvnbmacuy6" path="res://scripts/housing/house_property.gd" id="1_vvgeh"]
+[ext_resource type="PackedScene" uid="uid://boxafpnlf42xa" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_03.prefab.scn" id="2_eyig6"]
+[ext_resource type="PackedScene" uid="uid://fwkgy7u7ebs3" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_02.prefab.scn" id="3_ow1ry"]
+[ext_resource type="PackedScene" uid="uid://y8axqvsk4k3x" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_03.prefab.scn" id="4_7hna1"]
+[ext_resource type="Material" uid="uid://d3v4r6nc1w6i2" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_04_B.material" id="5_a1p7k"]
+[ext_resource type="PackedScene" uid="uid://0ag2xmxcic27" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Roof_Window_02.prefab.scn" id="6_frgek"]
+[ext_resource type="Material" uid="uid://3rf3mq5bqkhj" path="res://assets/Map/PolygonTown/Materials/Misc/Window_Glass_Opaque.material" id="7_4vj4l"]
+[ext_resource type="PackedScene" uid="uid://b8bjljovb7rna" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_GardenShed_01.prefab.scn" id="8_vleui"]
+[ext_resource type="PackedScene" uid="uid://df31msyjehpnx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="9_p5bkm"]
+[ext_resource type="PackedScene" uid="uid://bdt8xso25nyny" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_01.prefab.scn" id="10_t0asj"]
+[ext_resource type="Material" uid="uid://c4s4mefvmmmbf" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_02_C.material" id="11_qh8x1"]
+[ext_resource type="PackedScene" uid="uid://dwspa776buanf" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_TreeDead_01.prefab.scn" id="12_jw6y5"]
+[ext_resource type="PackedScene" uid="uid://bxb8gq2r1nps7" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_SatelliteDish_01.prefab.scn" id="13_6euxy"]
+[ext_resource type="PackedScene" uid="uid://dvl815qkwid3p" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_Tall_01.prefab.scn" id="14_a1p7k"]
+[ext_resource type="PackedScene" uid="uid://cc706hyi43phn" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_04.prefab.scn" id="15_frgek"]
+[ext_resource type="PackedScene" uid="uid://bni5x0h0nh7fu" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_03.prefab.scn" id="16_4vj4l"]
+[ext_resource type="PackedScene" uid="uid://s47rklg021qi" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_01.prefab.scn" id="17_vleui"]
+[ext_resource type="PackedScene" uid="uid://mu4gdvw43658" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ForSaleSign_01.prefab.scn" id="19_4vj4l"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5u7xb"]
 points = PackedVector3Array(-0.03201562, 0.21110389, -0.70511615, -0.54680896, 0.013907231, -0.15676618, -0.71392363, 0.37009472, -0.38716412, -0.32561094, 0.5284003, -0.677258, 0.3512894, 0.34799364, -0.5652571, -0.009981692, 0.14488624, -0.65508527, -0.83081806, 0.32400793, 0.18165302, 0.44028366, 0.010309378, -0.023160934, -0.46053314, 0.010309378, 0.404518, -0.63723403, 0.7516386, 0.044068098, 0.19032705, 0.88544446, -0.17922324, 0.6308631, 0.6206596, -0.1380046, -0.5246319, 0.5276294, 0.5580218, 0.44228673, 0.41566753, 0.56427574, 0.058409452, 0.37035173, 0.7469169, 0.122222066, 0.70520914, 0.66675377)
@@ -52,9 +37,6 @@ points = PackedVector3Array(2.5092444, 4.2062855, 0.29330444, 2.471786, 4.357209
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_banl1"]
 points = PackedVector3Array(-0.43774092, 1.0815028, 1.2867306, -1.0994003, -0.022064209, 1.2422718, -0.43774092, 0.9929652, 1.2867306, 1.1062837, -0.022064209, 1.2417749, 1.1453931, 2.193293, 1.19061, 0.0034415722, 2.7782438, 1.2214082, -1.1414831, 2.195212, 1.1943356, -1.1414831, 2.195212, -1.2230872, -1.0529721, 0.03741767, -1.1763929, 1.0598555, 0.03714356, -1.1766413, 1.1950233, 2.0074465, -1.1403787, 1.1456218, 2.193019, -1.21961, -0.080952525, 2.738498, 1.1866361, 0.0034415722, 2.7776957, -1.2506567, -0.080952525, 2.738498, -1.2153876)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mbhef"]
-points = PackedVector3Array(-0.4174666, 1.2862425, 0.08030191, -0.24774466, 1.7949905, 0.30652034, -0.38907585, 1.7666578, -0.060932428, -0.36080962, 1.0601126, -0.11748704, -0.07827178, -0.014048815, 0.08030191, -0.2760109, 1.0601126, 0.30652034, -0.36080962, 1.7949905, -0.11748704, 0.8546386, 1.4275515, 0.10854876, 0.8546386, 1.5121953, 0.10854876, 0.7697153, 1.5121953, -0.31539774, -0.2760109, 0.89047086, -0.14573391, -0.07827178, -0.014048815, -0.08917929, 0.06305942, -0.014048815, 0.08030191, -0.13480425, 0.89047086, 0.2782126, 0.8546386, 1.4275515, -0.0044386983, 0.06305942, -0.014048815, -0.08917929)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_o6heh"]
 data = PackedVector3Array(-2.7252, 4.0845, 4.0785, -2.7252, 0, 4.0785, -2.7252, 0, -4.0452, -2.7252, 0, -4.0452, -2.7252, 4.0845, -4.0452, -2.7252, 4.0845, 4.0785, 0, 5.6436, 1.4441999, -2.7252, 4.0845, 4.0785, -2.7252, 4.0845, -4.0452, -2.7252, 4.0845, -4.0452, 0, 5.6436, -1.4441999, 0, 5.6436, 1.4441999, 0, 5.6436, 1.4441999, 0, 5.6436, -1.4441999, 2.8106, 4.0845, -4.0452, 2.8106, 4.0845, -4.0452, 2.8106, 4.0845, 4.0785, 0, 5.6436, 1.4441999, 2.8106, 0, 4.0785, 2.8106, 4.0845, 4.0785, 2.8106, 4.0845, -4.0452, 2.8106, 4.0845, -4.0452, 2.8106, 0, -4.0452, 2.8106, 0, 4.0785, -2.7252, 0, 4.0785, 0, 0, 4.0785, 0, 0, -4.0452, 0, 0, -4.0452, -2.7252, 0, -4.0452, -2.7252, 0, 4.0785, 2.8106, 4.0845, 4.0785, -2.7252, 4.0845, 4.0785, 0, 5.6436, 1.4441999, 0, 5.6436, -1.4441999, -2.7252, 4.0845, -4.0452, 2.8106, 4.0845, -4.0452, 0, 0, -4.0452, 0, 0, 4.0785, 2.8106, 0, 4.0785, 2.8106, 0, 4.0785, 2.8106, 0, -4.0452, 0, 0, -4.0452, -2.7252, 0, 4.0785, 2.8106, 4.0845, 4.0785, 2.8106, 0, 4.0785, -2.7252, 0, 4.0785, -2.7252, 4.0845, 4.0785, 2.8106, 4.0845, 4.0785, -2.7252, 0, 4.0785, 2.8106, 0, 4.0785, 0, 0, 4.0785, 2.8106, 0, -4.0452, -2.7252, 0, -4.0452, 0, 0, -4.0452, 2.8106, 0, -4.0452, 2.8106, 4.0845, -4.0452, -2.7252, 0, -4.0452, 2.8106, 4.0845, -4.0452, -2.7252, 4.0845, -4.0452, -2.7252, 0, -4.0452)
@@ -86,21 +68,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.227112, 0, 4.772701)
 [node name="SM_Env_Bush_04 (10)" parent="bushes" unique_id=1790526964 instance=ExtResource("1_b8pi6")]
 transform = Transform3D(-2.0329049, 0, -1.7772221e-07, 0, 2.032905, 0, 1.7772219e-07, 0, -2.032905, -1.3357983, 0, -2.9940643)
 
-[node name="MeshRenderer" parent="bushes/SM_Env_Bush_04 (10)" index="0"]
-gi_mode = 2
-mesh = ExtResource("3_xa3dn")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="bushes/SM_Env_Bush_04 (10)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_5u7xb")
 
 [node name="SM_Env_Bush_03 (9)2" parent="bushes" unique_id=1075600272 instance=ExtResource("2_eyig6")]
 transform = Transform3D(-1.6761127, 0, -1.4653043e-07, 0, 1.6761127, 0, 1.4653043e-07, 0, -1.6761127, 5.1558666, 0, -0.5507736)
-
-[node name="MeshRenderer" parent="bushes/SM_Env_Bush_03 (9)2" index="0"]
-gi_mode = 2
-mesh = ExtResource("6_qaxt1")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="bushes/SM_Env_Bush_03 (9)2/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_s8uti")
@@ -108,32 +80,17 @@ shape = SubResource("ConvexPolygonShape3D_s8uti")
 [node name="SM_Env_Bush_04 (9)" parent="bushes" unique_id=1309696603 instance=ExtResource("1_b8pi6")]
 transform = Transform3D(-2.0598283, 0, -1.8007594e-07, 0, 2.0598288, 0, 1.800759e-07, 0, -2.0598288, 5.558264, 0, 2.7724457)
 
-[node name="MeshRenderer" parent="bushes/SM_Env_Bush_04 (9)" index="0"]
-gi_mode = 2
-mesh = ExtResource("3_xa3dn")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="bushes/SM_Env_Bush_04 (9)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_5u7xb")
 
 [node name="SM_Env_Bush_03 (8)" parent="bushes" unique_id=1516903534 instance=ExtResource("2_eyig6")]
 transform = Transform3D(-1.8868347, 0, -1.6495231e-07, 0, 1.8868345, 0, 1.6495233e-07, 0, -1.8868345, 0.16420174, 0, 3.0059357)
 
-[node name="MeshRenderer" parent="bushes/SM_Env_Bush_03 (8)" index="0"]
-gi_mode = 2
-mesh = ExtResource("6_qaxt1")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="bushes/SM_Env_Bush_03 (8)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_s8uti")
 
 [node name="SM_Env_Bush_02 (8)2" parent="bushes" unique_id=1030488818 instance=ExtResource("3_ow1ry")]
 transform = Transform3D(-2.368579, 0, -2.0706774e-07, 0, 2.368579, 0, 2.0706774e-07, 0, -2.368579, -6.3357983, -1, 1.0059357)
-
-[node name="MeshRenderer" parent="bushes/SM_Env_Bush_02 (8)2" index="0"]
-gi_mode = 2
-mesh = ExtResource("8_26hjq")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="bushes/SM_Env_Bush_02 (8)2/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_wnpru")
@@ -143,11 +100,8 @@ transform = Transform3D(-1.1920929e-07, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 
 
 [node name="MeshRenderer" parent="SM_Bld_House_Preset_03" index="0"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("10_tlsct")
 surface_material_override/0 = ExtResource("5_a1p7k")
 surface_material_override/1 = ExtResource("5_a1p7k")
-surface_material_override/2 = ExtResource("7_4vj4l")
 
 [node name="MeshCollider" parent="SM_Bld_House_Preset_03" index="1"]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -159,8 +113,6 @@ shape = SubResource("ConcavePolygonShape3D_n0f8j")
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.1086864, 0.5, -4.2213635)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Roof_Window_02 (1)" index="0"]
-gi_mode = 2
-mesh = ExtResource("14_g3j5l")
 surface_material_override/0 = ExtResource("7_4vj4l")
 surface_material_override/1 = ExtResource("5_a1p7k")
 surface_material_override/2 = ExtResource("5_a1p7k")
@@ -172,8 +124,6 @@ shape = SubResource("ConvexPolygonShape3D_r3lbc")
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.60868645, 0.5, -4.2213635)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Roof_Window_02" index="0"]
-gi_mode = 2
-mesh = ExtResource("14_g3j5l")
 surface_material_override/0 = ExtResource("7_4vj4l")
 surface_material_override/1 = ExtResource("5_a1p7k")
 surface_material_override/2 = ExtResource("5_a1p7k")
@@ -184,46 +134,23 @@ shape = SubResource("ConvexPolygonShape3D_r3lbc")
 [node name="SM_Bld_GardenShed_02" parent="." unique_id=2055920130 instance=ExtResource("8_vleui")]
 transform = Transform3D(-2.9802322e-06, 0, -1, 0, 1, 0, 1, 0, -2.9802322e-06, 0.89131355, 0, -8.721363)
 
-[node name="MeshRenderer" parent="SM_Bld_GardenShed_02" index="0"]
-gi_mode = 2
-mesh = ExtResource("16_82how")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="SM_Bld_GardenShed_02/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_banl1")
 
 [node name="SM_Bld_GardenShed_Door_01" parent="SM_Bld_GardenShed_02" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.47734833, 1.0262008, 1.1742477)
 
-[node name="MeshRenderer" parent="SM_Bld_GardenShed_02/SM_Bld_GardenShed_Door_01" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_15alj")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="SM_Prop_Antenna_01 (2)" parent="." unique_id=1683046719 instance=ExtResource("9_p5bkm")]
 transform = Transform3D(0.5650414, 0, -0.8250625, 0, 1, 0, 0.8250625, 0, 0.5650414, -6.810686, 5.511, -0.94336367)
 
-[node name="MeshRenderer" parent="SM_Prop_Antenna_01 (2)" index="0"]
+[node name="MeshRenderer" parent="SM_Prop_Antenna_01 (2)" index="0" unique_id=70937671]
 transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("19_58bbg")
-surface_material_override/0 = ExtResource("4_kgnso")
-
-[node name="MeshCollider" parent="SM_Prop_Antenna_01 (2)" index="1"]
-transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, 0, 0)
-
-[node name="CollisionShape3D" parent="SM_Prop_Antenna_01 (2)/MeshCollider" index="0"]
-shape = SubResource("ConvexPolygonShape3D_mbhef")
 
 [node name="SM_Bld_House_Preset_01" parent="." unique_id=2018508032 instance=ExtResource("10_t0asj")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7.7143345, -0.64, -3.1413617)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Preset_01" index="0"]
-gi_mode = 2
-mesh = ExtResource("21_i04o5")
-surface_material_override/0 = ExtResource("4_kgnso")
 surface_material_override/1 = ExtResource("11_qh8x1")
-surface_material_override/2 = ExtResource("7_4vj4l")
 
 [node name="CollisionShape3D" parent="SM_Bld_House_Preset_01/MeshCollider" index="0"]
 shape = SubResource("ConcavePolygonShape3D_o6heh")
@@ -233,9 +160,6 @@ transform = Transform3D(-1.5374821, 0, -1.3441091e-07, 0, 1.5374815, 0, 1.344109
 
 [node name="MeshRenderer" parent="SM_Generic_TreeDead_02" index="0" unique_id=1066180863]
 transform = Transform3D(1.0000001, 0, 7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("24_b7rkj")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="SM_Generic_TreeDead_02/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(1158175083, 130958256) index="0" unique_id=579689685]
 shape = SubResource("ConcavePolygonShape3D_vvgeh")
@@ -243,21 +167,11 @@ shape = SubResource("ConcavePolygonShape3D_vvgeh")
 [node name="SM_Prop_SatelliteDish_01 (3)" parent="." unique_id=61670072 instance=ExtResource("13_6euxy")]
 transform = Transform3D(-0.90813196, 0, -0.41868407, 0, 1, 0, 0.41868407, 0, -0.90813196, 7.359314, 4.412, -5.1863637)
 
-[node name="MeshRenderer" parent="SM_Prop_SatelliteDish_01 (3)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wv88y")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="SM_Prop_SatelliteDish_01 (3)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_xa3dn")
 
 [node name="SM_Env_Tree_Tall_01 (1)" parent="." unique_id=1418847554 instance=ExtResource("14_a1p7k")]
 transform = Transform3D(-2.0747924, 0, -1.8138407e-07, 0, 2.074792, 0, 1.8138411e-07, 0, -2.074792, -13.858686, 0, 0.028636456)
-
-[node name="MeshRenderer" parent="SM_Env_Tree_Tall_01 (1)" index="0" unique_id=893464176]
-gi_mode = 2
-mesh = ExtResource("28_onags")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="SM_Env_Tree_Tall_01 (1)/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(1418847554, 1869962890) index="0" unique_id=1189375710]
 shape = SubResource("ConcavePolygonShape3D_p5bkm")
@@ -267,9 +181,6 @@ transform = Transform3D(-1.6259465, 0, -1.421448e-07, 0, 1.625947, 0, 1.4214476e
 
 [node name="MeshRenderer" parent="SM_Generic_Tree_04 (1)2" index="0" unique_id=1431981313]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, -7.1054274e-15, 0, 0.99999994, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("30_g2c1m")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="SM_Generic_Tree_04 (1)2/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(1501920567, 885098433) index="0" unique_id=2078863105]
 shape = SubResource("ConcavePolygonShape3D_t0asj")
@@ -279,9 +190,6 @@ transform = Transform3D(-1.4288582, 0, -1.2491475e-07, 0, 1.4288582, 0, 1.249147
 
 [node name="MeshRenderer" parent="SM_Generic_Tree_06" index="0" unique_id=483330588]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
-gi_mode = 2
-mesh = ExtResource("32_o7mhk")
-surface_material_override/0 = ExtResource("4_kgnso")
 
 [node name="CollisionShape3D" parent="SM_Generic_Tree_06/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(814375542, 1489804067) index="0" unique_id=1805299856]
 shape = SubResource("ConcavePolygonShape3D_qh8x1")
@@ -289,13 +197,11 @@ shape = SubResource("ConcavePolygonShape3D_qh8x1")
 [node name="SM_Env_Tree_01 (3)2" parent="." unique_id=1926767044 instance=ExtResource("17_vleui")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7.270933, 0, -9.292728)
 
-[node name="MeshRenderer" parent="SM_Env_Tree_01 (3)2" index="0" unique_id=1503073777]
-gi_mode = 2
-mesh = ExtResource("34_2m2ee")
-surface_material_override/0 = ExtResource("4_kgnso")
-
 [node name="CollisionShape3D" parent="SM_Env_Tree_01 (3)2/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(1926767044, 742174499) index="0" unique_id=1484831763]
 shape = SubResource("ConcavePolygonShape3D_jw6y5")
+
+[node name="SM_Prop_ForSaleSign_01" parent="." unique_id=1965007946 instance=ExtResource("19_4vj4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.217464, 0.42031765, 10.267456)
 
 [editable path="bushes/SM_Env_Bush_04 (10)"]
 [editable path="bushes/SM_Env_Bush_03 (9)2"]

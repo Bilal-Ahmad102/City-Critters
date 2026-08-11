@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="NPCSchedule" format=3 uid="uid://dknkwuc1jkajv"]
+
+[ext_resource type="Script" uid="uid://drrvt3h86ro54" path="res://NPC/data/npc_schedule.gd" id="1_entry"]
+[ext_resource type="Script" uid="uid://nclx8evxr6qn" path="res://NPC/data/schedule_entry.gd" id="2_sched"]
+[ext_resource type="Resource" uid="uid://dqp0r2nthw52q" path="res://NPC/data/activities/act_sleep.tres" id="3_sleep"]
+[ext_resource type="Resource" uid="uid://p47panrj5l8d" path="res://NPC/data/activities/act_wait.tres" id="4_wait"]
+[ext_resource type="Resource" path="res://NPC/data/activities/act_relax.tres" id="5_relax"]
+
+[sub_resource type="Resource" id="E_night"]
+script = ExtResource("1_entry")
+start_hour = 0
+activity = ExtResource("3_sleep")
+
+[sub_resource type="Resource" id="E_morning"]
+script = ExtResource("1_entry")
+start_hour = 7
+activity = ExtResource("4_wait")
+
+[sub_resource type="Resource" id="E_afternoon"]
+script = ExtResource("1_entry")
+start_hour = 12
+activity = ExtResource("5_relax")
+
+[sub_resource type="Resource" id="E_bed"]
+script = ExtResource("1_entry")
+start_hour = 22
+activity = ExtResource("3_sleep")
+
+[resource]
+script = ExtResource("2_sched")
+entries = Array[ExtResource("1_entry")]([SubResource("E_night"), SubResource("E_morning"), SubResource("E_afternoon"), SubResource("E_bed")])

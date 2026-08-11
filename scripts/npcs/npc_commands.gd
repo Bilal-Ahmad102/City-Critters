@@ -36,6 +36,7 @@ func _on_interacted(by: Node3D) -> void:
 	if _layer != null:
 		return                       # already open
 	_player = by
+	_npc.begin_interaction(by)        # stop + face the player for the interaction
 	if _player.has_method("set_busy"):
 		_player.set_busy(true)
 	_build_menu()
@@ -91,12 +92,15 @@ func _label_for(i: int) -> String:
 	return String(commands[i].id).capitalize()
 
 func _on_command(cmd: ActivityResource) -> void:
-	var reaction: int = _npc.receive_command(cmd)
-	_status.text = _reaction_text(reaction)
+	# Release the attend/face hold first so the command can move the NPC (a refused or
+	# delayed command falls back to the resuming schedule), then close the menu.
+	_npc.end_interaction()
+	_npc.receive_command(cmd)
+	_close()
 
 func _on_resume() -> void:
 	_npc.cancel_command()
-	_status.text = "Back to the daily routine."
+	_close()
 
 func _reaction_text(reaction: int) -> String:
 	match reaction:
@@ -114,6 +118,8 @@ func _line_or(p: NPCPersonality, field: String, fallback: String) -> String:
 	return fallback
 
 func _close() -> void:
+	if _npc != null:
+		_npc.end_interaction()       # drop the attend/face hold, resume the schedule
 	if _layer != null:
 		_layer.queue_free()
 		_layer = null

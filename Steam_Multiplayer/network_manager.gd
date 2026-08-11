@@ -16,7 +16,11 @@ signal lobby_joined_signal(lobby_id: int)
 signal player_count_changed(count: int)
 signal session_failed(reason: String)
 
-const WORLD_SCENE := "res://scenes/city/town.tscn"
+const WORLD_SCENE := "res://scenes/city/Town_Scene.scn"
+const LOADING_SCENE := "res://scenes/ui/menus/loading_screen.tscn"
+
+# Status line shown on the loading screen while the world streams in.
+var loading_status: String = ""
 
 var lobby_id: int = 0
 var lobby_members: Array = []
@@ -110,6 +114,7 @@ func _on_lobby_created(connect_result: int, this_lobby_id: int) -> void:
 	_refresh_members()
 	lobby_created_signal.emit(lobby_id)
 	print("Multiplayer: hosting lobby %s as peer %s" % [lobby_id, multiplayer.get_unique_id()])
+	loading_status = "Hosting %s..." % pending_lobby_name
 	_start_session()
 
 
@@ -149,6 +154,7 @@ func _on_lobby_joined(this_lobby_id: int, _perm: int, _locked: bool, response: i
 
 	lobby_joined_signal.emit(lobby_id)
 	print("Multiplayer: joined lobby %s as peer %s" % [lobby_id, multiplayer.get_unique_id()])
+	loading_status = "Joining lobby..."
 	_start_session()
 
 
@@ -184,9 +190,10 @@ func get_current_player_count() -> int:
 
 
 func _start_session() -> void:
-	# Both host and clients load the same world; the world's PlayerSpawner
-	# (driven by the host) replicates a player node for every peer.
-	get_tree().change_scene_to_file(WORLD_SCENE)
+	# Both host and clients show the loading screen, which streams the world in
+	# and swaps to it. The world's PlayerSpawner (driven by the host) then
+	# replicates a player node for every peer.
+	get_tree().change_scene_to_file(LOADING_SCENE)
 
 
 func leave_lobby() -> void:

@@ -8,3 +8,4 @@ id = &"sleep"
 location_tag = &"own_home"
 animation = &"sleeping"
 min_duration_minutes = 480
+interruptible = false

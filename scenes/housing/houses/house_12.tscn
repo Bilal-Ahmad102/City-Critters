@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cs2hsct6cgjel"]
+
+[ext_resource type="PackedScene" uid="uid://cyro2uor04m34" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_09.prefab.scn" id="1_f42nr"]
+[ext_resource type="Script" uid="uid://2ewvnbmacuy6" path="res://scripts/housing/house_property.gd" id="1_vnu1l"]
+[ext_resource type="Material" uid="uid://d3v4r6nc1w6i2" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_04_B.material" id="2_cjol0"]
+[ext_resource type="Material" uid="uid://d3v22rpwmi7r0" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_01_C.material" id="3_m3p0d"]
+[ext_resource type="PackedScene" uid="uid://bxb8gq2r1nps7" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_SatelliteDish_01.prefab.scn" id="4_m3p0d"]
+[ext_resource type="PackedScene" uid="uid://dhfau7svva4da" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Concrete_Steps_01.prefab.scn" id="5_e70wb"]
+[ext_resource type="PackedScene" uid="uid://mu4gdvw43658" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ForSaleSign_01.prefab.scn" id="6_e70wb"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e70wb"]
+data = PackedVector3Array(-4.1489997, 7.1879997, 5.2804, -4.1489997, 0, 5.2804, -4.1489997, 0, -5.2888, -4.1489997, 0, -5.2888, -4.1489997, 7.1879997, -5.2888, -4.1489997, 7.1879997, 5.2804, -1.3417, 8.7514, 2.3507, -4.1489997, 7.1879997, 5.2804, -4.1489997, 7.1879997, -5.2888, -4.1489997, 7.1879997, -5.2888, -1.3417, 8.7514, -2.3590999, -1.3417, 8.7514, 2.3507, 1.4656, 0, 5.2804, 1.4656, 7.1879997, 5.2804, 1.4656, 7.1879997, -5.2888, 1.4656, 7.1879997, -5.2888, 1.4656, 0, -5.2888, 1.4656, 0, 5.2804, -4.1489997, 0, 5.2804, -1.3417, 0, 5.2804, -1.3417, 0, -5.2888, -1.3417, 0, -5.2888, -4.1489997, 0, -5.2888, -4.1489997, 0, 5.2804, 1.4656, 0, -5.2888, -1.3417, 0, -5.2888, -1.3417, 0, 5.2804, -1.3417, 0, 5.2804, 1.4656, 0, 5.2804, 1.4656, 0, -5.2888, 1.4656, 7.1879997, 5.2804, -4.1489997, 7.1879997, 5.2804, -1.3417, 8.7514, 2.3507, -1.3417, 8.7514, -2.3590999, -4.1489997, 7.1879997, -5.2888, 1.4656, 7.1879997, -5.2888, 1.4656, 7.1879997, -5.2888, 1.4656, 7.1879997, 5.2804, -1.3417, 8.7514, 2.3507, -1.3417, 8.7514, 2.3507, -1.3417, 8.7514, -2.3590999, 1.4656, 7.1879997, -5.2888, -1.3417, 0, 5.2804, 1.4656, 7.1879997, 5.2804, 1.4656, 0, 5.2804, -1.3417, 0, 5.2804, -4.1489997, 0, 5.2804, 1.4656, 7.1879997, 5.2804, -4.1489997, 0, 5.2804, -4.1489997, 7.1879997, 5.2804, 1.4656, 7.1879997, 5.2804, 1.4656, 7.1879997, -5.2888, -1.3417, 0, -5.2888, 1.4656, 0, -5.2888, 1.4656, 7.1879997, -5.2888, -4.1489997, 0, -5.2888, -1.3417, 0, -5.2888, 1.4656, 7.1879997, -5.2888, -4.1489997, 7.1879997, -5.2888, -4.1489997, 0, -5.2888, 4.1004, 4.157, -2.8161, 4.1004, 0, -2.8161, 4.1004, 0, 2.6949, 4.1004, 0, 2.6949, 4.1004, 4.157, 2.6949, 4.1004, 4.157, -2.8161, 0.0674, 6.3791, -2.8161, 4.1004, 4.157, -2.8161, 4.1004, 4.157, 2.6949, 4.1004, 4.157, 2.6949, 0.0674, 6.3791, 2.6949, 0.0674, 6.3791, -2.8161, 4.1004, 0, -2.8161, 0.0674, 0, -2.8161, 0.0674, 0, 2.6949, 0.0674, 0, 2.6949, 4.1004, 0, 2.6949, 4.1004, 0, -2.8161, 4.1004, 4.157, -2.8161, 0.0674, 6.3791, -2.8161, 0.0674, 0, -2.8161, 0.0674, 0, -2.8161, 4.1004, 0, -2.8161, 4.1004, 4.157, -2.8161, 4.1004, 4.157, 2.6949, 4.1004, 0, 2.6949, 0.0674, 0, 2.6949, 0.0674, 0, 2.6949, 0.0674, 6.3791, 2.6949, 4.1004, 4.157, 2.6949, 0.0674, 6.3791, 2.6949, 0.0674, 0, 2.6949, 0.0674, 0, -2.8161, 0.0674, 0, -2.8161, 0.0674, 6.3791, -2.8161, 0.0674, 6.3791, 2.6949)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vnu1l"]
+points = PackedVector3Array(-0.6221932, 0.8425374, 0.17352244, -0.088743925, 0.99200535, 0.47215903, -0.4511556, 1.2052753, -0.039891228, -0.118014276, 0.060803376, -0.11642981, -0.13129762, -0.010670185, 0.08823475, -0.43011385, 0.48031098, 0.3867417, 0.08182347, 0.99200535, 0.47215903, -0.063470304, 1.2955443, -0.15013012, 0.035860837, 0.31780133, 0.4465598, 0.01658231, 1.2341716, -0.1898576, 0.117794275, 0.024874806, -0.13153014, 0.12449473, -0.010670185, 0.08823475, 0.46562958, 0.50153565, 0.3654846, 0.57871425, 0.77234244, 0.17164302, 0.44435275, 1.2052753, -0.039891228, 0.57036805, 0.770936, 0.15135804)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vaddt"]
+points = PackedVector3Array(0.005938339, 0.5125957, 0.0017949353, 0.0122076925, 0, 0.006341147, -0.009321034, 0.27373344, 0.8780986, 0.028413385, 0.51930565, 0.50024843, 1.183749, 0.5125957, 0.0017949353, 0.0122076925, 0, 0.86222976, 1.1774797, 0, 0.006341147, 1.1044948, 0.27373344, 0.8780986, 1.1799638, 0.51930565, 0.50024843, 1.1991267, 0.50034505, 0.50024843, 1.1774797, 0, 0.86222976, 1.1423476, 0.27373344, 0.859056, 1.1563058, 0.23738815, 0.84661824)
+
+[node name="House_12" type="Node3D" unique_id=1362599400]
+script = ExtResource("1_vnu1l")
+
+[node name="SM_Bld_House_Preset_09" parent="." unique_id=1196612690 instance=ExtResource("1_f42nr")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.42108345, -0.64, -0.0070836544)
+
+[node name="MeshRenderer" parent="SM_Bld_House_Preset_09" index="0"]
+surface_material_override/0 = ExtResource("2_cjol0")
+surface_material_override/1 = ExtResource("3_m3p0d")
+
+[node name="CollisionShape3D" parent="SM_Bld_House_Preset_09/MeshCollider" index="0"]
+shape = SubResource("ConcavePolygonShape3D_e70wb")
+
+[node name="SM_Prop_SatelliteDish_01 (6)" parent="." unique_id=1326394896 instance=ExtResource("4_m3p0d")]
+transform = Transform3D(-0.90813196, 0, -0.41868407, 0, 1, 0, 0.41868407, 0, -0.90813196, 0.28867912, 7.431, -3.2596128)
+
+[node name="CollisionShape3D" parent="SM_Prop_SatelliteDish_01 (6)/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_vnu1l")
+
+[node name="SM_Bld_House_Concrete_Steps_01 (5)" parent="." unique_id=1755272987 instance=ExtResource("5_e70wb")]
+transform = Transform3D(-1.6292068e-07, 0, -1, 0, 0.8, 0, 1, 0, -1.6292068e-07, -4.355318, -0.092, -1.8156126)
+
+[node name="CollisionShape3D" parent="SM_Bld_House_Concrete_Steps_01 (5)/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_vaddt")
+
+[node name="SM_Prop_ForSaleSign_01" parent="." unique_id=1760468949 instance=ExtResource("6_e70wb")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -6.3647423, 0.30861878, 0.30205584)
+
+[editable path="SM_Bld_House_Preset_09"]
+[editable path="SM_Prop_SatelliteDish_01 (6)"]
+[editable path="SM_Bld_House_Concrete_Steps_01 (5)"]

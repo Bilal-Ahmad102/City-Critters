@@ -1,42 +1,23 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://be0nq6xam5a7j"]
 
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_10.prefab.scn" id="1_0pl8y"]
-[ext_resource type="Script" path="res://scripts/housing/house_property.gd" id="1_roeww"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_01_C.material" id="2_wxyqy"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Preset_10.SM_Bld_House_Preset_10.mesh" id="3_0bm7g"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_Garage_01.prefab.scn" id="3_a8awh"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Window_Shutters_Open_01.prefab.scn" id="4_iaaek"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/PolygonTown_02_A.material" id="5_8rq8k"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/PolygonTown_01_A.material" id="5_gmflh"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="6_8p4qh"]
-[ext_resource type="Material" path="res://assets/Map/PolygonTown/Materials/Misc/Window_Glass_Opaque.material" id="6_t7shl"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Chimney_01.prefab.scn" id="7_v2xog"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Post_01.prefab.scn" id="8_3kthc"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Preset_Garage_01.SM_Bld_House_Preset_Garage_01.mesh" id="8_hywm1"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Straight_01.prefab.scn" id="9_1nsbf"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_House_Window_Shutters_Open_01.SM_Bld_House_Window_Shutters_Open_01.mesh" id="10_lf4ge"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Gate_01.prefab.scn" id="10_ljn5b"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_Large_01.prefab.scn" id="11_wio8n"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_03.prefab.scn" id="12_n84hi"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_04.prefab.scn" id="13_mj0qb"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Props/extracted/SM_Prop_Antenna_01.SM_Prop_Antenna_01.mesh" id="13_xnq4t"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Post_01.prefab.scn" id="14_iaaek"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Straight_01.prefab.scn" id="15_8rq8k"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Buildings/extracted/SM_Bld_Chimney_01.SM_Bld_Chimney_01.mesh" id="15_b5ckp"]
-[ext_resource type="PackedScene" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Gate_01.prefab.scn" id="16_8p4qh"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_Wood_Post_01.SM_Env_Fence_Wood_Post_01.mesh" id="17_nwis6"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_Wood_Straight_01.SM_Env_Fence_Wood_Straight_01.mesh" id="19_vg7ut"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_Wood_Gate_01.SM_Env_Fence_Wood_Gate_01.mesh" id="21_b1kra"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_Wood_Gate_01.SM_Fence_Wood_Gate_02.mesh" id="22_2gtvl"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_White_Post_01.SM_Env_Fence_White_Post_01.mesh" id="24_4r418"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_White_Straight_01.SM_Env_Fence_White_Straight_01.mesh" id="26_wwaph"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Fence_White_Gate_01.SM_Env_Fence_White_Gate_01.mesh" id="28_ngwwi"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_Large_01.SM_Env_Tree_Large_01.mesh" id="30_ymubd"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_Large_01.SM_Env_Tree_House_01.mesh" id="31_ifkyu"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_Large_01.SM_Env_Tree_Leaves_01.mesh" id="32_acf4r"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Environment/extracted/SM_Env_Tree_Large_01.SM_Env_Tree_Swing_01.mesh" id="33_jbhr5"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Generic/extracted/SM_Generic_Tree_03.SM_Generic_Tree_03.mesh" id="35_av8kf"]
-[ext_resource type="ArrayMesh" path="res://assets/Map/PolygonTown/Models/Generic/extracted/SM_Generic_Tree_04.SM_Generic_Tree_04.mesh" id="37_y230i"]
+[ext_resource type="PackedScene" uid="uid://cnkdg4ueba8s2" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_10.prefab.scn" id="1_0pl8y"]
+[ext_resource type="Script" uid="uid://2ewvnbmacuy6" path="res://scripts/housing/house_property.gd" id="1_roeww"]
+[ext_resource type="Material" uid="uid://d3v22rpwmi7r0" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_01_C.material" id="2_wxyqy"]
+[ext_resource type="PackedScene" uid="uid://c6oftww4fow41" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_Garage_01.prefab.scn" id="3_a8awh"]
+[ext_resource type="PackedScene" uid="uid://hxk4c7pnldji" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Window_Shutters_Open_01.prefab.scn" id="4_iaaek"]
+[ext_resource type="Material" uid="uid://cm5l7up3gb00k" path="res://assets/Map/PolygonTown/Materials/PolygonTown_02_A.material" id="5_8rq8k"]
+[ext_resource type="PackedScene" uid="uid://df31msyjehpnx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="6_8p4qh"]
+[ext_resource type="PackedScene" uid="uid://jguyb8wimtbu" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_Chimney_01.prefab.scn" id="7_v2xog"]
+[ext_resource type="PackedScene" uid="uid://d33qp07th66ui" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Post_01.prefab.scn" id="8_3kthc"]
+[ext_resource type="PackedScene" uid="uid://crnk354jyj8lo" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Straight_01.prefab.scn" id="9_1nsbf"]
+[ext_resource type="PackedScene" uid="uid://dfljfwop504u7" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_Wood_Gate_01.prefab.scn" id="10_ljn5b"]
+[ext_resource type="PackedScene" uid="uid://8r1pov5l28hh" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Tree_Large_01.prefab.scn" id="11_wio8n"]
+[ext_resource type="PackedScene" uid="uid://bni5x0h0nh7fu" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_03.prefab.scn" id="12_n84hi"]
+[ext_resource type="PackedScene" uid="uid://cc706hyi43phn" path="res://assets/Map/PolygonTown/Prefabs/Generic/SM_Generic_Tree_04.prefab.scn" id="13_mj0qb"]
+[ext_resource type="PackedScene" uid="uid://dsulcrtlxods8" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Post_01.prefab.scn" id="14_iaaek"]
+[ext_resource type="PackedScene" uid="uid://csvgpv1rgggoj" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Straight_01.prefab.scn" id="15_8rq8k"]
+[ext_resource type="PackedScene" uid="uid://dqfrln6ellflr" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Fence_White_Gate_01.prefab.scn" id="16_8p4qh"]
+[ext_resource type="PackedScene" uid="uid://mu4gdvw43658" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ForSaleSign_01.prefab.scn" id="18_8p4qh"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7h8o7"]
 data = PackedVector3Array(6.6812997, 3.7584999, 4.0689, 6.6812997, 0, 4.0689, -0.9167, 0, 4.0689, -0.9167, 0, 4.0689, -0.9167, 3.7584999, 4.0689, 6.6812997, 3.7584999, 4.0689, 6.6812997, 5.6988, 1.1258, 6.6812997, 3.7584999, 4.0689, -0.9167, 3.7584999, 4.0689, -0.9167, 3.7584999, 4.0689, -0.9167, 5.6988, 1.1258, 6.6812997, 5.6988, 1.1258, 6.6812997, 0, -1.8172, 6.6812997, 3.7584999, -1.8172, -0.9167, 3.7584999, -1.8172, -0.9167, 3.7584999, -1.8172, -0.9167, 0, -1.8172, 6.6812997, 0, -1.8172, 6.6812997, 0, 4.0689, 6.6812997, 0, 1.1258, -0.9167, 0, 1.1258, -0.9167, 0, 1.1258, -0.9167, 0, 4.0689, 6.6812997, 0, 4.0689, -0.9167, 0, -1.8172, -0.9167, 0, 1.1258, 6.6812997, 0, 1.1258, 6.6812997, 0, 1.1258, 6.6812997, 0, -1.8172, -0.9167, 0, -1.8172, 6.6812997, 3.7584999, 4.0689, 6.6812997, 5.6988, 1.1258, 6.6812997, 0, 1.1258, 6.6812997, 0, 1.1258, 6.6812997, 0, 4.0689, 6.6812997, 3.7584999, 4.0689, -0.9167, 3.7584999, 4.0689, -0.9167, 0, 4.0689, -0.9167, 0, 1.1258, -0.9167, 0, 1.1258, -0.9167, 5.6988, 1.1258, -0.9167, 3.7584999, 4.0689, 6.6812997, 3.7584999, -1.8172, 6.6812997, 5.6988, 1.1258, -0.9167, 5.6988, 1.1258, -0.9167, 5.6988, 1.1258, -0.9167, 3.7584999, -1.8172, 6.6812997, 3.7584999, -1.8172, -0.9167, 3.7584999, -1.8172, -0.9167, 5.6988, 1.1258, -0.9167, 0, 1.1258, -0.9167, 0, 1.1258, -0.9167, 0, -1.8172, -0.9167, 3.7584999, -1.8172, 6.6812997, 3.7584999, -1.8172, 6.6812997, 0, -1.8172, 6.6812997, 0, 1.1258, 6.6812997, 0, 1.1258, 6.6812997, 5.6988, 1.1258, 6.6812997, 3.7584999, -1.8172, -6.2946, 7.1636, 3.8820999, -6.2946, 0, 3.8820999, -6.2946, 0, -4.2497, -6.2946, 0, -4.2497, -6.2946, 7.1636, -4.2497, -6.2946, 7.1636, 3.8820999, -3.5584, 8.679, -4.2497, -3.5584, 8.679, 3.8820999, -6.2946, 7.1636, 3.8820999, -6.2946, 7.1636, 3.8820999, -6.2946, 7.1636, -4.2497, -3.5584, 8.679, -4.2497, -0.8222, 0, 3.8820999, -0.8222, 7.1636, 3.8820999, -0.8222, 7.1636, -4.2497, -0.8222, 7.1636, -4.2497, -0.8222, 0, -4.2497, -0.8222, 0, 3.8820999, -6.2946, 0, 3.8820999, -3.5584, 0, 3.8820999, -3.5584, 0, -4.2497, -3.5584, 0, -4.2497, -6.2946, 0, -4.2497, -6.2946, 0, 3.8820999, -6.2946, 7.1636, 3.8820999, -3.5584, 8.679, 3.8820999, -3.5584, 0, 3.8820999, -3.5584, 0, 3.8820999, -6.2946, 0, 3.8820999, -6.2946, 7.1636, 3.8820999, -6.2946, 7.1636, -4.2497, -6.2946, 0, -4.2497, -3.5584, 0, -4.2497, -3.5584, 0, -4.2497, -3.5584, 8.679, -4.2497, -6.2946, 7.1636, -4.2497, -0.8222, 7.1636, 3.8820999, -3.5584, 8.679, 3.8820999, -3.5584, 8.679, -4.2497, -3.5584, 8.679, -4.2497, -0.8222, 7.1636, -4.2497, -0.8222, 7.1636, 3.8820999, -0.8222, 7.1636, -4.2497, -3.5584, 8.679, -4.2497, -3.5584, 0, -4.2497, -3.5584, 0, -4.2497, -0.8222, 0, -4.2497, -0.8222, 7.1636, -4.2497, -3.5584, 0, -4.2497, -3.5584, 0, 3.8820999, -0.8222, 0, 3.8820999, -0.8222, 0, 3.8820999, -0.8222, 0, -4.2497, -3.5584, 0, -4.2497, -0.8222, 7.1636, 3.8820999, -0.8222, 0, 3.8820999, -3.5584, 0, 3.8820999, -3.5584, 0, 3.8820999, -3.5584, 8.679, 3.8820999, -0.8222, 7.1636, 3.8820999)
@@ -46,9 +27,6 @@ data = PackedVector3Array(-2.8072999, 4.2658, 4.177, -2.8072999, 0, 4.177, -2.80
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tgadd"]
 points = PackedVector3Array(2.210222, 2.3185136, 0.35971683, 2.210222, 2.3185136, 0.27023107, 0.30129218, 2.3185136, 0.35971683, 2.210222, 0.5586274, 0.35971683, 2.210222, 0.5586274, 0.27023107, 0.3310024, 2.3185136, 0.27023107, 0.30129218, 2.2883668, 0.27023107, 0.30129218, 0.5586274, 0.35971683, 0.30129218, 0.5586274, 0.27023107)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kkjxq"]
-points = PackedVector3Array(-0.4174666, 1.2862425, 0.08030191, -0.24774466, 1.7949905, 0.30652034, -0.38907585, 1.7666578, -0.060932428, -0.36080962, 1.0601126, -0.11748704, -0.07827178, -0.014048815, 0.08030191, -0.2760109, 1.0601126, 0.30652034, -0.36080962, 1.7949905, -0.11748704, 0.8546386, 1.4275515, 0.10854876, 0.8546386, 1.5121953, 0.10854876, 0.7697153, 1.5121953, -0.31539774, -0.2760109, 0.89047086, -0.14573391, -0.07827178, -0.014048815, -0.08917929, 0.06305942, -0.014048815, 0.08030191, -0.13480425, 0.89047086, 0.2782126, 0.8546386, 1.4275515, -0.0044386983, 0.06305942, -0.014048815, -0.08917929)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1weh0"]
 points = PackedVector3Array(-0.43139923, 1.4701674, 0.5369892, -0.43139923, 1.4701674, -0.5240481, -0.34538803, 0.05240956, 0.44351488, 0.34531295, 0.015319749, 0.4614827, 0.39492851, 1.5862585, 0.50884306, -0.2393837, 1.8852024, 0.42793584, -0.402348, 1.5758734, 0.5005342, -0.32237554, 1.8724064, 0.16392285, 0.40227294, 1.5977564, -0.5051455, 0.33805013, 0.03460645, -0.46806735, -0.34538803, 0.05240956, -0.4588238, -0.32237554, 1.8724064, -0.40938628, -0.35501736, 1.5931201, -0.5015104, 0.3210764, 1.909867, -0.42621166, 0.31267112, 1.8852024, 0.42793584, -0.29952627, 1.8911368, 0.372059)
@@ -102,11 +80,7 @@ script = ExtResource("1_roeww")
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3.3791637, -0.64, 3.1824284)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Preset_10" index="0"]
-gi_mode = 2
-mesh = ExtResource("3_0bm7g")
 surface_material_override/0 = ExtResource("2_wxyqy")
-surface_material_override/1 = ExtResource("5_gmflh")
-surface_material_override/2 = ExtResource("6_t7shl")
 
 [node name="CollisionShape3D" parent="SM_Bld_House_Preset_10/MeshCollider" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.042827606, -6.1035156e-05, -0.00061035156)
@@ -115,12 +89,6 @@ shape = SubResource("ConcavePolygonShape3D_7h8o7")
 [node name="SM_Bld_House_Preset_Garage_01" parent="." unique_id=2001869388 instance=ExtResource("3_a8awh")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 6.0950203, -0.64, 1.1993961)
 
-[node name="MeshRenderer" parent="SM_Bld_House_Preset_Garage_01" index="0"]
-gi_mode = 2
-mesh = ExtResource("8_hywm1")
-surface_material_override/0 = ExtResource("5_gmflh")
-surface_material_override/1 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="SM_Bld_House_Preset_Garage_01/MeshCollider" index="0"]
 shape = SubResource("ConcavePolygonShape3D_mhf2o")
 
@@ -128,8 +96,6 @@ shape = SubResource("ConcavePolygonShape3D_mhf2o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2691631, 3.38, 7.1124287)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Window_Shutters_Open_01 (7)" index="0"]
-gi_mode = 2
-mesh = ExtResource("10_lf4ge")
 surface_material_override/0 = ExtResource("5_8rq8k")
 
 [node name="CollisionShape3D" parent="SM_Bld_House_Window_Shutters_Open_01 (7)/MeshCollider" index="0"]
@@ -139,8 +105,6 @@ shape = SubResource("ConvexPolygonShape3D_tgadd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19083595, 3.38, 7.111429)
 
 [node name="MeshRenderer" parent="SM_Bld_House_Window_Shutters_Open_01 (4)" index="0"]
-gi_mode = 2
-mesh = ExtResource("10_lf4ge")
 surface_material_override/0 = ExtResource("5_8rq8k")
 
 [node name="CollisionShape3D" parent="SM_Bld_House_Window_Shutters_Open_01 (4)/MeshCollider" index="0"]
@@ -149,21 +113,8 @@ shape = SubResource("ConvexPolygonShape3D_tgadd")
 [node name="SM_Prop_Antenna_01 (3)2" parent="." unique_id=1718156161 instance=ExtResource("6_8p4qh")]
 transform = Transform3D(0.5650414, 0, -0.8250625, 0, 1, 0, 0.8250625, 0, 0.5650414, -9.269163, 4.75, 1.9814281)
 
-[node name="MeshRenderer" parent="SM_Prop_Antenna_01 (3)2" index="0"]
-gi_mode = 2
-mesh = ExtResource("13_xnq4t")
-surface_material_override/0 = ExtResource("5_gmflh")
-
-[node name="CollisionShape3D" parent="SM_Prop_Antenna_01 (3)2/MeshCollider" index="0"]
-shape = SubResource("ConvexPolygonShape3D_kkjxq")
-
 [node name="SM_Bld_Chimney_01 (1)" parent="." unique_id=864178884 instance=ExtResource("7_v2xog")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.929163, 6.63, 4.1824284)
-
-[node name="MeshRenderer" parent="SM_Bld_Chimney_01 (1)" index="0"]
-gi_mode = 2
-mesh = ExtResource("15_b5ckp")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="SM_Bld_Chimney_01 (1)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_1weh0")
@@ -174,21 +125,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3280239, 0, 2.5893688)
 [node name="SM_Env_Fence_Wood_Post_01 (58)" parent="fence" unique_id=162585748 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, -7.9069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (58)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (58)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (62)" parent="fence" unique_id=922044630 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.05114, 0, -10.40694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (62)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (62)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -196,21 +137,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (63)" parent="fence" unique_id=45087739 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.07114, 0, -2.9069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (63)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (63)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (64)" parent="fence" unique_id=914263912 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.081139, 0, -5.4069405)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (64)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (64)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -218,21 +149,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (59)" parent="fence" unique_id=1766221909 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, -5.4069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (59)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (59)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Post_01 (60)" parent="fence" unique_id=1786197843 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, -3.5511398, 0, -12.876938)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (60)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (60)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -240,21 +161,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Straight_01 (65)" parent="fence" unique_id=64236178 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(0.99999976, 0, -8.7422755e-08, 0, 1, 0, -8.7422755e-08, 0, -0.99999976, -3.5511398, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (65)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (65)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (66)" parent="fence" unique_id=1700393749 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(0.99999976, 0, -8.7422755e-08, 0, 1, 0, -8.7422755e-08, 0, -0.99999976, -6.05114, 0, -12.896938)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (66)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (66)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -262,21 +173,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (67)" parent="fence" unique_id=1184539626 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(0.99999976, 0, -8.7422755e-08, 0, 1, 0, -8.7422755e-08, 0, -0.99999976, 1.4488602, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (67)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (67)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (61)" parent="fence" unique_id=1635484769 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, -1.0511398, 0, -12.876938)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (61)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (61)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -284,21 +185,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Straight_01 (68)" parent="fence" unique_id=1843919455 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(0.99999976, 0, -8.7422755e-08, 0, 1, 0, -8.7422755e-08, 0, -0.99999976, -1.0511398, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (68)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (68)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (62)" parent="fence" unique_id=492279342 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, 1.4488602, 0, -12.90694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (62)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (62)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -306,21 +197,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (63)" parent="fence" unique_id=1922423961 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, -6.05114, 0, -12.876938)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (63)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (63)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Post_01 (64)" parent="fence" unique_id=816499648 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, -8.55114, 0, -12.876938)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (64)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (64)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -328,21 +209,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Straight_01 (70)" parent="fence" unique_id=1947185431 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(0.99999976, 0, -8.7422755e-08, 0, 1, 0, -8.7422755e-08, 0, -0.99999976, -11.05114, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (70)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (70)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (66)" parent="fence" unique_id=1280736985 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133926e-07, 0, 1.16657, 0, 1.0624399, 0, 1, 0, -4.6819034e-07, 3.948862, 0, -12.90694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (66)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (66)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -350,21 +221,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (65)" parent="fence" unique_id=34087644 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133946e-07, 0, 1.1665704, 0, 1.0624399, 0, 1.0000005, 0, -4.681905e-07, 11.44886, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (65)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (65)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (69)" parent="fence" unique_id=1942547021 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1, 0, -8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 8.94886, 0, -12.90694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (69)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (69)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -372,21 +233,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (68)" parent="fence" unique_id=1314962880 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133946e-07, 0, 1.1665704, 0, 1.0624399, 0, 1.0000005, 0, -4.681905e-07, 8.94886, 0, -12.876942)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (68)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (68)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (72)" parent="fence" unique_id=1426318256 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1, 0, -8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 3.9488602, 0, -12.896942)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (72)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (72)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -394,21 +245,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (73)" parent="fence" unique_id=176544734 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1, 0, -8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.44886, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (73)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (73)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (69)" parent="fence" unique_id=1385966060 instance=ExtResource("8_3kthc")]
 transform = Transform3D(4.0133946e-07, 0, 1.1665704, 0, 1.0624399, 0, 1.0000005, 0, -4.681905e-07, 6.44886, 0, -12.876942)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (69)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (69)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -416,21 +257,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (67)" parent="fence" unique_id=1530831072 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, -5.4069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (67)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (67)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (71)" parent="fence" unique_id=1872608933 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.478859, 0, -5.4069405)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (71)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (71)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -438,21 +269,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (74)" parent="fence" unique_id=1786801667 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.468861, 0, -7.9069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (74)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (74)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (75)" parent="fence" unique_id=2047824903 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.44886, 0, -0.40694046)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (75)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (75)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -460,21 +281,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (70)" parent="fence" unique_id=501503560 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, -2.9069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (70)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (70)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (76)" parent="fence" unique_id=1596934347 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.478859, 0, -2.9069405)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (76)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (76)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -482,21 +293,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (71)" parent="fence" unique_id=267373013 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.478859, 0, -0.40694046)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (71)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (71)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Post_01 (72)" parent="fence" unique_id=899113351 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, -7.9069405)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (72)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (72)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -504,21 +305,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (73)" parent="fence" unique_id=460192141 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, -10.40694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (73)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (73)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (77)" parent="fence" unique_id=1410880437 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.478859, 0, -10.40694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (77)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (77)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -526,21 +317,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (78)" parent="fence" unique_id=1583618621 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973854e-07, 0, 0.99999976, 0, 1, 0, 0.99999976, 0, -9.973854e-07, 11.478859, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (78)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (78)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (75)" parent="fence" unique_id=1875480312 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, 2.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (75)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (75)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -548,21 +329,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (76)" parent="fence" unique_id=148951343 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, 4.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (76)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (76)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (79)" parent="fence" unique_id=1122954890 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973857e-07, 0, 1, 0, 1, 0, 1, 0, -9.973857e-07, 11.44886, 0, 2.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (79)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (79)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -570,21 +341,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Straight_01 (80)" parent="fence" unique_id=322843976 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(9.973857e-07, 0, 1, 0, 1, 0, 1, 0, -9.973857e-07, 11.44886, 0, 4.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (80)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (80)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
 
 [node name="SM_Env_Fence_Wood_Post_01 (77)" parent="fence" unique_id=1390556189 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-1, 0, 1.3558931e-06, 0, 1.0624399, 0, 1.1622905e-06, 0, 1.16657, 11.44886, 0, 7.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (77)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (77)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
@@ -592,21 +353,11 @@ shape = SubResource("ConvexPolygonShape3D_ab60s")
 [node name="SM_Env_Fence_Wood_Post_01 (78)" parent="fence" unique_id=861283811 instance=ExtResource("8_3kthc")]
 transform = Transform3D(-2.1020558e-06, 0, -1.16657, 0, 1.0624399, 0, -1, 0, 2.452195e-06, 8.94886, 0, 7.0930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (78)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (78)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (81)" parent="fence" unique_id=1970689032 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(-1, 0, 1.966953e-06, 0, 1, 0, 1.966953e-06, 0, 1, 11.44886, 0, 7.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (81)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (81)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -615,21 +366,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 transform = Transform3D(4.0133926e-07, 0, -1.16657, 0, 1.0624399, 0, -1, 0, -4.6819034e-07, -8.55114, 0, 4.563057)
 visible = false
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (74)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (74)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (82)" parent="fence" unique_id=1688252896 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(-0.99999976, 0, -2.0861617e-07, 0, 1, 0, -2.0861617e-07, 0, 0.99999976, -8.55114, 0, 4.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (82)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (82)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -637,21 +378,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (79)" parent="fence" unique_id=1695339088 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, 4.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (79)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (79)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_ab60s")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (83)" parent="fence" unique_id=1097231792 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.081139, 0, 4.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (83)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (83)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_qcyqm")
@@ -659,21 +390,11 @@ shape = SubResource("ConvexPolygonShape3D_qcyqm")
 [node name="SM_Env_Fence_Wood_Post_01 (53)" parent="fence" unique_id=673531694 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (53)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (53)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_j8py0")
 
 [node name="SM_Env_Fence_Wood_Straight_01 (59)" parent="fence" unique_id=15306098 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.05114, 0, 2.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (59)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (59)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_pmscy")
@@ -681,21 +402,11 @@ shape = SubResource("ConvexPolygonShape3D_pmscy")
 [node name="SM_Env_Fence_Wood_Straight_01 (60)" parent="fence" unique_id=1226433068 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.081139, 0, -0.40694046)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (60)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (60)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_pmscy")
 
 [node name="SM_Env_Fence_Wood_Post_01 (54)" parent="fence" unique_id=781130161 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.021141, 0, 2.0930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (54)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (54)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_r771u")
@@ -703,21 +414,11 @@ shape = SubResource("ConvexPolygonShape3D_r771u")
 [node name="SM_Env_Fence_Wood_Post_01 (55)" parent="fence" unique_id=1228756789 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, -0.40694046)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (55)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (55)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_r771u")
 
 [node name="SM_Env_Fence_Wood_Post_01 (57)" parent="fence" unique_id=534800246 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.081139, 0, -10.40694)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (57)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (57)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_r771u")
@@ -725,21 +426,11 @@ shape = SubResource("ConvexPolygonShape3D_r771u")
 [node name="SM_Env_Fence_Wood_Straight_01 (61)" parent="fence" unique_id=1145049189 instance=ExtResource("9_1nsbf")]
 transform = Transform3D(1.6292064e-07, 0, -0.99999976, 0, 1, 0, -0.99999976, 0, -1.6292064e-07, -11.081139, 0, -7.9069405)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Straight_01 (61)" index="0"]
-gi_mode = 2
-mesh = ExtResource("19_vg7ut")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Straight_01 (61)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_yp5ew")
 
 [node name="SM_Env_Fence_Wood_Post_01 (56)" parent="fence" unique_id=1064192535 instance=ExtResource("8_3kthc")]
 transform = Transform3D(1, 0, -1.0198478e-07, 0, 1.0624399, 0, -8.742278e-08, 0, -1.16657, -11.05114, 0, -2.9069405)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Post_01 (56)" index="0"]
-gi_mode = 2
-mesh = ExtResource("17_nwis6")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Post_01 (56)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_r771u")
@@ -747,29 +438,14 @@ shape = SubResource("ConvexPolygonShape3D_r771u")
 [node name="SM_Env_Fence_Wood_Gate_01 (1)" parent="fence" unique_id=2010113282 instance=ExtResource("10_ljn5b")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -6.05114, 0, -12.90694)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Gate_01 (1)" index="0"]
-gi_mode = 2
-mesh = ExtResource("21_b1kra")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_Wood_Gate_01 (1)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_roeww")
 
 [node name="SM_Fence_Wood_Gate_02" parent="fence/SM_Env_Fence_Wood_Gate_01 (1)" index="2"]
 transform = Transform3D(-0.47479558, 0, -0.88009614, 0, 1, 0, 0.88009614, 0, -0.47479558, 1.144271, 0.19926147, -0.19640216)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_Wood_Gate_01 (1)/SM_Fence_Wood_Gate_02" index="0"]
-gi_mode = 2
-mesh = ExtResource("22_2gtvl")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="SM_Env_Fence_White_Post_01 (38)" parent="fence" unique_id=1614715518 instance=ExtResource("14_iaaek")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -9.55114, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Post_01 (38)" index="0"]
-gi_mode = 2
-mesh = ExtResource("24_4r418")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Post_01 (38)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v2xog")
@@ -777,21 +453,11 @@ shape = SubResource("ConvexPolygonShape3D_v2xog")
 [node name="SM_Env_Fence_White_Post_01 (47)" parent="fence" unique_id=1429317697 instance=ExtResource("14_iaaek")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7.05114, 0, 6.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Post_01 (47)" index="0"]
-gi_mode = 2
-mesh = ExtResource("24_4r418")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Post_01 (47)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v2xog")
 
 [node name="SM_Env_Fence_White_Post_01 (16)" parent="fence" unique_id=1843980739 instance=ExtResource("14_iaaek")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.9488583, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Post_01 (16)" index="0"]
-gi_mode = 2
-mesh = ExtResource("24_4r418")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Post_01 (16)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v2xog")
@@ -799,21 +465,11 @@ shape = SubResource("ConvexPolygonShape3D_v2xog")
 [node name="SM_Env_Fence_White_Post_01 (48)" parent="fence" unique_id=801990631 instance=ExtResource("14_iaaek")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.44885826, 0, 6.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Post_01 (48)" index="0"]
-gi_mode = 2
-mesh = ExtResource("24_4r418")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Post_01 (48)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v2xog")
 
 [node name="SM_Env_Fence_White_Straight_01 (8)" parent="fence" unique_id=995408271 instance=ExtResource("15_8rq8k")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 2.9488583, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Straight_01 (8)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wwaph")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Straight_01 (8)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3kthc")
@@ -821,21 +477,11 @@ shape = SubResource("ConvexPolygonShape3D_3kthc")
 [node name="SM_Env_Fence_White_Straight_01 (15)" parent="fence" unique_id=1247070524 instance=ExtResource("15_8rq8k")]
 transform = Transform3D(-2.9802322e-06, 0, 1, 0, 1, 0, -1, 0, -2.9802322e-06, 2.9488602, 0, 6.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Straight_01 (15)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wwaph")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Straight_01 (15)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3kthc")
 
 [node name="SM_Env_Fence_White_Straight_01 (19)" parent="fence" unique_id=771848839 instance=ExtResource("15_8rq8k")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -7.05114, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Straight_01 (19)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wwaph")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Straight_01 (19)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3kthc")
@@ -843,18 +489,8 @@ shape = SubResource("ConvexPolygonShape3D_3kthc")
 [node name="SM_Env_Fence_White_Gate_01 (2)" parent="fence" unique_id=1136515029 instance=ExtResource("16_8p4qh")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -4.55114, 0, 6.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Gate_01 (2)" index="0" unique_id=1927641874]
-gi_mode = 2
-mesh = ExtResource("28_ngwwi")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="SM_Env_Fence_White_Straight_01 (37)" parent="fence" unique_id=1290022901 instance=ExtResource("15_8rq8k")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.0511417, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Straight_01 (37)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wwaph")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Straight_01 (37)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3kthc")
@@ -862,21 +498,11 @@ shape = SubResource("ConvexPolygonShape3D_3kthc")
 [node name="SM_Env_Fence_White_Straight_01 (39)" parent="fence" unique_id=1497899927 instance=ExtResource("15_8rq8k")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.44885826, 0, 6.5930595)
 
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Straight_01 (39)" index="0"]
-gi_mode = 2
-mesh = ExtResource("26_wwaph")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Straight_01 (39)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_3kthc")
 
 [node name="SM_Env_Fence_White_Post_01 (49)" parent="fence" unique_id=1341936603 instance=ExtResource("14_iaaek")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -2.0511417, 0, 6.5930595)
-
-[node name="MeshRenderer" parent="fence/SM_Env_Fence_White_Post_01 (49)" index="0"]
-gi_mode = 2
-mesh = ExtResource("24_4r418")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="fence/SM_Env_Fence_White_Post_01 (49)/MeshCollider" index="0"]
 shape = SubResource("ConvexPolygonShape3D_v2xog")
@@ -884,43 +510,17 @@ shape = SubResource("ConvexPolygonShape3D_v2xog")
 [node name="SM_Env_Tree_Large_02" parent="." unique_id=544664503 instance=ExtResource("11_wio8n")]
 transform = Transform3D(-0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, -0.7071067, -3.139164, 0, -7.8075695)
 
-[node name="MeshRenderer" parent="SM_Env_Tree_Large_02" index="0" unique_id=1502041315]
-gi_mode = 2
-mesh = ExtResource("30_ymubd")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="SM_Env_Tree_Large_02/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(544664503, 1986302452) index="0" unique_id=1054510287]
 shape = SubResource("ConcavePolygonShape3D_0bm7g")
-
-[node name="MeshRenderer2" parent="SM_Env_Tree_Large_02" index="1" unique_id=976192111]
-gi_mode = 2
-mesh = ExtResource("31_ifkyu")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="SM_Env_Tree_Large_02/MeshRenderer2/StaticBody3D" parent_id_path=PackedInt32Array(544664503, 1981296622) index="0" unique_id=1018830009]
 shape = SubResource("ConcavePolygonShape3D_gmflh")
 
-[node name="MeshRenderer3" parent="SM_Env_Tree_Large_02" index="2" unique_id=1572804282]
-gi_mode = 2
-mesh = ExtResource("32_acf4r")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="SM_Env_Tree_Large_02/MeshRenderer3/StaticBody3D" parent_id_path=PackedInt32Array(544664503, 831497571) index="0" unique_id=985352485]
 shape = SubResource("ConcavePolygonShape3D_t7shl")
 
-[node name="MeshRenderer4" parent="SM_Env_Tree_Large_02" index="3" unique_id=1070848358]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0417092, 4.254309, 0.65596837)
-gi_mode = 2
-mesh = ExtResource("33_jbhr5")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="SM_Generic_Tree_03" parent="." unique_id=814375542 instance=ExtResource("12_n84hi")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -4.1214046, 0, -4.527025)
-
-[node name="MeshRenderer" parent="SM_Generic_Tree_03" index="0" unique_id=483330588]
-gi_mode = 2
-mesh = ExtResource("35_av8kf")
-surface_material_override/0 = ExtResource("5_gmflh")
 
 [node name="CollisionShape3D" parent="SM_Generic_Tree_03/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(814375542, 1489804067) index="0" unique_id=1805299856]
 shape = SubResource("ConcavePolygonShape3D_hywm1")
@@ -928,13 +528,11 @@ shape = SubResource("ConcavePolygonShape3D_hywm1")
 [node name="SM_Generic_Tree_05" parent="." unique_id=1501920567 instance=ExtResource("13_mj0qb")]
 transform = Transform3D(-1.4288582, 0, -1.2491475e-07, 0, 1.4288582, 0, 1.2491475e-07, 0, -1.4288582, 3.6805382, 0, -8.3172245)
 
-[node name="MeshRenderer" parent="SM_Generic_Tree_05" index="0" unique_id=1431981313]
-gi_mode = 2
-mesh = ExtResource("37_y230i")
-surface_material_override/0 = ExtResource("5_gmflh")
-
 [node name="CollisionShape3D" parent="SM_Generic_Tree_05/MeshRenderer/StaticBody3D" parent_id_path=PackedInt32Array(1501920567, 885098433) index="0" unique_id=2078863105]
 shape = SubResource("ConcavePolygonShape3D_lf4ge")
+
+[node name="SM_Prop_ForSaleSign_01" parent="." unique_id=163320182 instance=ExtResource("18_8p4qh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.76379, 0, 10.267456)
 
 [editable path="SM_Bld_House_Preset_10"]
 [editable path="SM_Bld_House_Preset_Garage_01"]

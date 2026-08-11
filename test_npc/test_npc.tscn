@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://damjgrh1ju4hg"]
+
+[ext_resource type="PackedScene" uid="uid://boj2sqnhveqfg" path="res://assets/NPC/casual_girl.blend" id="1_2teud"]
+[ext_resource type="Script" uid="uid://bjnmv261dbf38" path="res://test_npc/test_npc.gd" id="1_5mcrg"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5mcrg"]
+animation = &"End_Praying"
+play_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dbuxn"]
+animation = &"Praying"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6n1h3"]
+animation = &"End_Praying"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gjjn3"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_sv86x"]
+xfade_time = 0.2
+input_0/name = "idle"
+input_0/auto_advance = false
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "enter_pray"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
+input_2/name = "pray"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
+input_3/name = "end_pray"
+input_3/auto_advance = false
+input_3/break_loop_at_end = false
+input_3/reset = true
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_shhma"]
+graph_offset = Vector2(-210.13086, 147.42609)
+nodes/output/position = Vector2(720, 80)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_gjjn3")
+nodes/Animation/position = Vector2(80, 100)
+nodes/Transition/node = SubResource("AnimationNodeTransition_sv86x")
+nodes/Transition/position = Vector2(474.1, 75.9)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_5mcrg")
+"nodes/Animation 2/position" = Vector2(20, 240)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_6n1h3")
+"nodes/Animation 4/position" = Vector2(160, 400)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_dbuxn")
+"nodes/Animation 3/position" = Vector2(-20, 420)
+node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"Animation", &"Transition", 1, &"Animation 2", &"Transition", 2, &"Animation 3", &"Transition", 3, &"Animation 4"]
+
+[node name="test_npc" type="Node3D" unique_id=1810850007]
+script = ExtResource("1_5mcrg")
+
+[node name="casual_girl" parent="." unique_id=806848329 instance=ExtResource("1_2teud")]
+
+[node name="Skeleton3D" parent="casual_girl/Armature" parent_id_path=PackedInt32Array(806848329, 257711479) index="0" unique_id=676879620]
+bones/0/position = Vector3(-0.000110685825, 0, -0.00037988648)
+bones/1/position = Vector3(0.056239754, 1.0821531, -0.04559454)
+bones/1/rotation = Quaternion(-0.008523436, 0.012926187, -0.037070263, 0.9991927)
+bones/2/rotation = Quaternion(0.027552042, -0.010565486, 0.016755782, 0.99942416)
+bones/3/rotation = Quaternion(0.0062052486, 0.003698525, 0.05175985, 0.99863344)
+bones/4/rotation = Quaternion(0.0062765405, 0.008203721, 0.050822143, 0.9986543)
+bones/5/position = Vector3(2.7401256e-08, 0.25007954, -1.924975e-08)
+bones/5/rotation = Quaternion(-0.0075559337, -0.0028126417, -0.019035809, 0.9997864)
+bones/6/position = Vector3(-9.626092e-09, 0.18133265, 0.0018720981)
+bones/6/rotation = Quaternion(0.01311218, 0.0054780357, -0.07135168, 0.99735004)
+bones/8/position = Vector3(0.15406641, 0.23686774, 0.00061406736)
+bones/8/rotation = Quaternion(0.62219137, 0.40496498, -0.46099102, 0.4861776)
+bones/9/rotation = Quaternion(0.6489921, 0.0017424161, -0.02701525, 0.76031333)
+bones/10/rotation = Quaternion(-0.039240077, 0.0041882135, 0.13161038, 0.9905157)
+bones/12/position = Vector3(-0.15406545, 0.2368554, 0.00026626932)
+bones/12/rotation = Quaternion(0.58168685, -0.45433596, 0.51211494, 0.43926942)
+bones/13/position = Vector3(1.8447878e-08, 0.25806087, 3.231959e-07)
+bones/13/rotation = Quaternion(0.53378004, 0.007156849, -0.026584832, 0.84517515)
+bones/14/position = Vector3(3.5891563e-08, 0.5218352, -2.3064081e-07)
+bones/14/rotation = Quaternion(-0.039568547, -0.0052221073, -0.1581546, 0.98660743)
+bones/16/rotation = Quaternion(0.11813004, 0.16256584, 0.973273, -0.11116428)
+bones/17/rotation = Quaternion(-0.29586464, -0.0743577, 0.029193118, 0.9518839)
+bones/18/rotation = Quaternion(0.7219658, 0.25929964, -0.38810292, 0.51078886)
+bones/19/rotation = Quaternion(0.0007397804, 0.0024847458, 0.11688593, 0.993142)
+bones/21/rotation = Quaternion(-0.033383228, -0.042719427, 0.9962953, -0.06675621)
+bones/22/rotation = Quaternion(-0.051480748, 0.0472228, 0.041259043, 0.9967033)
+bones/23/rotation = Quaternion(0.7019183, -0.33915472, 0.24724406, 0.57546085)
+bones/24/rotation = Quaternion(0.0008117178, -0.0030699982, -0.09618266, 0.9953587)
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=615062658]
+root_node = NodePath("../casual_girl")
+tree_root = SubResource("AnimationNodeBlendTree_shhma")
+anim_player = NodePath("../casual_girl/AnimationPlayer")
+parameters/Transition/current_state = "idle"
+parameters/Transition/transition_request = ""
+parameters/Transition/current_index = 0
+
+[editable path="casual_girl"]

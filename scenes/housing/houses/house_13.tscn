@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://ca7ik3hrx1cu"]
+
+[ext_resource type="PackedScene" uid="uid://y8axqvsk4k3x" path="res://assets/Map/PolygonTown/Prefabs/Buildings/Presets/SM_Bld_House_Preset_03.prefab.scn" id="1_cougp"]
+[ext_resource type="Script" uid="uid://2ewvnbmacuy6" path="res://scripts/housing/house_property.gd" id="1_f8e4r"]
+[ext_resource type="Material" uid="uid://bmwb0uu7wu3jt" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_02_B.material" id="2_sho1b"]
+[ext_resource type="Material" uid="uid://dhndrvruphu2p" path="res://assets/Map/PolygonTown/Materials/Alt/PolygonTown_04_C.material" id="3_35kch"]
+[ext_resource type="PackedScene" uid="uid://dhfau7svva4da" path="res://assets/Map/PolygonTown/Prefabs/Buildings/SM_Bld_House_Concrete_Steps_01.prefab.scn" id="4_35kch"]
+[ext_resource type="PackedScene" uid="uid://df31msyjehpnx" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_Antenna_01.prefab.scn" id="5_sqm0l"]
+[ext_resource type="PackedScene" uid="uid://bqdqxeiil75n8" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_01.prefab.scn" id="6_5q8xc"]
+[ext_resource type="PackedScene" uid="uid://cjbblhu1q1pqv" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_04.prefab.scn" id="7_5oylh"]
+[ext_resource type="PackedScene" uid="uid://fwkgy7u7ebs3" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_02.prefab.scn" id="8_f8e4r"]
+[ext_resource type="PackedScene" uid="uid://boxafpnlf42xa" path="res://assets/Map/PolygonTown/Prefabs/Environment/SM_Env_Bush_03.prefab.scn" id="9_0ucjy"]
+[ext_resource type="PackedScene" uid="uid://mu4gdvw43658" path="res://assets/Map/PolygonTown/Prefabs/Props/SM_Prop_ForSaleSign_01.prefab.scn" id="10_5oylh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sqm0l"]
+data = PackedVector3Array(-1.4447, 4.2275, 6.4841, -1.4447, 0, 6.4841, -1.4447, 0, -6.4396, -1.4447, 0, -6.4396, -1.4447, 4.2275, -6.4396, -1.4447, 4.2275, 6.4841, 2.4828, 6.3006997, 2.7352, -1.4447, 4.2275, 6.4841, -1.4447, 4.2275, -6.4396, -1.4447, 4.2275, -6.4396, 2.4828, 6.3006997, -2.7437, 2.4828, 6.3006997, 2.7352, 6.5334, 0, 6.4841, 6.5334, 4.2275, 6.4841, 6.5334, 4.2275, -6.4396, 6.5334, 4.2275, -6.4396, 6.5334, 0, -6.4396, 6.5334, 0, 6.4841, -1.4447, 0, 6.4841, 2.4828, 0, 6.4841, 2.4828, 0, -6.4396, 2.4828, 0, -6.4396, -1.4447, 0, -6.4396, -1.4447, 0, 6.4841, 6.5334, 0, -6.4396, 2.4828, 0, -6.4396, 2.4828, 0, 6.4841, 2.4828, 0, 6.4841, 6.5334, 0, 6.4841, 6.5334, 0, -6.4396, 6.5334, 4.2275, 6.4841, -1.4447, 4.2275, 6.4841, 2.4828, 6.3006997, 2.7352, 2.4828, 6.3006997, -2.7437, -1.4447, 4.2275, -6.4396, 6.5334, 4.2275, -6.4396, 6.5334, 4.2275, -6.4396, 6.5334, 4.2275, 6.4841, 2.4828, 6.3006997, 2.7352, 2.4828, 6.3006997, 2.7352, 2.4828, 6.3006997, -2.7437, 6.5334, 4.2275, -6.4396, 2.4828, 0, 6.4841, 6.5334, 4.2275, 6.4841, 6.5334, 0, 6.4841, 2.4828, 0, 6.4841, -1.4447, 4.2275, 6.4841, 6.5334, 4.2275, 6.4841, 2.4828, 0, 6.4841, -1.4447, 0, 6.4841, -1.4447, 4.2275, 6.4841, 6.5334, 4.2275, -6.4396, 2.4828, 0, -6.4396, 6.5334, 0, -6.4396, 6.5334, 4.2275, -6.4396, -1.4447, 4.2275, -6.4396, 2.4828, 0, -6.4396, -1.4447, 4.2275, -6.4396, -1.4447, 0, -6.4396, 2.4828, 0, -6.4396, 3.0691, 4.0926, 1.4326, 3.0691, 0, 1.4326, -6.4941998, 0, 1.4326, -6.4941998, 0, 1.4326, -6.4941998, 4.0926, 1.4326, 3.0691, 4.0926, 1.4326, -2.5188, 6.4424, -2.4665, 2.4716, 6.4424, -2.4665, 3.0691, 4.0926, 1.4326, 3.0691, 4.0926, 1.4326, -6.4941998, 4.0926, 1.4326, -2.5188, 6.4424, -2.4665, 3.0691, 4.0926, -6.4877, 2.4716, 6.4424, -2.4665, -2.5188, 6.4424, -2.4665, -2.5188, 6.4424, -2.4665, -6.4941998, 4.0926, -6.4877, 3.0691, 4.0926, -6.4877, 3.0691, 0, -6.4877, 3.0691, 4.0926, -6.4877, -6.4941998, 4.0926, -6.4877, -6.4941998, 4.0926, -6.4877, -6.4941998, 0, -6.4877, 3.0691, 0, -6.4877, 3.0691, 0, 1.4326, 3.0691, 0, -2.4665, -6.4941998, 0, -2.4665, -6.4941998, 0, -2.4665, -6.4941998, 0, 1.4326, 3.0691, 0, 1.4326, -6.4941998, 0, -6.4877, -6.4941998, 0, -2.4665, 3.0691, 0, -2.4665, 3.0691, 0, -2.4665, 3.0691, 0, -6.4877, -6.4941998, 0, -6.4877, 3.0691, 4.0926, -6.4877, 3.0691, 4.0926, 1.4326, 2.4716, 6.4424, -2.4665, -2.5188, 6.4424, -2.4665, -6.4941998, 4.0926, 1.4326, -6.4941998, 4.0926, -6.4877, 3.0691, 0, -2.4665, 3.0691, 4.0926, -6.4877, 3.0691, 0, -6.4877, 3.0691, 0, -2.4665, 3.0691, 4.0926, 1.4326, 3.0691, 4.0926, -6.4877, 3.0691, 0, -2.4665, 3.0691, 0, 1.4326, 3.0691, 4.0926, 1.4326, -6.4941998, 4.0926, -6.4877, -6.4941998, 0, -2.4665, -6.4941998, 0, -6.4877, -6.4941998, 4.0926, -6.4877, -6.4941998, 4.0926, 1.4326, -6.4941998, 0, -2.4665, -6.4941998, 4.0926, 1.4326, -6.4941998, 0, 1.4326, -6.4941998, 0, -2.4665)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mociv"]
+points = PackedVector3Array(0.005938339, 0.5125957, 0.0017949353, 0.0122076925, 0, 0.006341147, -0.009321034, 0.27373344, 0.8780986, 0.028413385, 0.51930565, 0.50024843, 1.183749, 0.5125957, 0.0017949353, 0.0122076925, 0, 0.86222976, 1.1774797, 0, 0.006341147, 1.1044948, 0.27373344, 0.8780986, 1.1799638, 0.51930565, 0.50024843, 1.1991267, 0.50034505, 0.50024843, 1.1774797, 0, 0.86222976, 1.1423476, 0.27373344, 0.859056, 1.1563058, 0.23738815, 0.84661824)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n43wh"]
+points = PackedVector3Array(-0.03201562, 0.21110389, -0.70511615, -0.54680896, 0.013907231, -0.15676618, -0.71392363, 0.37009472, -0.38716412, -0.32561094, 0.5284003, -0.677258, 0.3512894, 0.34799364, -0.5652571, -0.009981692, 0.14488624, -0.65508527, -0.83081806, 0.32400793, 0.18165302, 0.44028366, 0.010309378, -0.023160934, -0.46053314, 0.010309378, 0.404518, -0.63723403, 0.7516386, 0.044068098, 0.19032705, 0.88544446, -0.17922324, 0.6308631, 0.6206596, -0.1380046, -0.5246319, 0.5276294, 0.5580218, 0.44228673, 0.41566753, 0.56427574, 0.058409452, 0.37035173, 0.7469169, 0.122222066, 0.70520914, 0.66675377)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tyx1i"]
+points = PackedVector3Array(-0.5933613, 0.50075823, 0.2475186, -0.48335612, 0.16849145, 0.321077, -0.5088764, 0.7791208, 0.31309468, -0.33559486, 0.7297799, -0.5030196, -0.292828, 0.52286184, -0.49685603, -0.06104791, 0.020183537, 0.039473593, 0.17469418, 0.143821, 0.46283853, 0.2666371, 0.47551736, 0.52922297, 0.30742294, 1.07702, 0.2901582, 0.05641526, 1.4770236, -0.054192096, -0.106028885, 1.4509271, -0.21616203, 0.5052925, 0.95238435, -0.37914237, 0.056997895, 0.23708385, -0.455631, 0.5283657, 0.23736906, 0.1570862, 0.44947416, 1.0567703, 0.17739558, 0.5971189, 0.42674688, -0.19554952)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6r1h6"]
+points = PackedVector3Array(-0.65873903, 0.40283424, 0.09857756, -0.22955257, 0.03665425, -0.47002417, -0.49573565, 0.091413885, 0.3223458, -0.62606114, 0.7205472, 0.16392243, -0.5096302, 0.6102246, -0.32325146, -0.11234969, 0.87532014, -0.63363963, 0.020677567, 0.38248342, -0.62249553, 0.519208, 0.10841749, -0.21826911, 0.15730703, 0.106275305, 0.5535856, 0.29277867, 0.24417855, 0.6424851, 0.043063164, 1.0349131, 0.66008765, -0.18053576, 1.3905159, 0.007778585, 0.24093151, 1.4044402, 0.029686868, 0.6555802, 0.6067436, -0.21839574, 0.5629501, 1.1492522, 0.25649434, 0.08809173, 1.0347792, 0.6598343)
+
+[node name="House_13" type="Node3D" unique_id=1388000470]
+script = ExtResource("1_f8e4r")
+
+[node name="SM_Bld_House_Preset_03 (2)" parent="." unique_id=1132091586 instance=ExtResource("1_cougp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23917389, -0.5, 1.1041684)
+
+[node name="MeshRenderer" parent="SM_Bld_House_Preset_03 (2)" index="0"]
+surface_material_override/0 = ExtResource("2_sho1b")
+surface_material_override/1 = ExtResource("3_35kch")
+
+[node name="CollisionShape3D" parent="SM_Bld_House_Preset_03 (2)/MeshCollider" index="0"]
+shape = SubResource("ConcavePolygonShape3D_sqm0l")
+
+[node name="SM_Bld_House_Concrete_Steps_01 (4)" parent="." unique_id=1983965641 instance=ExtResource("4_35kch")]
+transform = Transform3D(-1.6292068e-07, 0, -1, 0, 1, 0, 1, 0, -1.6292068e-07, -6.461174, -0.106, -1.9678302)
+
+[node name="CollisionShape3D" parent="SM_Bld_House_Concrete_Steps_01 (4)/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_mociv")
+
+[node name="SM_Prop_Antenna_01 (1)" parent="." unique_id=714746454 instance=ExtResource("5_sqm0l")]
+transform = Transform3D(0.5650414, 0, -0.8250625, 0, 1, 0, 0.8250625, 0, 0.5650414, 2.451828, 5.511, -1.5698314)
+
+[node name="MeshRenderer" parent="SM_Prop_Antenna_01 (1)" index="0" unique_id=70937671]
+transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, 0, 0)
+
+[node name="Bushes" type="Node3D" parent="." unique_id=159978102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0628624, 0, 0.12964296)
+
+[node name="SM_Env_Bush_01 (3)2" parent="Bushes" unique_id=391964350 instance=ExtResource("6_5q8xc")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.4492874, 0, 6.818756)
+
+[node name="SM_Env_Bush_04 (8)" parent="Bushes" unique_id=367432704 instance=ExtResource("7_5oylh")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -1.4659157, 0, 3.2511673)
+
+[node name="CollisionShape3D" parent="Bushes/SM_Env_Bush_04 (8)/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_n43wh")
+
+[node name="SM_Env_Bush_02 (7)2" parent="Bushes" unique_id=2134129400 instance=ExtResource("8_f8e4r")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.053791, 0, 3.0508347)
+
+[node name="CollisionShape3D" parent="Bushes/SM_Env_Bush_02 (7)2/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_tyx1i")
+
+[node name="SM_Env_Bush_01 (2)2" parent="Bushes" unique_id=304982650 instance=ExtResource("6_5q8xc")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5.5232353, 0, -6.765251)
+
+[node name="SM_Env_Bush_02 (6)2" parent="Bushes" unique_id=1688119278 instance=ExtResource("8_f8e4r")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.8473511, 0, -6.57399)
+
+[node name="CollisionShape3D" parent="Bushes/SM_Env_Bush_02 (6)2/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_tyx1i")
+
+[node name="SM_Env_Bush_03 (7)2" parent="Bushes" unique_id=228092925 instance=ExtResource("9_0ucjy")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.1004906, 0, -6.435478)
+
+[node name="CollisionShape3D" parent="Bushes/SM_Env_Bush_03 (7)2/MeshCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_6r1h6")
+
+[node name="SM_Prop_ForSaleSign_01" parent="." unique_id=1548889813 instance=ExtResource("10_5oylh")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.183834, 0.44749784, -0.32490703)
+
+[editable path="SM_Bld_House_Preset_03 (2)"]
+[editable path="SM_Bld_House_Concrete_Steps_01 (4)"]
+[editable path="SM_Prop_Antenna_01 (1)"]
+[editable path="Bushes/SM_Env_Bush_01 (3)2"]
+[editable path="Bushes/SM_Env_Bush_04 (8)"]
+[editable path="Bushes/SM_Env_Bush_02 (7)2"]
+[editable path="Bushes/SM_Env_Bush_01 (2)2"]
+[editable path="Bushes/SM_Env_Bush_02 (6)2"]
+[editable path="Bushes/SM_Env_Bush_03 (7)2"]

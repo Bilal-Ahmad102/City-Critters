@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://cnqxxxm754gcr"]
 
 [ext_resource type="Script" uid="uid://vepjl7mk4c0i" path="res://scripts/npcs/npc_base.gd" id="1_npc"]
+[ext_resource type="Script" uid="uid://cxmas1arm73cp" path="res://scripts/ui/map_marker.gd" id="2_hdsio"]
 [ext_resource type="PackedScene" uid="uid://boj2sqnhveqfg" path="res://assets/NPC/casual_girl.blend" id="2_model"]
+[ext_resource type="Texture2D" uid="uid://cqiqhg382rfn3" path="res://addons/at-icons/node2d/bunny.svg" id="3_deac1"]
 [ext_resource type="Script" uid="uid://dr8pn8w6a1x82" path="res://scripts/npcs/state_machine.gd" id="3_sm"]
 [ext_resource type="Script" uid="uid://be4peydngc0lo" path="res://scripts/npcs/states/idle.gd" id="4_idle"]
 [ext_resource type="Script" uid="uid://kie4u0imkilq" path="res://scripts/npcs/states/walk.gd" id="5_walk"]
@@ -9,15 +11,16 @@
 [ext_resource type="Script" uid="uid://ckcqksof7khb1" path="res://scripts/npcs/states/drinking.gd" id="7_1uxhp"]
 [ext_resource type="Script" uid="uid://c7wy8ootxm4m4" path="res://scripts/npcs/activities_handler.gd" id="8_myfjo"]
 [ext_resource type="Script" uid="uid://cxdekyg8weut6" path="res://scripts/interaction/interaction_area.gd" id="9_area"]
-[ext_resource type="Script" path="res://scripts/npcs/npc_commands.gd" id="10_cmd"]
-[ext_resource type="BehaviorTree" path="res://NPC/data/bt/npc_brain.tres" id="11_brain"]
+[ext_resource type="Script" uid="uid://dgpojfecvsomv" path="res://scripts/npcs/npc_commands.gd" id="10_cmd"]
+[ext_resource type="BehaviorTree" uid="uid://3tdvs5y3fryd" path="res://NPC/data/bt/npc_brain.tres" id="11_brain"]
+[ext_resource type="Script" uid="uid://coj4jk0eydxgp" path="res://scripts/npcs/animation_controller.gd" id="12_anim"]
 
 [sub_resource type="CapsuleShape3D" id="body_cap"]
 radius = 0.225
 height = 1.37
 
-[sub_resource type="SphereShape3D" id="interact_sphere"]
-radius = 1.8
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4ivf1"]
+animation = &"Sitting Drinking"
 
 [sub_resource type="AnimationNodeTransition" id="trans"]
 xfade_time = 0.15
@@ -57,15 +60,15 @@ input_8/name = "looking"
 input_8/auto_advance = false
 input_8/break_loop_at_end = false
 input_8/reset = true
-input_9/name = "talking"
+input_9/name = "enter_pray"
 input_9/auto_advance = false
 input_9/break_loop_at_end = false
 input_9/reset = true
-input_10/name = "waving"
+input_10/name = "pray"
 input_10/auto_advance = false
 input_10/break_loop_at_end = false
 input_10/reset = true
-input_11/name = "yawn"
+input_11/name = "end_pray"
 input_11/auto_advance = false
 input_11/break_loop_at_end = false
 input_11/reset = true
@@ -74,11 +77,26 @@ input_12/auto_advance = false
 input_12/break_loop_at_end = false
 input_12/reset = true
 
+[sub_resource type="AnimationNodeAnimation" id="a_box_idle"]
+animation = &"Box Idle"
+
 [sub_resource type="AnimationNodeAnimation" id="a_idle"]
 animation = &"Idle"
 
+[sub_resource type="AnimationNodeAnimation" id="a_looking"]
+animation = &"Looking Around"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bcxfx"]
+animation = &"Picking Up"
+
 [sub_resource type="AnimationNodeAnimation" id="a_run"]
 animation = &"running"
+
+[sub_resource type="AnimationNodeAnimation" id="a_sit_park"]
+animation = &"Sitting_in_park"
+
+[sub_resource type="AnimationNodeAnimation" id="a_sleeping"]
+animation = &"Sleeping Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="a_walk"]
 animation = &"walking"
@@ -86,43 +104,73 @@ animation = &"walking"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1uxhp"]
 animation = &"Drinking"
 
-[sub_resource type="AnimationNodeAnimation" id="a_sit_park"]
-animation = &"Sitting_in_park"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hdsio"]
+animation = &"End_Praying"
 
-[sub_resource type="AnimationNodeAnimation" id="a_box_idle"]
-animation = &"Box Idle"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_deac1"]
+animation = &"End_Praying"
+play_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="a_looking"]
-animation = &"Looking Around"
-
-[sub_resource type="AnimationNodeAnimation" id="a_sleeping"]
-animation = &"Sleeping Idle"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iugc2"]
+animation = &"Praying"
 
 [sub_resource type="AnimationNodeBlendTree" id="tree"]
-nodes/output/position = Vector2(640, 120)
+nodes/output/position = Vector2(820, 60)
 nodes/a_idle/node = SubResource("a_idle")
-nodes/a_idle/position = Vector2(80, 40)
+nodes/a_idle/position = Vector2(-220, -140)
 nodes/a_walk/node = SubResource("a_walk")
-nodes/a_walk/position = Vector2(80, 160)
+nodes/a_walk/position = Vector2(-80, -40)
 nodes/a_run/node = SubResource("a_run")
-nodes/a_run/position = Vector2(80, 280)
+nodes/a_run/position = Vector2(-220, 60)
 nodes/Transition/node = SubResource("trans")
-nodes/Transition/position = Vector2(380, 120)
+nodes/Transition/position = Vector2(640, 40)
 nodes/drinking/node = SubResource("AnimationNodeAnimation_1uxhp")
-nodes/drinking/position = Vector2(80, 380)
+nodes/drinking/position = Vector2(-60, 320)
 nodes/a_sit_park/node = SubResource("a_sit_park")
-nodes/a_sit_park/position = Vector2(80, 480)
+nodes/a_sit_park/position = Vector2(-80, 140)
 nodes/a_box_idle/node = SubResource("a_box_idle")
-nodes/a_box_idle/position = Vector2(80, 580)
+nodes/a_box_idle/position = Vector2(-60, 500)
 nodes/a_looking/node = SubResource("a_looking")
-nodes/a_looking/position = Vector2(80, 680)
+nodes/a_looking/position = Vector2(-220, 600)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_4ivf1")
+nodes/Animation/position = Vector2(-240, 240)
+nodes/end_pray/node = SubResource("AnimationNodeAnimation_hdsio")
+nodes/end_pray/position = Vector2(260, 860)
+nodes/pray/node = SubResource("AnimationNodeAnimation_iugc2")
+nodes/pray/position = Vector2(120, 780)
+nodes/enter_pray/node = SubResource("AnimationNodeAnimation_deac1")
+nodes/enter_pray/position = Vector2(-20, 680)
+nodes/a_pick_up/node = SubResource("AnimationNodeAnimation_bcxfx")
+nodes/a_pick_up/position = Vector2(-220, 420)
 nodes/a_sleeping/node = SubResource("a_sleeping")
-nodes/a_sleeping/position = Vector2(80, 780)
-node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"a_idle", &"Transition", 1, &"a_walk", &"Transition", 2, &"a_run", &"Transition", 5, &"drinking", &"Transition", 3, &"a_sit_park", &"Transition", 7, &"a_box_idle", &"Transition", 8, &"a_looking", &"Transition", 12, &"a_sleeping"]
+nodes/a_sleeping/position = Vector2(-60, -260)
+node_connections = [&"output", 0, &"Transition", &"Transition", 0, &"a_idle", &"Transition", 1, &"a_walk", &"Transition", 2, &"a_run", &"Transition", 3, &"a_sit_park", &"Transition", 4, &"Animation", &"Transition", 5, &"drinking", &"Transition", 6, &"a_pick_up", &"Transition", 7, &"a_box_idle", &"Transition", 8, &"a_looking", &"Transition", 9, &"enter_pray", &"Transition", 10, &"pray", &"Transition", 11, &"end_pray", &"Transition", 12, &"a_sleeping"]
+
+[sub_resource type="SphereShape3D" id="interact_sphere"]
+radius = 1.8
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_iugc2"]
 
 [node name="NPC" type="CharacterBody3D" unique_id=530122288]
 script = ExtResource("1_npc")
 use_behavior_tree = true
+debug_anim = true
+
+[node name="Commands" type="Node" parent="." unique_id=624001013]
+script = ExtResource("10_cmd")
+
+[node name="MapMarker" type="Node" parent="." unique_id=531502450]
+script = ExtResource("2_hdsio")
+color = Color(0.4, 0.8509804, 0.9019608, 1)
+label = "NPC"
+icon = ExtResource("3_deac1")
+legend = "NPC"
+
+[node name="AnimationController" type="Node" parent="." unique_id=624001015]
+script = ExtResource("12_anim")
+
+[node name="Activities_Handler" type="Node" parent="." unique_id=751020406]
+script = ExtResource("8_myfjo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1387170386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68, 0)
@@ -131,40 +179,41 @@ shape = SubResource("body_cap")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1120050001]
 target_desired_distance = 1.2
 path_max_distance = 3.0
+debug_enabled = true
 
 [node name="Model" parent="." unique_id=1567274946 instance=ExtResource("2_model")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
-[node name="Skeleton3D" parent="Model/Armature" parent_id_path=PackedInt32Array(1567274946, 575171748) index="0" unique_id=354343201]
-bones/1/position = Vector3(0.012394642, 1.0714885, -0.045207296)
-bones/1/rotation = Quaternion(-0.028881432, -0.1356255, 0.02676406, 0.9899774)
-bones/2/rotation = Quaternion(-0.031235823, -0.0013482108, -0.055702534, 0.9979578)
-bones/3/rotation = Quaternion(0.021251492, -0.011011912, -0.016244147, 0.9995815)
-bones/4/rotation = Quaternion(0.021277249, -0.009801858, -0.01646804, 0.99959)
-bones/5/position = Vector3(8.8475645e-09, 0.25007972, -7.847104e-09)
-bones/5/rotation = Quaternion(0.035123296, 0.0070602363, 0.029293863, 0.99892867)
-bones/6/position = Vector3(9.313226e-10, 0.18133236, 0.001872105)
-bones/6/rotation = Quaternion(-0.10479908, 0.022655554, 0.008638672, 0.9941978)
-bones/8/position = Vector3(0.154065, 0.23686522, 0.0006140629)
-bones/8/rotation = Quaternion(0.61683464, 0.38106728, -0.5357595, 0.43274078)
-bones/9/rotation = Quaternion(0.5139572, 0.0077470746, -0.045964368, 0.8565485)
-bones/10/rotation = Quaternion(-0.04094876, 0.0068469667, 0.20789766, 0.97726905)
-bones/12/position = Vector3(-0.15406613, 0.23685643, 0.00026626585)
-bones/12/rotation = Quaternion(0.5954698, -0.4020318, 0.54640716, 0.4303784)
-bones/13/position = Vector3(-6.936685e-09, 0.25806287, 3.4869404e-07)
-bones/13/rotation = Quaternion(0.543431, -0.065063186, -0.030099226, 0.83638734)
-bones/14/position = Vector3(2.5474753e-08, 0.52183133, -5.6105534e-08)
-bones/14/rotation = Quaternion(-0.041852262, -0.008198127, -0.24364059, 0.9689275)
-bones/16/rotation = Quaternion(0.006996416, 0.028719785, 0.99568003, 0.08802066)
-bones/17/rotation = Quaternion(-0.20293762, -0.07716807, -0.006821622, 0.97612244)
-bones/18/rotation = Quaternion(0.7493759, 0.2944069, -0.16565265, 0.5694908)
-bones/19/rotation = Quaternion(0.013740376, -0.0032528976, 0.11662229, 0.993076)
-bones/21/rotation = Quaternion(-0.07207346, 0.12729146, 0.98571384, 0.083490185)
-bones/22/rotation = Quaternion(-0.3237116, -0.060625914, 0.0021929706, 0.9442089)
-bones/23/rotation = Quaternion(0.7564359, -0.3274157, 0.2876043, 0.48773727)
-bones/24/rotation = Quaternion(0.00089422497, -0.0033059157, -0.09595564, 0.99537975)
+[node name="Skeleton3D" parent="Model/Armature" parent_id_path=PackedInt32Array(1567274946, 10549476) index="0" unique_id=1006589914]
+bones/1/position = Vector3(0.071379215, 0.61447614, 0.010475619)
+bones/1/rotation = Quaternion(0.00794733, 0.025192456, 0.0060609337, 0.99963266)
+bones/2/rotation = Quaternion(0.014728318, -0.0046533914, -0.003971816, 0.99987286)
+bones/3/rotation = Quaternion(-0.004782334, -0.003750105, -0.0021862495, 0.99997914)
+bones/4/rotation = Quaternion(-0.0047813877, -0.0037946384, -0.0021185619, 0.99997914)
+bones/5/position = Vector3(3.4924597e-10, 0.25007954, -8.289346e-09)
+bones/5/rotation = Quaternion(0.008216901, -0.0051704654, 0.03460886, 0.99935377)
+bones/6/position = Vector3(2.1769665e-08, 0.18133269, 0.0018720917)
+bones/6/rotation = Quaternion(-0.08311494, 0.021450799, -0.035192728, 0.9956873)
+bones/8/position = Vector3(0.15406501, 0.236865, 0.00061406026)
+bones/8/rotation = Quaternion(0.54674816, 0.4678396, -0.47947896, 0.50228745)
+bones/9/rotation = Quaternion(0.43158975, 0.0060902564, 0.4347613, 0.7903644)
+bones/10/rotation = Quaternion(-0.04772218, 0.027323328, 0.7929071, 0.60685617)
+bones/12/position = Vector3(-0.15406616, 0.23685624, 0.00026625645)
+bones/12/rotation = Quaternion(0.6020923, -0.435473, 0.4701537, 0.4762392)
+bones/13/position = Vector3(-2.9733279e-08, 0.25806275, -1.6667914e-07)
+bones/13/rotation = Quaternion(0.50086224, 0.037856948, -0.3777583, 0.7778191)
+bones/14/position = Vector3(1.2777572e-08, 0.5218316, -4.38623e-09)
+bones/14/rotation = Quaternion(-0.047159422, -0.028660564, -0.8290629, 0.5564255)
+bones/16/rotation = Quaternion(-0.013084488, -0.063507766, 0.99471766, -0.079576135)
+bones/17/rotation = Quaternion(-0.9016697, -0.058290984, 0.039212983, 0.42668065)
+bones/18/rotation = Quaternion(0.847978, 0.37406304, -0.26182672, 0.26917806)
+bones/19/rotation = Quaternion(0.09281455, 0.12100504, 0.10764226, 0.9824237)
+bones/21/rotation = Quaternion(-0.019527657, -0.11877118, 0.9879607, 0.09718953)
+bones/22/rotation = Quaternion(-0.8913283, 0.065644555, -0.03413492, 0.4472801)
+bones/23/rotation = Quaternion(0.87848705, -0.31912416, 0.20786162, 0.28846827)
+bones/24/rotation = Quaternion(-0.018747205, 0.0146544175, -0.097080864, 0.994992)
 
-[node name="AnimationPlayer" parent="Model" index="1" unique_id=1004629256]
+[node name="AnimationPlayer" parent="Model" index="1" unique_id=2010992692]
 root_motion_track = NodePath("Armature/Skeleton3D:root")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=766442117]
@@ -173,9 +222,9 @@ root_node = NodePath("%AnimationTree/../Model")
 root_motion_track = NodePath("Armature/Skeleton3D:root")
 tree_root = SubResource("tree")
 anim_player = NodePath("../Model/AnimationPlayer")
-parameters/Transition/current_state = "idle"
+parameters/Transition/current_state = "enter_pray"
 parameters/Transition/transition_request = ""
-parameters/Transition/current_index = 0
+parameters/Transition/current_index = 9
 
 [node name="state_machine" type="LimboHSM" parent="." unique_id=456896294]
 unique_name_in_owner = true
@@ -193,9 +242,6 @@ script = ExtResource("6_run")
 [node name="drinking" type="LimboState" parent="state_machine" unique_id=1000320671]
 script = ExtResource("7_1uxhp")
 
-[node name="Activities_Handler" type="Node" parent="." unique_id=751020406]
-script = ExtResource("8_myfjo")
-
 [node name="InteractionArea" type="Area3D" parent="." unique_id=624001010]
 script = ExtResource("9_area")
 prompt_text = "Talk"
@@ -211,11 +257,8 @@ billboard = 1
 text = "Talk"
 font_size = 40
 
-[node name="Commands" type="Node" parent="." unique_id=624001013]
-script = ExtResource("10_cmd")
-
 [node name="BTPlayer" type="BTPlayer" parent="." unique_id=624001014]
 behavior_tree = ExtResource("11_brain")
-agent_node = NodePath("..")
+blackboard_plan = SubResource("BlackboardPlan_iugc2")
 
 [editable path="Model"]

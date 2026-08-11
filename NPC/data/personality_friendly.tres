@@ -4,8 +4,6 @@
 
 [resource]
 script = ExtResource("1_pers")
-takes_orders = true
-refuses = Array[StringName]([])
 compliance = 1.0
 stubborn = false
 refusal_line = "Not today, sorry."

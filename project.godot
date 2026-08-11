@@ -16,7 +16,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="City-Critters"
-run/main_scene="res://assets/Map/PolygonTown/Scenes/Demo.scn"
+run/main_scene="res://scenes/ui/menus/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -26,13 +26,13 @@ CurrencySystem="*uid://c21qbvk4ilib6"
 GameManager="*uid://co30255acx5hd"
 MultiplayerManager="*uid://becb51omqicym"
 PlayerData="*uid://21ergkekotih"
-PropertyManager="*res://autoloads/property_manager.gd"
 JobStats="*res://autoloads/job_stats.gd"
 GameClock="*res://autoloads/game_clock.gd"
 SteamManager="*res://Steam_Multiplayer/steam.gd"
 MultiplayerGlobal="*res://Steam_Multiplayer/multiplayer_global.gd"
 Multiplayer="*res://Steam_Multiplayer/network_manager.gd"
 LocationRegistry="*uid://dqutrh2hpdbj2"
+PropertyManager="*res://autoloads/property_manager.gd"
 
 [debug]
 

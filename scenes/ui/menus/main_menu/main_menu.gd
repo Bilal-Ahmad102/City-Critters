@@ -66,7 +66,9 @@ func _on_multiplayer_pressed() -> void:
 	_on_refresh_pressed()
 
 func _on_single_player_pressed() -> void:
-	get_tree().change_scene_to_file(WORLD_SCENE)
+	# Solo: no lobby, just stream the world in through the loading screen.
+	Multiplayer.loading_status = "Loading town..."
+	get_tree().change_scene_to_file(Multiplayer.LOADING_SCENE)
 
 
 # ── Customization ─────────────────────────────────────────────────────────────
